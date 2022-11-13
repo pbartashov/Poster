@@ -1,0 +1,99 @@
+/* 
+  Localizable.strings
+  Poster
+
+  Created by Павел Барташов on 09.11.2022.
+  
+*/
+
+// ErrorPresenter
+"okErrorPresenter" = "Ok";
+
+// LoginError
+"missingLoginLoginError" = "Enter login.";
+"missingPasswordLoginError" = "Enter password.";
+"invalidEmailLoginError" = "Wrong email.";
+"wrongPasswordLoginError" = "Wrong login or password.";
+"weakPasswordLoginError" = "Password must contain at least 6 characters.";
+"userNotFoundLoginError" = "User not found.";
+"networkErrorLoginError" = "Network error.";
+"unknownLoginError" = "Login error. Please try again.";
+
+// LoginCoordinator
+"createAccountPromptTitleLoginCoordinator" = "Create account?";
+"createAccountPromptMessageLoginCoordinator" = "Do you want to create user account for";
+"yesAnswerLoginCoordinator" = "Yes";
+"noAnswerLoginCoordinator" = "No";
+
+// WelcomeView
+"signInButtonSignInView" = "Sign in";
+"signUpButtonSignInView" = "Sign up";
+
+
+
+
+// SignInView
+"loginButtonSignInView" = "Log in";
+"loginTextFieldPlaceHolder" = "Telephone or email";
+"passwordTextFieldPlaceHolder" = "Password";
+
+
+
+
+// ViewControllerFacLoginCoordinatortory
+"feedViewControllerFactory" = "Feed";
+"profileViewControllerFactory" = "Profile";
+"favoritesViewControllerFactory" = "Favorites";
+
+
+
+
+
+
+
+
+// FeedViewController
+"newPostFeedViewController" = "New post";
+
+// FeedView
+"post1FeedView" = "Post 1";
+"post2FeedView" = "Post 2";
+"loginFeedView" = "Log in";
+"wrongLabelFeedView" = "Wrong";
+"rightLabelFeedView" = "Right";
+"passwordPlaceholderFeedView" = "Password";
+
+
+
+
+
+// PhotosViewController
+"titlePhotosViewController" = "Photos";
+
+// ProfileHeaderView
+"statusTextFieldPlaceholderProfileHeaderView" = "Set your status..";
+"setStatusButtonProfileHeaderView" = "Set status";
+
+// PostsViewController
+"foundedResultsPostsViewController" = "Founded for";
+"offColorFilterPostsViewController" = "Off";
+"noirColorFilterPostsViewController" = "Noir";
+"motionBlurColorFilterPostsViewController" = "Blur";
+"invertColorFilterPostsViewController" = "Invert";
+
+// PhotosTableViewCell
+"titleLabelPhotosTableViewCell" = "Photos";
+
+
+
+
+// PostsCoordinator
+"searchTextFieldPlaceholderPostsCoordinator" = "Author name";
+"searchActionTitlePostsCoordinator" = "Search";
+"cancelActionTitlePostsCoordinator" = "Cancel";
+
+// PostsViewModel
+"searchPromptTitlePostsViewModel" = "Search by autor";
+"retryPromptTitlePostsViewModel" = "Nothing found...🤷";
+"retryPromptMessagePostsViewModel" = "Try again, please";
+
