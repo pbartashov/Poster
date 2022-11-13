@@ -66,9 +66,7 @@ final class LoginCoordinator: NavigationCoordinator, LoginCoordinatorProtocol {
         guard let viewController = viewController else {
             return
         }
-        DispatchQueue.main.async { [weak self] in
-            self?.navigationController?.pushViewController(viewController, animated: true)
-        }
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
 

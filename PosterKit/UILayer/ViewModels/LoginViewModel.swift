@@ -24,7 +24,8 @@ public enum LoginAction {
 public enum LoginState {
     case initial
     case missingPhoneNumber
-    case wrongPhoneNumber
+    case missingCode
+//    case wrongPhoneNumber
     case authFailed
 //    case processing(phoneNumber: String)
     case processing(LoginAction)
@@ -32,15 +33,14 @@ public enum LoginState {
 }
 
 public protocol LoginViewModelProtocol {
-//  var state: AnyPublisher<LoginState, Never> { get }
-    var state: LoginState { get }
+    var statePublisher: Published<LoginState>.Publisher { get }
+//    var state: LoginState { get }
 
     func perfomAction(_ action: LoginAction)
 
 }
 
 public final class LoginViewModel: LoginViewModelProtocol {
-    @Published public var state: LoginState = .initial
 
     //MARK: - Properties
     
@@ -49,6 +49,8 @@ public final class LoginViewModel: LoginViewModelProtocol {
 //    private var credentialStorage: CredentialStorageProtocol?
     private let errorPresenter: ErrorPresenterProtocol
 
+    @Published public var state: LoginState = .initial
+    public var statePublisher: Published<LoginState>.Publisher { $state }
 
     //MARK: - LifeCicle
     
@@ -107,9 +109,6 @@ public final class LoginViewModel: LoginViewModelProtocol {
         coordinator?.showSignInScene()
     }
 
-
-
-
     private func checkAuthFor(phoneNumber: String) {
         state = .processing(.authWith(phoneNumber: phoneNumber))
         loginDelegate?.checkCredentials(phoneNumber: phoneNumber) { [weak self] result in
@@ -147,26 +146,33 @@ public final class LoginViewModel: LoginViewModelProtocol {
     private func handle(result: Result<String, Error>,
                         phoneNumberOrCode: String
     ) {
-        switch result {
-            case .failure(LoginError.missingPhoneNumber):
-                handle(error: LoginError.missingPhoneNumber, state: .missingPhoneNumber)
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            switch result {
+                case .failure(LoginError.missingPhoneNumber):
+                    self.handle(error: LoginError.missingPhoneNumber, state: .missingPhoneNumber)
 
-//            case .failure(LoginError.missingPassword):
-//                handle(error: LoginError.missingPassword, state: .wrongPassword)
+                case .failure(LoginError.missingCode):
+                    self.handle(error: LoginError.missingCode, state: .missingCode)
 
-//            case .failure(LoginError.weakPassword):
-//                handle(error: LoginError.weakPassword, state: .wrongPassword)
+                    //            case .failure(LoginError.missingPassword):
+                    //                handle(error: LoginError.missingPassword, state: .wrongPassword)
 
-            case .failure(LoginError.userNotFound):
-                showCreateAccount(withPhoneNumber: phoneNumberOrCode)
-                
-            case .failure(let error):
-                handle(error: error, state: .authFailed)
+                    //            case .failure(LoginError.weakPassword):
+                    //                handle(error: LoginError.weakPassword, state: .wrongPassword)
 
-            case .success(let phoneNumberOrCode):
-                if case let .processing(action) = state {
-                    handle(action: action, phoneNumberOrCode: phoneNumberOrCode)
-                }
+                case .failure(LoginError.userNotFound):
+                    self.showCreateAccount(withPhoneNumber: phoneNumberOrCode)
+
+                case .failure(let error):
+                    self.handle(error: error, state: .authFailed)
+
+                case .success(let phoneNumberOrCode):
+                    if case let .processing(action) = self.state {
+                        self.handle(action: action, phoneNumberOrCode: phoneNumberOrCode)
+                    }
+                    self.state = .initial
+            }
         }
     }
 

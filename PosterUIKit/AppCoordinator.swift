@@ -7,7 +7,7 @@
 
 import UIKit
 
-public protocol MainCoordinatorProtocol {
+public protocol AppCoordinatorProtocol {
     func start() -> UIViewController
 }
 
@@ -20,7 +20,7 @@ protocol RootSceneSwitcher: AnyObject {
 //    func switchTo(tab: Tab)
 //}
 
-public final class MainCoordinator: MainCoordinatorProtocol {
+public final class AppCoordinator: AppCoordinatorProtocol {
 
     // MARK: - Properties
 
@@ -46,21 +46,23 @@ public final class MainCoordinator: MainCoordinatorProtocol {
     func switchTo(viewController: UIViewController) {
         guard let window = window else { return }
 
-        DispatchQueue.main.async {
-            window.rootViewController = viewController
-            // add animation
-            UIView.transition(with: window,
-                              duration: 0.5,
-                              options: [.transitionFlipFromLeft],
-                              animations: nil,
-                              completion: nil)
-        }
+        window.rootViewController = viewController
+        // add animation
+        UIView.transition(with: window,
+                          duration: 0.5,
+                          options: [.transitionFlipFromLeft],
+                          animations: nil,
+                          completion: nil)
     }
 }
 
-extension MainCoordinator: RootSceneSwitcher {
+extension AppCoordinator: RootSceneSwitcher {
     func switchToMainViewScene(for userName: String) {
-        let viewController = appDependencyContainer.makeMainViewController(for: userName)
-        switchTo(viewController: viewController)
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            let viewController = self.appDependencyContainer.makeMainViewController(for: userName)
+            self.switchTo(viewController: viewController)
+            self.appDependencyContainer.releaseLoginScene()
+        }
     }
 }

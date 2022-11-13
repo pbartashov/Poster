@@ -15,7 +15,8 @@ class SignActionViewController: UIViewController {
 
     var viewModel: LoginViewModelProtocol
 
-    var buttonTappedSubsription: AnyCancellable?
+//    var buttonTappedSubsription: AnyCancellable?
+    var subsriptions: Set<AnyCancellable> = []
 
 
     //MARK: - Views

@@ -44,11 +44,11 @@ final class SignUpViewController: SignActionViewController {
 
     private func initialize() {
         super.addSubView(signUpView)
-        setupViewModel()
+        bindViewModel()
     }
 
-    private func setupViewModel() {
-        buttonTappedSubsription = signUpView.buttonTappedPublisher
+    private func bindViewModel() {
+        signUpView.buttonTappedPublisher
             .sink { [weak self] button in
                 guard let self = self else { return }
                 switch button {
@@ -60,5 +60,27 @@ final class SignUpViewController: SignActionViewController {
                         return
                 }
             }
+            .store(in: &subsriptions)
+
+        viewModel.statePublisher
+            .sink { [weak self] state in
+                DispatchQueue.main.async {
+                    self?.signUpView.isBusy = false
+                    switch state {
+                        case .initial:
+                            break
+
+                        case .missingPhoneNumber, .missingCode:
+                            self?.signUpView.shakeTextField()
+
+                        case .authFailed:
+                            self?.signUpView.shakeActionButton()
+
+                        case .processing:
+                            self?.signUpView.isBusy = true
+                    }
+                }
+            }
+            .store(in: &subsriptions)
     }
 }

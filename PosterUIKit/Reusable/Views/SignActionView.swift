@@ -97,7 +97,7 @@ class SignActionView: ViewWithButton<LoginButton> {
         }
     }
 
-    func shake(view: UIView) {
+    private func shake(view: UIView) {
         view.transform = CGAffineTransform(translationX: 10, y: 0)
 
         UIView.animate(withDuration: 0.5, delay: 0,
@@ -107,11 +107,11 @@ class SignActionView: ViewWithButton<LoginButton> {
         }, completion: nil )
     }
 
-    func shakePhoneNumberTextField() {
+    func shakeTextField() {
         shake(view: textField)
     }
 
-    func shakeSignInButton() {
+    func shakeActionButton() {
         shake(view: actionButton)
     }
 }

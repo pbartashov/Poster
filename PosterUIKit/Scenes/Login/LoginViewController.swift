@@ -30,7 +30,7 @@ final class LoginViewController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.navigationBar.isHidden = true
+//        navigationController?.navigationBar.isHidden = true
         setupViewModel()
 
         viewModel.perfomAction(.start)

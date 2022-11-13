@@ -9,7 +9,8 @@
 /* Begin PBXBuildFile section */
 		371A206BC1A919830571A1EE /* Pods_PosterUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4EF5297CA4438A5593B999A /* Pods_PosterUIKit.framework */; };
 		5216393100B7AD3F346A262E /* Pods_Poster.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C93280A84525F3B5D76B93C0 /* Pods_Poster.framework */; };
-		6E0ADC9C291A7B2D007B2C5D /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0ADC9B291A7B2D007B2C5D /* MainCoordinator.swift */; };
+		6E0117382921097C00D8F391 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2F7813291BD828007EB9ED /* UIColor+.swift */; };
+		6E0ADC9C291A7B2D007B2C5D /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0ADC9B291A7B2D007B2C5D /* AppCoordinator.swift */; };
 		6E106BE6291A7923004021DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E106BE5291A7923004021DF /* AppDelegate.swift */; };
 		6E106BE8291A7923004021DF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E106BE7291A7923004021DF /* SceneDelegate.swift */; };
 		6E106BEF291A7924004021DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E106BEE291A7924004021DF /* Assets.xcassets */; };
@@ -93,7 +94,7 @@
 
 /* Begin PBXFileReference section */
 		692A2646A1BFA5F4725F4A6B /* Pods-Poster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Poster.release.xcconfig"; path = "Target Support Files/Pods-Poster/Pods-Poster.release.xcconfig"; sourceTree = "<group>"; };
-		6E0ADC9B291A7B2D007B2C5D /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		6E0ADC9B291A7B2D007B2C5D /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		6E106BE2291A7923004021DF /* Poster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Poster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E106BE5291A7923004021DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6E106BE7291A7923004021DF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -227,7 +228,7 @@
 				6E2F780F291BD4B6007EB9ED /* ErrorPresenter */,
 				6E2F77F9291B1B23007EB9ED /* Reusable */,
 				6E0ADC9A291A7B0F007B2C5D /* Scenes */,
-				6E0ADC9B291A7B2D007B2C5D /* MainCoordinator.swift */,
+				6E0ADC9B291A7B2D007B2C5D /* AppCoordinator.swift */,
 				6E2F77D5291A8A90007EB9ED /* AppDependencyContainer.swift */,
 				6E2F77D7291B1788007EB9ED /* Tab.swift */,
 				6E106C01291A79CB004021DF /* PosterUIKit.h */,
@@ -665,6 +666,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6E106BE6291A7923004021DF /* AppDelegate.swift in Sources */,
+				6E0117382921097C00D8F391 /* UIColor+.swift in Sources */,
 				6E2F77F6291B1AEA007EB9ED /* String+Extension.swift in Sources */,
 				6E106BE8291A7923004021DF /* SceneDelegate.swift in Sources */,
 			);
@@ -698,7 +700,7 @@
 				6E2F78312920963A007EB9ED /* SignActionView.swift in Sources */,
 				6E2F7800291B1C0B007EB9ED /* Constants.swift in Sources */,
 				6E2F77E9291B186B007EB9ED /* SignInView.swift in Sources */,
-				6E0ADC9C291A7B2D007B2C5D /* MainCoordinator.swift in Sources */,
+				6E0ADC9C291A7B2D007B2C5D /* AppCoordinator.swift in Sources */,
 				6E2F781B291F8EA8007EB9ED /* WelcomeViewController.swift in Sources */,
 				6E2F783429209C3A007EB9ED /* SignActionViewController.swift in Sources */,
 			);

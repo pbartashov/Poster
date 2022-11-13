@@ -12,6 +12,7 @@ protocol AppDependencyContainerProtocol {
 //    func makeLoginViewController() -> UIViewController
 //    func makeLoginCoordinator(loginNavigationController: UINavigationController) -> LoginCoordinatorProtocol
     func makeLoginViewController() -> UIViewController
+    func releaseLoginScene()
     func makeMainViewController(for userName: String) -> UIViewController
 }
 
@@ -48,6 +49,10 @@ public class AppDependencyContainer: AppDependencyContainerProtocol {
         self.loginCoordinator = loginCoordinator
 
         return loginViewController
+    }
+
+    func releaseLoginScene() {
+        loginCoordinator = nil
     }
 
 //    func makeLoginCoordinator() -> LoginCoordinator {
