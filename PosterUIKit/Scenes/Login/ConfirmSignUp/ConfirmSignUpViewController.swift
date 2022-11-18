@@ -18,7 +18,7 @@ final class ConfirmSignUpViewController: SignActionViewController {
     //MARK: - Views
 
     private lazy var confirmSignUpView: ConfirmSignUpView = {
-        let viewFactory = LoginViewFactory()
+        let viewFactory = ViewFactory()
         return ConfirmSignUpView(viewFactory: viewFactory)
     }()
 

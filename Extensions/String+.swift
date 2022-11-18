@@ -1,6 +1,6 @@
 //
-//  String+Extension.swift
-//  Navigation
+//  String+.swift
+//  Poster
 //
 //  Created by Павел Барташов on 29.06.2022.
 //

@@ -1,6 +1,6 @@
 //
 //  Coordinator.swift
-//  Navigation
+//  PosterUIKit
 //
 //  Created by Павел Барташов on 09.07.2022.
 //

@@ -17,7 +17,7 @@ final class SignUpViewController: SignActionViewController {
     //MARK: - Views
 
     private lazy var signUpView: SignUpView = {
-        let viewFactory = LoginViewFactory(textFieldMode: .phoneNumber)
+        let viewFactory = LoginViewFactory()
         return SignUpView(viewFactory: viewFactory)
     }()
 

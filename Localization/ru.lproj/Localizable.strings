@@ -51,24 +51,53 @@
 "explainLabelConfirmSignUpView" = "Мы отправили SMS с кодом на номер";
 "enterCodeLabelConfirmSignUpView" = "Введите код из SMS";
 
+// PostServiceErrors
+"networkErrorPostServiceErrors" = "Отсутствует доступ в интернет.";
+
+// MainDependancyContainer
+"feedMainDependancyContainer" = "Главная";
+//"musicViewControllerFactory" = "Музыка";
+//"videoViewControllerFactory" = "Видео";
+//"recorderViewControllerFactory" = "Рекордер";
+"profileMainDependancyContainer" = "Профиль";
+"favoritesMainDependancyContainer" = "Сохраненные";
+//"mapViewControllerFactory" = "Карта"
+
+// PhotosViewController
+"titlePhotosViewController" = "Фото галлерея";
+
+// ProfileHeaderView
+"statusTextFieldPlaceholderProfileHeaderView" = "Установите ваш статус..";
+"setStatusButtonProfileHeaderView" = "Установить статус";
+
+// PostsViewController
+"foundedResultsPostsViewController" = "Найдено для";
+"offColorFilterPostsViewController" = "Выкл";
+"noirColorFilterPostsViewController" = "Нуар";
+"motionBlurColorFilterPostsViewController" = "Размытие";
+"invertColorFilterPostsViewController" = "Инверсия";
+
+// PhotosTableViewCell
+"titleLabelPhotosTableViewCell" = "Фото";
+
+// PostsCoordinator
+"searchTextFieldPlaceholderPostsCoordinator" = "Имя автора";
+"searchActionTitlePostsCoordinator" = "Искать";
+"cancelActionTitlePostsCoordinator" = "Отменить поиск";
+
+// PostsViewModel
+"searchPromptTitlePostsViewModel" = "Поиск по автору";
+"retryPromptTitlePostsViewModel" = "Ничего не нашли...🤷";
+"retryPromptMessagePostsViewModel" = "Попробуйте еще";
+
+
+
+
 
 
 //
-//// RecorderError
-//"permissionDeniedRecorderError" = "Требуется разрешение на доступ к микрофону.";
-//"fileCreationErrorRecorderError" = "Ошибка при создании файла с записью.";
-//
-//// RecorderState
-//"permissionDeniedRecorderState" = "Требуется разрешение на доступ к микрофону.";
-//"emptyRecorderState" = "Записи пока нет";
-//"recordingRecorderState" = "Идет запись...";
-//"recordingPausedRecorderState" = "Запись на паузе";
-//"playingRecorderState" = "Воспроизведение...";
-//"playingPausedRecorderState" = "Воспроизведение на паузе";
-//"stoppedRecorderState" = "Стоп";
-//
-//// MusicError
-//"trackNotFoundMusicError" = "Музыкальный трек не найден.";
+
+
 //
 //// FeedViewController
 //"newPostFeedViewController" = "Новый пост";
@@ -101,57 +130,13 @@
 //// LoginCoordinator
 
 //
-//// PhotosViewController
-//"titlePhotosViewController" = "Фото галлерея";
+
+
+
 //
-//// ProfileHeaderView
-//"statusTextFieldPlaceholderProfileHeaderView" = "Установите ваш статус..";
-//"setStatusButtonProfileHeaderView" = "Установить статус";
+;
 //
-//// PostsViewController
-//"foundedResultsPostsViewController" = "Найдено для";
-//"offColorFilterPostsViewController" = "Выкл";
-//"noirColorFilterPostsViewController" = "Нуар";
-//"motionBlurColorFilterPostsViewController" = "Размытие";
-//"invertColorFilterPostsViewController" = "Инверсия";
-//
-//// PhotosTableViewCell
-//"titleLabelPhotosTableViewCell" = "Фото";
-//
-//// MapPresenter
-//"waypointNameMapPresenter" = "Точка";
-//
-//// MapViewController
-//"removeAllWaypointsButtonMapViewController" = "Очистить";
-//
-//// MKMapType
-//"standardMKMapType" = "Схема";
-//"satelliteMKMapType" = "Спутник";
-//"hybridMKMapType" = "Гибрид";
-//"satelliteFlyoverMKMapType" = "Спутник+";
-//"hybridFlyoverMKMapType" = "Гибрид+";
-//"mutedStandardMKMapType" = "Простая схема";
-//"unknownMKMapType" = "Неизвестно";
-//
-//// ViewControllerFactory
-//"feedViewControllerFactory" = "Лента";
-//"musicViewControllerFactory" = "Музыка";
-//"videoViewControllerFactory" = "Видео";
-//"recorderViewControllerFactory" = "Рекордер";
-//"profileViewControllerFactory" = "Профиль";
-//"favoritesViewControllerFactory" = "Избранное";
-//"mapViewControllerFactory" = "Карта";
-//
-//// PostsCoordinator
-//"searchTextFieldPlaceholderPostsCoordinator" = "Имя автора";
-//"searchActionTitlePostsCoordinator" = "Искать";
-//"cancelActionTitlePostsCoordinator" = "Отменить поиск";
-//
-//// PostsViewModel
-//"searchPromptTitlePostsViewModel" = "Поиск по автору";
-//"retryPromptTitlePostsViewModel" = "Ничего не нашли...🤷";
-//"retryPromptMessagePostsViewModel" = "Попробуйте еще";
-//
+
 //// LocalNotificationsService
 //"checkoutUpdatesLocalNotificationsService" = "Посмотрите последние обновления";
 //"showProfileLocalNotificationsService" = "Показать посты";

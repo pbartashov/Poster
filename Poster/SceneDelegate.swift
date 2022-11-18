@@ -11,7 +11,8 @@ import PosterUIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    var appCoordinator: AppCoordinatorProtocol?
+//    var appCoordinator: AppCoordinatorProtocol?
+    var appDependancyContainer: AppDependencyContainerProtocol?
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -23,13 +24,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         setAppearance()
 
         let window = UIWindow(windowScene: windowScene)
-        let coordinator = AppCoordinator(window: window)
+        let appDependancyContainer = AppDependencyContainer()
+        let coordinator = appDependancyContainer.makeAppCoordinator(window: window)
 
         window.rootViewController = coordinator.start()
         window.makeKeyAndVisible()
 
         self.window = window
-        self.appCoordinator = coordinator
+        self.appDependancyContainer = appDependancyContainer
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

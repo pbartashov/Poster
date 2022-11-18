@@ -8,37 +8,54 @@
 import UIKit
 import PosterKit
 
-protocol AppDependencyContainerProtocol {
+public protocol AppDependencyContainerProtocol: AnyObject {
 //    func makeLoginViewController() -> UIViewController
 //    func makeLoginCoordinator(loginNavigationController: UINavigationController) -> LoginCoordinatorProtocol
+    func makeAppCoordinator(window: UIWindow) -> AppCoordinatorProtocol
+
     func makeLoginViewController() -> UIViewController
     func releaseLoginScene()
+
     func makeMainViewController(for userName: String) -> UIViewController
 }
 
-public class AppDependencyContainer: AppDependencyContainerProtocol {
+public final class AppDependencyContainer: AppDependencyContainerProtocol {
     
     // MARK: - Properties
 
-    private weak var rootSceneSwitcher: RootSceneSwitcher?
+//    private weak var rootSceneSwitcher: RootSceneSwitcher?
+    private var appCoordinator: AppCoordinator?
     //    private var feedCoordinator: FeedCoordinator?
     private var loginCoordinator: LoginCoordinator?
     //    private var profileCoordinator: ProfileCoordinator?
     //    private var profilePostsCoordinator: PostsCoordinator?
     //    private var favoritesCoordinator: PostsCoordinator?
+
+    private var mainDependancyContainer: MainDependancyContainer?
     // MARK: - Views
     
     // MARK: - LifeCicle
 
-    init(rootSceneSwitcher: RootSceneSwitcher) {
-        self.rootSceneSwitcher = rootSceneSwitcher
+    public init() {
+        
     }
+
+//    init(rootSceneSwitcher: RootSceneSwitcher) {
+//        self.rootSceneSwitcher = rootSceneSwitcher
+//    }
     
     // MARK: - Metods
 
-    func makeLoginViewController() -> UIViewController {
+    public func makeAppCoordinator(window: UIWindow) -> AppCoordinatorProtocol {
+        let appCoordinator = AppCoordinator(window: window, appDependencyContainer: self)
+        self.appCoordinator = appCoordinator
+
+        return appCoordinator
+    }
+
+    public func makeLoginViewController() -> UIViewController {
         let switchToMainScene = { [weak self] userName -> Void in
-            self?.rootSceneSwitcher?.switchToMainViewScene(for: userName)
+            self?.appCoordinator?.switchToMainViewScene(for: userName)
         }
         let loginCoordinator = LoginCoordinator(switchToMainScene: switchToMainScene)
         let loginDependencyContainer = LoginDependencyContainer(loginCoordinator: loginCoordinator)
@@ -51,7 +68,7 @@ public class AppDependencyContainer: AppDependencyContainerProtocol {
         return loginViewController
     }
 
-    func releaseLoginScene() {
+    public func releaseLoginScene() {
         loginCoordinator = nil
     }
 
@@ -82,47 +99,15 @@ public class AppDependencyContainer: AppDependencyContainerProtocol {
 ////                              credentialStorage: CredentialStorageService())
 //    }
 
-    func makeMainViewController(for userName: String) -> UIViewController {
-//        let feedNavigationController = UINavigationController()
-//        feedCoordinator = FeedCoordinator(navigationController: feedNavigationController)
-//
-//        let feedViewController = ViewControllerFactory.create.feedViewController(tag: Tab.feed.index)
-//        feedViewController.coordinator = feedCoordinator
-//        feedNavigationController.setViewControllers([feedViewController], animated: false)
-//
-//        let profileNavigationController = UINavigationController()
-//        profileCoordinator = ProfileCoordinator(navigationController: profileNavigationController)
-//        profilePostsCoordinator = PostsCoordinator(navigationController: profileNavigationController)
-//
-//        let profileViewController = ViewControllerFactory
-//            .create.profileViewController(userName: userName,
-//                                          profileCoordinator: profileCoordinator,
-//                                          profilePostsCoordinator: profilePostsCoordinator,
-//                                          tag: Tab.profile.index)
-//        profileNavigationController.setViewControllers([profileViewController], animated: false)
-//
-//        let favoritesNavigationController = UINavigationController()
-//        favoritesCoordinator = PostsCoordinator(navigationController: favoritesNavigationController)
-//        let favoritesViewController = ViewControllerFactory
-//            .create.favoritesViewController(coordinator: favoritesCoordinator,
-//                                            tag: Tab.favorites.index)
-//        favoritesNavigationController.setViewControllers([favoritesViewController], animated: false)
-//
-//        let mapViewController = ViewControllerFactory.create.mapViewController(tag: Tab.map.index)
-//
-//        let tabBarController = ViewControllerFactory.create.tabBarController(with: [
-//            feedNavigationController,
-//            profileNavigationController,
-//            favoritesNavigationController,
-//            mapViewController
-//        ])
-//
-//        ErrorPresenter.shared.initialize(with: tabBarController)
-//
-//        mainTabController = tabBarController
-//
-//        return tabBarController
+    public func makeMainViewController(for userName: String) -> UIViewController {
+        let mainDependancyContainer = MainDependancyContainer()
+        self.mainDependancyContainer = mainDependancyContainer
 
-        return UIViewController()
+        return mainDependancyContainer.makeMainViewController(userName: userName)
+    }
+
+
+    func releaseMainScene() {
+//        mainCoordinator = nil
     }
 }

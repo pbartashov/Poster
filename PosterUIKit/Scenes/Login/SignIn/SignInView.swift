@@ -38,7 +38,7 @@ final class SignInView: SignActionView {
 
     //MARK: - LifeCicle
 
-    init(viewFactory: LoginViewFactory) {
+    init(viewFactory: ViewFactoryProtocol) {
         super.init(viewFactory: viewFactory, loginButton: LoginButton.confirm)
         initialize()
     }
@@ -71,17 +71,17 @@ final class SignInView: SignActionView {
         }
 
         textField.snp.makeConstraints { make in
-            make.top.equalTo(enterNumberLabel.snp.bottom).offset(Constants.padding)
-            make.leading.equalToSuperview().offset(Constants.phoneTextFieldPadding)
-            make.trailing.equalToSuperview().offset(-Constants.phoneTextFieldPadding)
-            make.height.equalTo(Constants.phoneTextFieldHeight)
+            make.top.equalTo(enterNumberLabel.snp.bottom).offset(ConstantsUI.padding)
+            make.leading.equalToSuperview().offset(ConstantsUI.phoneTextFieldPadding)
+            make.trailing.equalToSuperview().offset(-ConstantsUI.phoneTextFieldPadding)
+            make.height.equalTo(ConstantsUI.phoneTextFieldHeight)
         }
 
         actionButton.snp.makeConstraints { make in
             make.top.equalTo(textField.snp.bottom).offset(70)
             make.centerX.equalToSuperview()
 
-            make.bottom.equalToSuperview().offset(-Constants.padding)
+            make.bottom.equalToSuperview().offset(-ConstantsUI.padding)
         }
     }
 }

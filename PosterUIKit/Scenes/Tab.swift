@@ -1,6 +1,6 @@
 //
 //  Tab.swift
-//  Navigation
+//  PosterUIKit
 //
 //  Created by Павел Барташов on 31.10.2022.
 //

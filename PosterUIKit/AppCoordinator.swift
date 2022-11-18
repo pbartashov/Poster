@@ -25,22 +25,25 @@ public final class AppCoordinator: AppCoordinatorProtocol {
     // MARK: - Properties
 
     private weak var window: UIWindow?
-    private var appDependencyContainer: AppDependencyContainerProtocol!
+    private unowned var appDependencyContainer: AppDependencyContainerProtocol
 
     // MARK: - LifeCicle
 
-    public init(window: UIWindow) {
+    public init(window: UIWindow,
+                appDependencyContainer: AppDependencyContainerProtocol) {
         self.window = window
-
-        defer {
-            self.appDependencyContainer = AppDependencyContainer(rootSceneSwitcher: self)
-        }
+        self.appDependencyContainer = appDependencyContainer
+//
+//        defer {
+//            self.appDependencyContainer = AppDependencyContainer(rootSceneSwitcher: self)
+//        }
     }
 
     // MARK: - Metods
 
     public func start() -> UIViewController {
-        appDependencyContainer.makeLoginViewController()
+//        appDependencyContainer.makeLoginViewController()
+        appDependencyContainer.makeMainViewController(for: "rwre")
     }
 
     func switchTo(viewController: UIViewController) {

@@ -32,6 +32,7 @@ public enum LoginState {
 
 }
 
+#warning("PublishedViewModelProtocol")
 public protocol LoginViewModelProtocol {
     var statePublisher: Published<LoginState>.Publisher { get }
 //    var state: LoginState { get }

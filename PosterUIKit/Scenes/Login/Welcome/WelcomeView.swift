@@ -13,7 +13,7 @@ final class WelcomeView: ViewWithButton<LoginButton> {
 
     //MARK: - Properties
 
-    let viewFactory: LoginViewFactory
+    let viewFactory: ViewFactoryProtocol
 
     //MARK: - Views
 
@@ -39,7 +39,7 @@ final class WelcomeView: ViewWithButton<LoginButton> {
 
     //MARK: - LifeCicle
 
-    init(viewFactory: LoginViewFactory) {
+    init(viewFactory: ViewFactoryProtocol) {
         self.viewFactory = viewFactory
         super.init(frame: .zero)
         initialize()
@@ -81,7 +81,7 @@ final class WelcomeView: ViewWithButton<LoginButton> {
             make.top.equalTo(signUpViewButton.snp.bottom).offset(30)
             make.centerX.equalToSuperview()
 
-            make.bottom.equalToSuperview().offset(-Constants.padding)
+            make.bottom.equalToSuperview().offset(-ConstantsUI.padding)
         }
     }
 }

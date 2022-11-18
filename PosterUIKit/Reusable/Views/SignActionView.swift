@@ -13,7 +13,7 @@ class SignActionView: ViewWithButton<LoginButton> {
 
     //MARK: - Properties
 
-    let viewFactory: LoginViewFactory
+    let viewFactory: ViewFactoryProtocol
     let loginButton: LoginButton
 
     var text: String {
@@ -64,7 +64,7 @@ class SignActionView: ViewWithButton<LoginButton> {
 
     //MARK: - LifeCicle
 
-    init(viewFactory: LoginViewFactory,
+    init(viewFactory: ViewFactoryProtocol,
          loginButton: LoginButton
     ) {
         self.viewFactory = viewFactory

@@ -41,6 +41,11 @@ extension UIColor {
                        darkMode: .gray)
     }
 
+    static var backgroundColor: UIColor {
+        Self.makeColor(lightMode: .white, darkMode: .black)
+    }
+
+
 //    static var borderColor: UIColor {
 //        Self.makeColor(lightMode: .black, darkMode: .lightGray)
 //    }
@@ -53,9 +58,7 @@ extension UIColor {
 
 
     
-    static var backgroundColor: UIColor {
-        Self.makeColor(lightMode: .systemGray6, darkMode: .black)
-    }
+
 
     static var lightBackgroundColor: UIColor {
         Self.makeColor(lightMode: .white, darkMode: .darkGray)
