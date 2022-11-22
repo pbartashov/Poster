@@ -181,19 +181,19 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
                     let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                           heightDimension: .fractionalHeight(1))
                     let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                    item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: ConstantsUI.interStoriesSpace / 2,
-                                                                 bottom: 0, trailing: ConstantsUI.interStoriesSpace / 2)
+                    item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: Constants.UI.interStoriesSpace / 2,
+                                                                 bottom: 0, trailing: Constants.UI.interStoriesSpace / 2)
 
-                    let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(ConstantsUI.storiesImageSize + ConstantsUI.interStoriesSpace),
-                                                           heightDimension: .estimated(ConstantsUI.storiesImageSize))
+                    let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(Constants.UI.storiesImageSize + Constants.UI.interStoriesSpace),
+                                                           heightDimension: .estimated(Constants.UI.storiesImageSize))
                     let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
                                                                    subitems: [item])
 
                     let section = NSCollectionLayoutSection(group: group)
                     section.orthogonalScrollingBehavior = .continuous
                     section.boundarySupplementaryItems = [storiesHeaderItem]
-                    section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: ConstantsUI.padding,
-                                                                    bottom: 32, trailing: ConstantsUI.padding)
+                    section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: Constants.UI.padding,
+                                                                    bottom: 32, trailing: Constants.UI.padding)
                     return section
 
                 case .postsSection:
@@ -207,7 +207,7 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
 //                    let safeAreaInsets = self.collectionView.safeAreaInsets
 //                    let safeAreaSides = safeAreaInsets.left + safeAreaInsets.right
 //                    let contentWidth = layoutEnvironment.container.contentSize.width
-//                    let groupWidth = contentWidth * widthFactor - ConstantsUI.padding * 2 - safeAreaSides
+//                    let groupWidth = contentWidth * widthFactor - Constants.UI.padding * 2 - safeAreaSides
 //                    let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(groupWidth),
                     let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                            heightDimension: .estimated(500))
@@ -221,8 +221,8 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
 //                                                                    bottom: 0,
 //                                                                    trailing: sectionSideInset)
 
-                    section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: ConstantsUI.padding,
-                                                                    bottom: 0, trailing: ConstantsUI.padding)
+                    section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: Constants.UI.padding,
+                                                                    bottom: 0, trailing: Constants.UI.padding)
                     section.boundarySupplementaryItems = [postsHeaderItem]
 
                     return section

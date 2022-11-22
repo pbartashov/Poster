@@ -37,7 +37,7 @@ extension ProfileViewModel: DragDropProtocol {
             UIDragItem(itemProvider: textItemProvider)
         ]
 
-        guard let image = post.image else { return dragItems }
+        guard let image = post.imageData?.asImage else { return dragItems }
 
         let imageProvider = NSItemProvider(object: image)
         dragItems.append(
@@ -82,10 +82,12 @@ extension ProfileViewModel: DragDropProtocol {
                 return
             }
 
+            #warning("Use UserService && open Create Post")
+
             let newPost = Post(url: UUID().uuidString,
-                               author: "Drag&Drop",
+                               author: User(id: "id", name: "Drag&Drop"),
                                description: description,
-                               image: image)
+                               imageData: image.pngData())
 
             perfomAction(.insert((newPost, destinationIndex)))
 

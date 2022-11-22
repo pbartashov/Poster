@@ -6,13 +6,14 @@
 //
 
 import UIKit
+import PosterKit
 
 public protocol AppCoordinatorProtocol {
     func start() -> UIViewController
 }
 
 protocol RootSceneSwitcher: AnyObject {
-    func switchToMainViewScene(for userName: String)
+    func switchToMainViewScene(for user: User)
 
 }
 
@@ -42,8 +43,8 @@ public final class AppCoordinator: AppCoordinatorProtocol {
     // MARK: - Metods
 
     public func start() -> UIViewController {
-//        appDependencyContainer.makeLoginViewController()
-        appDependencyContainer.makeMainViewController(for: "rwre")
+        appDependencyContainer.makeLoginViewController()
+//        appDependencyContainer.makeMainViewController(for: "rwre")
     }
 
     func switchTo(viewController: UIViewController) {
@@ -60,10 +61,10 @@ public final class AppCoordinator: AppCoordinatorProtocol {
 }
 
 extension AppCoordinator: RootSceneSwitcher {
-    func switchToMainViewScene(for userName: String) {
+    func switchToMainViewScene(for user: User) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            let viewController = self.appDependencyContainer.makeMainViewController(for: userName)
+            let viewController = self.appDependencyContainer.makeMainViewController(for: user)
             self.switchTo(viewController: viewController)
             self.appDependencyContainer.releaseLoginScene()
         }

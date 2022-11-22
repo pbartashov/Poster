@@ -42,12 +42,10 @@ public final class ProfileViewModel<T>: ViewModel<ProfileState, ProfileAction>,
 //    private let postService: PostServiceProtocol
     public let postsViewModel: PostsViewModelType
 
-//    private let userService: UserService
-    private let userName: String
+    private weak var userService: UserServiceProtocol?
+//    private let userName: String
     public var user: User? {
-//        userService.getUser(byName: userName)
-        return User()
-        #warning("dsfdsafds")
+        userService?.currentUser
     }
 
     public var posts: [Post] {
@@ -63,16 +61,17 @@ public final class ProfileViewModel<T>: ViewModel<ProfileState, ProfileAction>,
     public init(
 //        postService: PostServiceProtocol,
          coordinator: ProfileCoordinatorProtocol?,
-//         userService: UserService,
-         userName: String,
+         userService: UserServiceProtocol,
+//         userName: String,
 //         postRepository: PostRepositoryInterface,
          postsViewModel: PostsViewModelType,
-         errorPresenter: ErrorPresenterProtocol) {
+         errorPresenter: ErrorPresenterProtocol
+    ) {
         
 //        self.postService = postService
         self.coordinator = coordinator
-//        self.userService = userService
-        self.userName = userName
+        self.userService = userService
+//        self.userName = userName
 //        self.favoritesPostRepository = postRepository
         self.postsViewModel = postsViewModel
 

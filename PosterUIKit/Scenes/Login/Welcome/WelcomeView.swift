@@ -81,7 +81,7 @@ final class WelcomeView: ViewWithButton<LoginButton> {
             make.top.equalTo(signUpViewButton.snp.bottom).offset(30)
             make.centerX.equalToSuperview()
 
-            make.bottom.equalToSuperview().offset(-ConstantsUI.padding)
+            make.bottom.equalToSuperview().offset(-Constants.UI.padding)
         }
     }
 }

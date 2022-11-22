@@ -10,5 +10,5 @@ public protocol LoginCoordinatorProtocol: AnyObject {
     func showSignUpScene()
     func showConfirmSignUpScene(for phoneNumber: String)
     func showSignInScene()
-    func showMainScene(for userName: String)
+    func showMainScene(for user: User)
 }

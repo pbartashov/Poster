@@ -166,8 +166,8 @@ where T: ProfileViewModelProtocol&DragDropProtocol,
         }
 
         button.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(ConstantsUI.padding)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-ConstantsUI.padding)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(Constants.UI.padding)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-Constants.UI.padding)
         }
 
         self.coverView = cover

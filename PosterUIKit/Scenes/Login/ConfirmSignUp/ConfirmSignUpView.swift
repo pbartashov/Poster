@@ -92,7 +92,7 @@ final class ConfirmSignUpView: SignActionView {
         }
 
         explainLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(ConstantsUI.padding)
+            make.top.equalTo(titleLabel.snp.bottom).offset(Constants.UI.padding)
             make.centerX.equalToSuperview()
         }
 
@@ -103,14 +103,14 @@ final class ConfirmSignUpView: SignActionView {
 
         enterCodeLabel.snp.makeConstraints { make in
             make.top.equalTo(phoneNumberLabel.snp.bottom).offset(118)
-            make.leading.equalToSuperview().offset(ConstantsUI.phoneTextFieldPadding)
+            make.leading.equalToSuperview().offset(Constants.UI.phoneTextFieldPadding)
         }
 
         textField.snp.makeConstraints { make in
             make.top.equalTo(enterCodeLabel.snp.bottom).offset(5)
-            make.leading.equalToSuperview().offset(ConstantsUI.phoneTextFieldPadding)
-            make.trailing.equalToSuperview().offset(-ConstantsUI.phoneTextFieldPadding)
-            make.height.equalTo(ConstantsUI.phoneTextFieldHeight)
+            make.leading.equalToSuperview().offset(Constants.UI.phoneTextFieldPadding)
+            make.trailing.equalToSuperview().offset(-Constants.UI.phoneTextFieldPadding)
+            make.height.equalTo(Constants.UI.phoneTextFieldHeight)
         }
 
         actionButton.snp.makeConstraints { make in
@@ -122,7 +122,7 @@ final class ConfirmSignUpView: SignActionView {
             make.top.equalTo(actionButton.snp.bottom).offset(43)
             make.centerX.equalToSuperview()
 
-            make.bottom.equalToSuperview().offset(-ConstantsUI.padding)
+            make.bottom.equalToSuperview().offset(-Constants.UI.padding)
         }
     }
 }

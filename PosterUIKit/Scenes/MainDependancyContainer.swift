@@ -9,7 +9,7 @@ import UIKit
 import PosterKit
 
 protocol MainDependancyContainerProtocol {
-    func makeMainViewController(userName: String) -> UIViewController
+    func makeMainViewController(user: User) -> UIViewController
 }
 
 public final class MainDependancyContainer: MainDependancyContainerProtocol {
@@ -22,21 +22,35 @@ public final class MainDependancyContainer: MainDependancyContainerProtocol {
     private var profilePostsCoordinator: PostsCoordinatorProtocol?
     private var favoritesCoordinator: PostsCoordinatorProtocol?
 
+    private unowned var userService: UserServiceProtocol
+
     // MARK: - Views
 
     // MARK: - LifeCicle
 
+    init(feedCoordinator: FeedCoordinatorProtocol? = nil,
+         feedPostsCoordinator: PostsCoordinatorProtocol? = nil,
+         profileCoordinator: ProfileCoordinatorProtocol? = nil,
+         profilePostsCoordinator: PostsCoordinatorProtocol? = nil,
+         favoritesCoordinator: PostsCoordinatorProtocol? = nil,
+         userService: UserServiceProtocol
+    ) {
+        self.feedCoordinator = feedCoordinator
+        self.feedPostsCoordinator = feedPostsCoordinator
+        self.profileCoordinator = profileCoordinator
+        self.profilePostsCoordinator = profilePostsCoordinator
+        self.favoritesCoordinator = favoritesCoordinator
+        self.userService = userService
+    }
+
     // MARK: - Metods
 
-
-
-
-    func makeMainViewController(userName: String) -> UIViewController {
+    func makeMainViewController(user: User) -> UIViewController {
         let feedNavigationController = UINavigationController()
         feedCoordinator = FeedCoordinator(navigationController: feedNavigationController)
         feedPostsCoordinator = PostsCoordinator(navigationController: feedNavigationController)
 
-        let feedViewController = makeFeedViewController(userName: userName,
+        let feedViewController = makeFeedViewController(user: user,
                                                         feedCoordinator: feedCoordinator,
                                                         feedPostsCoordinator: feedPostsCoordinator,
                                                         tag: Tab.feed.index)
@@ -46,7 +60,7 @@ public final class MainDependancyContainer: MainDependancyContainerProtocol {
         profileCoordinator = ProfileCoordinator(navigationController: profileNavigationController)
         profilePostsCoordinator = PostsCoordinator(navigationController: profileNavigationController)
 
-        let profileViewController = makeProfileViewController(userName: userName,
+        let profileViewController = makeProfileViewController(user: user,
                                                               profileCoordinator: profileCoordinator,
                                                               profilePostsCoordinator: profilePostsCoordinator,
                                                               tag: Tab.profile.index)
@@ -58,7 +72,7 @@ public final class MainDependancyContainer: MainDependancyContainerProtocol {
                                                                   tag: Tab.favorites.index)
         favoritesNavigationController.setViewControllers([favoritesViewController], animated: false)
 
-       let tabBarController = makeTabBarController(with: [
+        let tabBarController = makeTabBarController(with: [
             feedNavigationController,
             profileNavigationController,
             favoritesNavigationController
@@ -66,12 +80,12 @@ public final class MainDependancyContainer: MainDependancyContainerProtocol {
 
         ErrorPresenter.shared.initialize(with: tabBarController)
 
-//        mainTabController = tabBarController
+        //        mainTabController = tabBarController
 
         return tabBarController
     }
 
-    func makeFeedViewController(userName: String,
+    func makeFeedViewController(user: User,
                                 feedCoordinator: FeedCoordinatorProtocol?,
                                 feedPostsCoordinator: PostsCoordinatorProtocol?,
                                 tag: Int
@@ -79,7 +93,7 @@ public final class MainDependancyContainer: MainDependancyContainerProtocol {
         let feedFactory = FeedFactory()
         let feedViewModel = feedFactory.viewModelWith(feedCoordinator: feedCoordinator,
                                                       postsCoordinator: feedPostsCoordinator,
-                                                      userName: userName)
+                                                      user: user)
 
         let feedViewController = feedFactory.viewControllerWith(viewModel: feedViewModel)
 
@@ -89,15 +103,15 @@ public final class MainDependancyContainer: MainDependancyContainerProtocol {
         return feedViewController
     }
 
-    func makeProfileViewController(userName: String,
+    func makeProfileViewController(user: User,
                                    profileCoordinator: ProfileCoordinatorProtocol?,
                                    profilePostsCoordinator: PostsCoordinatorProtocol?,
                                    tag: Int
     ) -> UIViewController {
         let profileFactory = ProfileFactory()
         let profileViewModel = profileFactory.viewModelWith(profileCoordinator: profileCoordinator,
-                                                                   postsCoordinator: profilePostsCoordinator,
-                                                                   userName: userName)
+                                                            postsCoordinator: profilePostsCoordinator,
+                                                            userService: userService)
         let profileViewController = profileFactory.viewControllerWith(viewModel: profileViewModel)
 
         profileViewController.tabBarItem = UITabBarItem(title: "profileMainDependancyContainer".localized,
@@ -124,7 +138,7 @@ public final class MainDependancyContainer: MainDependancyContainerProtocol {
         
         tabBarController.setViewControllers(viewControllers, animated: true)
 
-//        tabBarController.selectedIndex = 1
+        //        tabBarController.selectedIndex = 1
 
         return tabBarController
     }

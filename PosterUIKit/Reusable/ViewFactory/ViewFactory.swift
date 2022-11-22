@@ -67,10 +67,10 @@ struct ViewFactory: ViewFactoryProtocol {
         var configuration = UIButton.Configuration.filled()
         configuration.baseBackgroundColor = .brandTextBlackColor
         configuration.contentInsets = NSDirectionalEdgeInsets(
-            top: ConstantsUI.buttonVerticalPadding,
-            leading: ConstantsUI.buttonHorizontalPadding,
-            bottom: ConstantsUI.buttonVerticalPadding,
-            trailing: ConstantsUI.buttonHorizontalPadding
+            top: Constants.UI.buttonVerticalPadding,
+            leading: Constants.UI.buttonHorizontalPadding,
+            bottom: Constants.UI.buttonVerticalPadding,
+            trailing: Constants.UI.buttonHorizontalPadding
         )
 
         configuration.background.cornerRadius = 10

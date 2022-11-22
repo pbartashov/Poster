@@ -11,31 +11,32 @@ import CoreData
 //https://www.userdesk.io/blog/repository-pattern-using-core-data-and-swift/
 extension PostEntity: DomainModel {
     typealias DomainModelType = Post
-    
+
+    #warning("TODO")
     func toDomainModel() -> Post {
         Post(url: url ?? "",
-             author: author ?? "",
+             author: User(id: "kdfjgodfjsadfo"),
              description: postDescription ?? "",
-             image: UIImage(data: imageData),
+             imageData: imageData,
              likes: Int(likes),
              views: Int(views))
     }
 
     func copyDomainModel(model: Post) {
         url = model.url
-        author = model.author
+        author = model.author.id
         postDescription = model.description
-        imageData = model.image?.pngData()
+        imageData = model.imageData
         likes = Int32(model.likes)
         views = Int32(model.views)
     }
 }
 
-extension UIImage {
-    convenience init?(data: Data?) {
-        guard let data = data else {
-            return nil
-        }
-        self.init(data: data)
-    }
-}
+//extension UIImage {
+//    convenience init?(data: Data?) {
+//        guard let data = data else {
+//            return nil
+//        }
+//        self.init(data: data)
+//    }
+//}

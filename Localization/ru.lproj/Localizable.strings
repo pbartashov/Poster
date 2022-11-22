@@ -13,7 +13,8 @@
 "missingPhoneNumberLoginError" = "Введите номер телефона.";
 "missingCodeLoginError" = "Введите код.";
 //"missingPasswordLoginError" = "Введите пароль.";
-"invalidPhoneNumberLoginError" = "Неверный адрес номер телефона.";
+"invalidPhoneNumberLoginError" = "Неверный номер телефона.";
+"invalidCodeLoginError" = "Неверный код.";
 //"wrongPasswordLoginError" = "Неверный логин или пароль.";
 //"weakPasswordLoginError" = "Пароль должен содержать не менее 6 символов.";
 "userNotFoundLoginError" = "Пользователь не найден.";

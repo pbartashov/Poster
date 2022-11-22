@@ -16,7 +16,7 @@ public protocol AppDependencyContainerProtocol: AnyObject {
     func makeLoginViewController() -> UIViewController
     func releaseLoginScene()
 
-    func makeMainViewController(for userName: String) -> UIViewController
+    func makeMainViewController(for user: User) -> UIViewController
 }
 
 public final class AppDependencyContainer: AppDependencyContainerProtocol {
@@ -32,12 +32,14 @@ public final class AppDependencyContainer: AppDependencyContainerProtocol {
     //    private var favoritesCoordinator: PostsCoordinator?
 
     private var mainDependancyContainer: MainDependancyContainer?
+    private var userService: UserServiceProtocol
     // MARK: - Views
     
     // MARK: - LifeCicle
 
     public init() {
-        
+        let userStorage = UserCloudStorage()
+        userService = UserService(userStorage: userStorage)
     }
 
 //    init(rootSceneSwitcher: RootSceneSwitcher) {
@@ -54,11 +56,12 @@ public final class AppDependencyContainer: AppDependencyContainerProtocol {
     }
 
     public func makeLoginViewController() -> UIViewController {
-        let switchToMainScene = { [weak self] userName -> Void in
-            self?.appCoordinator?.switchToMainViewScene(for: userName)
+        let switchToMainScene = { [weak self] user -> Void in
+            self?.appCoordinator?.switchToMainViewScene(for: user)
         }
         let loginCoordinator = LoginCoordinator(switchToMainScene: switchToMainScene)
-        let loginDependencyContainer = LoginDependencyContainer(loginCoordinator: loginCoordinator)
+        let loginDependencyContainer = LoginDependencyContainer(loginCoordinator: loginCoordinator,
+                                                                userService: userService)
         let loginViewController = loginDependencyContainer.makeLoginViewController(loginCoordinator: loginCoordinator)
 
         loginCoordinator.navigationController = loginViewController
@@ -99,11 +102,11 @@ public final class AppDependencyContainer: AppDependencyContainerProtocol {
 ////                              credentialStorage: CredentialStorageService())
 //    }
 
-    public func makeMainViewController(for userName: String) -> UIViewController {
-        let mainDependancyContainer = MainDependancyContainer()
+    public func makeMainViewController(for user: User) -> UIViewController {
+        let mainDependancyContainer = MainDependancyContainer(userService: userService)
         self.mainDependancyContainer = mainDependancyContainer
 
-        return mainDependancyContainer.makeMainViewController(userName: userName)
+        return mainDependancyContainer.makeMainViewController(user: user)
     }
 
 

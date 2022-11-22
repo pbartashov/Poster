@@ -57,7 +57,8 @@ final class ConfirmSignUpViewController: SignActionViewController {
                 guard let self = self else { return }
                 switch button {
                     case .signUp:
-                        let action = LoginAction.comfirmPhoneNumberWith(code: self.confirmSignUpView.text)
+                        let phoneNumberAndCode = (phoneNumber: self.phoneNumber, code: self.confirmSignUpView.text)
+                        let action = LoginAction.comfirm(phoneNumberAndCode)
                         self.viewModel.perfomAction(action)
 
                     default:

@@ -19,13 +19,13 @@ final class LoginCoordinator: NavigationCoordinator, LoginCoordinatorProtocol {
 
     //MARK: - Properties
 
-    private let switchToMainScene: (String) -> Void
+    private let switchToMainScene: (User) -> Void
     var dependencyContainer: LoginDependencyContainerProtocol?
 
     //MARK: - LifeCicle
 
     init(//navigationController: UINavigationController,
-         switchToMainScene: @escaping (String) -> Void
+         switchToMainScene: @escaping (User) -> Void
 //         dependencyContainer: LoginDependencyContainerProtocol// = LoginDependencyContainer()
     ) {
 
@@ -38,8 +38,8 @@ final class LoginCoordinator: NavigationCoordinator, LoginCoordinatorProtocol {
 
     //MARK: - Metods
 
-    func showMainScene(for userName: String) {
-        switchToMainScene(userName)
+    func showMainScene(for user: User) {
+        switchToMainScene(user)
     }
 
     func showWelcomeScene() {

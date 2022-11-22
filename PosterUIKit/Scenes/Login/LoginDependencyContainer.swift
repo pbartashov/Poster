@@ -27,15 +27,18 @@ struct LoginDependencyContainer: LoginDependencyContainerProtocol {
 //    private weak var loginSceneSwitcher: LoginSceneSwitcher?
 
     private var sharedLoginViewModel: LoginViewModelProtocol
+    private unowned var userService: UserServiceProtocol
 
     // MARK: - Views
 
     // MARK: - LifeCicle
 
-    init(loginCoordinator: LoginCoordinatorProtocol) {
+    init(loginCoordinator: LoginCoordinatorProtocol,
+         userService: UserServiceProtocol
+    ) {
         func makeLoginViewModel() -> LoginViewModelProtocol {
             let checker = ChekerService()
-            let loginDelegate = LoginInspector(checker: checker)
+            let loginDelegate = LoginInspector(checker: checker, userService: userService)
             return LoginViewModel(loginDelegate: loginDelegate,
                                   coordinator: loginCoordinator,
                                   errorPresenter: ErrorPresenter.shared)
@@ -43,6 +46,7 @@ struct LoginDependencyContainer: LoginDependencyContainerProtocol {
         }
 
         self.sharedLoginViewModel = makeLoginViewModel()
+        self.userService = userService
     }
 
     // MARK: - Metods

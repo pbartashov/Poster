@@ -99,20 +99,20 @@ class PostView: UIView {
     private func setupLayouts() {
 #warning("snp")
         NSLayoutConstraint.activate([
-            authorLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: ConstantsUI.padding),
-            authorLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: ConstantsUI.padding),
-            authorLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -ConstantsUI.padding),
+            authorLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: Constants.UI.padding),
+            authorLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constants.UI.padding),
+            authorLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constants.UI.padding),
 
             postImageView.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 12),
             postImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             postImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             postImageView.heightAnchor.constraint(equalTo: self.widthAnchor),
 
-            descriptionLabel.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: ConstantsUI.padding),
+            descriptionLabel.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: Constants.UI.padding),
             descriptionLabel.leadingAnchor.constraint(equalTo: authorLabel.leadingAnchor),
             descriptionLabel.trailingAnchor.constraint(equalTo: authorLabel.trailingAnchor),
 
-            likesAndViewsStack.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: ConstantsUI.padding),
+            likesAndViewsStack.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: Constants.UI.padding),
             likesAndViewsStack.leadingAnchor.constraint(equalTo: authorLabel.leadingAnchor),
             likesAndViewsStack.trailingAnchor.constraint(equalTo: authorLabel.trailingAnchor),
 
@@ -121,7 +121,7 @@ class PostView: UIView {
     }
 
     func setup(with post: Post, filter: ColorFilter? = nil) {
-        authorLabel.text = post.author
+        authorLabel.text = post.author.name
         descriptionLabel.text = post.description
 
         let likesString = "postLikesCount".localized
@@ -130,7 +130,7 @@ class PostView: UIView {
         let viewsString = "postViewsCount".localized
         viewsLabel.text = String.localizedStringWithFormat(viewsString, post.views)
 
-        guard let image = post.image else {
+        guard let image = post.imageData?.asImage else {
             postImageView.image = .placeholder
             return
         }

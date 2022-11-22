@@ -26,10 +26,10 @@ final class ProfileHeaderViewCell: UITableViewCell {
     //MARK: - Views
 
     private lazy var avatarImageView: UIImageView = {
-        let image = UIImageView(frame: CGRect(x: ConstantsUI.padding,
-                                              y: ConstantsUI.padding,
-                                              width: ConstantsUI.avatarImageSize,
-                                              height: ConstantsUI.avatarImageSize))
+        let image = UIImageView(frame: CGRect(x: Constants.UI.padding,
+                                              y: Constants.UI.padding,
+                                              width: Constants.UI.avatarImageSize,
+                                              height: Constants.UI.avatarImageSize))
         image.layer.borderWidth = 3
         image.layer.cornerRadius = image.frame.width / 2
         image.layer.masksToBounds = true
@@ -124,42 +124,42 @@ final class ProfileHeaderViewCell: UITableViewCell {
     }
 
     func setup(with user: User?) {
-        avatarImageView.image = user?.avatar
+        avatarImageView.image = user?.avatarData?.asImage
         fullNameLabel.text = user?.name
         statusLabel.text = user?.status
     }
 
     private func setupLayouts() {
         avatarImageView.snp.makeConstraints { make in
-            make.top.leading.equalToSuperview().offset(ConstantsUI.padding)
-            make.width.height.equalTo(ConstantsUI.avatarImageSize)
+            make.top.leading.equalToSuperview().offset(Constants.UI.padding)
+            make.width.height.equalTo(Constants.UI.avatarImageSize)
         }
 
         fullNameLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(27)
-            make.leading.equalTo(avatarImageView.snp.trailing).offset(ConstantsUI.padding)
-            make.trailing.equalToSuperview().offset(-ConstantsUI.padding)
+            make.leading.equalTo(avatarImageView.snp.trailing).offset(Constants.UI.padding)
+            make.trailing.equalToSuperview().offset(-Constants.UI.padding)
         }
 
         statusLabel.snp.makeConstraints { make in
-            make.leading.equalTo(avatarImageView.snp.trailing).offset(ConstantsUI.padding)
-            make.trailing.equalToSuperview().offset(-ConstantsUI.padding)
+            make.leading.equalTo(avatarImageView.snp.trailing).offset(Constants.UI.padding)
+            make.trailing.equalToSuperview().offset(-Constants.UI.padding)
             make.top.equalToSuperview().offset(82)
         }
 
         statusTextField.snp.makeConstraints { make in
-            make.top.equalTo(statusLabel.snp.bottom).offset(ConstantsUI.padding / 2)
-            make.leading.equalTo(avatarImageView.snp.trailing).offset(ConstantsUI.padding)
-            make.trailing.equalToSuperview().offset(-ConstantsUI.padding)
+            make.top.equalTo(statusLabel.snp.bottom).offset(Constants.UI.padding / 2)
+            make.leading.equalTo(avatarImageView.snp.trailing).offset(Constants.UI.padding)
+            make.trailing.equalToSuperview().offset(-Constants.UI.padding)
             make.height.equalTo(40)
         }
 
         setStatusButton.snp.makeConstraints { make in
-            make.top.equalTo(statusTextField.snp.bottom).offset(ConstantsUI.padding)
-            make.leading.equalToSuperview().offset(ConstantsUI.padding)
-            make.trailing.equalToSuperview().offset(-ConstantsUI.padding)
+            make.top.equalTo(statusTextField.snp.bottom).offset(Constants.UI.padding)
+            make.leading.equalToSuperview().offset(Constants.UI.padding)
+            make.trailing.equalToSuperview().offset(-Constants.UI.padding)
             make.height.equalTo(50)
-            make.bottom.equalToSuperview().offset(-ConstantsUI.padding)
+            make.bottom.equalToSuperview().offset(-Constants.UI.padding)
         }
     }
 

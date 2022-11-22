@@ -71,17 +71,17 @@ final class SignInView: SignActionView {
         }
 
         textField.snp.makeConstraints { make in
-            make.top.equalTo(enterNumberLabel.snp.bottom).offset(ConstantsUI.padding)
-            make.leading.equalToSuperview().offset(ConstantsUI.phoneTextFieldPadding)
-            make.trailing.equalToSuperview().offset(-ConstantsUI.phoneTextFieldPadding)
-            make.height.equalTo(ConstantsUI.phoneTextFieldHeight)
+            make.top.equalTo(enterNumberLabel.snp.bottom).offset(Constants.UI.padding)
+            make.leading.equalToSuperview().offset(Constants.UI.phoneTextFieldPadding)
+            make.trailing.equalToSuperview().offset(-Constants.UI.phoneTextFieldPadding)
+            make.height.equalTo(Constants.UI.phoneTextFieldHeight)
         }
 
         actionButton.snp.makeConstraints { make in
             make.top.equalTo(textField.snp.bottom).offset(70)
             make.centerX.equalToSuperview()
 
-            make.bottom.equalToSuperview().offset(-ConstantsUI.padding)
+            make.bottom.equalToSuperview().offset(-Constants.UI.padding)
         }
     }
 }

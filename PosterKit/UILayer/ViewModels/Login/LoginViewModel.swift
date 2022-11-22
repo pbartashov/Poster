@@ -7,13 +7,15 @@
 
 import Combine
 
+public typealias PhoneNumberAndCode = (phoneNumber: String, code: String)
+
 public enum LoginAction {
     case start
     case showSignUp
     case showSignIn
     case authWith(phoneNumber: String)
     case signUpWith(phoneNumber: String)
-    case comfirmPhoneNumberWith(code: String)
+    case comfirm(PhoneNumberAndCode)
 
 
 
@@ -28,7 +30,9 @@ public enum LoginState {
 //    case wrongPhoneNumber
     case authFailed
 //    case processing(phoneNumber: String)
-    case processing(LoginAction)
+    case processing//(LoginAction)
+
+//    case authSucceeded(User)
 
 }
 
@@ -86,8 +90,8 @@ public final class LoginViewModel: LoginViewModelProtocol {
             case .signUpWith(let phoneNumber):
                 signUpWith(phoneNumber: phoneNumber)
 
-            case .comfirmPhoneNumberWith(let code):
-                comfirmPhoneNumberWith(code: code)
+            case let .comfirm((phoneNumber, code)):
+                comfirmWith(phoneNumber: phoneNumber, code: code)
 
 
 
@@ -100,6 +104,8 @@ public final class LoginViewModel: LoginViewModelProtocol {
 
     private func showWelcome() {
         coordinator?.showWelcomeScene()
+
+        Post.storeMock()
     }
 
     private func showSignUp() {
@@ -111,87 +117,104 @@ public final class LoginViewModel: LoginViewModelProtocol {
     }
 
     private func checkAuthFor(phoneNumber: String) {
-        state = .processing(.authWith(phoneNumber: phoneNumber))
-        loginDelegate?.checkCredentials(phoneNumber: phoneNumber) { [weak self] result in
-            self?.handle(result: result, phoneNumberOrCode: phoneNumber)
+        state = .processing
+        //(.authWith(phoneNumber: phoneNumber))
+        loginDelegate?.signIn(phoneNumber: phoneNumber) { [weak self] result in
+            self?.handleSignIn(result: result)
         }
     }
 
     private func signUpWith(phoneNumber: String) {
-        state = .processing(.signUpWith(phoneNumber: phoneNumber))
+        state = .processing
+        //(.signUpWith(phoneNumber: phoneNumber))
         loginDelegate?.signUp(phoneNumber: phoneNumber) { [weak self] result in
-            self?.handle(result: result, phoneNumberOrCode: phoneNumber)
+            self?.handleSignUp(result: result)
         }
     }
 
-    private func comfirmPhoneNumberWith(code: String) {
-        state = .processing(.comfirmPhoneNumberWith(code: code))
-        loginDelegate?.comfirmPhoneNumberWith(code: code) { [weak self] result in
-            self?.handle(result: result, phoneNumberOrCode: code)
+    private func comfirmWith(phoneNumber: String, code: String) {
+        state = .processing
+        //(.comfirmPhoneNumberWith(code: code))
+        loginDelegate?.comfirm(phoneNumber: phoneNumber, withCode: code) { [weak self] result in
+            self?.handleSignIn(result: result)
         }
     }
 
 
-    private func showCreateAccount(withPhoneNumber phoneNumber: String) {
-        fatalError("Not implemented")
-#warning("Not implemented")
-//        coordinator?.showCreateAccount(for: phoneNumber) { [weak self] in
-//            self?.signUp(withPhoneNumber: phoneNumber)
-//        }
+//    private func showCreateAccount(withPhoneNumber phoneNumber: String) {
+//        fatalError("Not implemented")
+//#warning("Not implemented")
+////        coordinator?.showCreateAccount(for: phoneNumber) { [weak self] in
+////            self?.signUp(withPhoneNumber: phoneNumber)
+////        }
+////    }
 //    }
-    }
 
 
 
 
-    private func handle(result: Result<String, Error>,
-                        phoneNumberOrCode: String
+    private func handleSignUp(result: Result<String, Error>
+//                        phoneNumberOrCode: String
     ) {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
+//            guard let self = self else { return }
             switch result {
-                case .failure(LoginError.missingPhoneNumber):
-                    self.handle(error: LoginError.missingPhoneNumber, state: .missingPhoneNumber)
-
-                case .failure(LoginError.missingCode):
-                    self.handle(error: LoginError.missingCode, state: .missingCode)
-
-                    //            case .failure(LoginError.missingPassword):
-                    //                handle(error: LoginError.missingPassword, state: .wrongPassword)
-
-                    //            case .failure(LoginError.weakPassword):
-                    //                handle(error: LoginError.weakPassword, state: .wrongPassword)
-
-                case .failure(LoginError.userNotFound):
-                    self.showCreateAccount(withPhoneNumber: phoneNumberOrCode)
-
                 case .failure(let error):
-                    self.handle(error: error, state: .authFailed)
+                    self?.handle(error: error)
 
-                case .success(let phoneNumberOrCode):
-                    if case let .processing(action) = self.state {
-                        self.handle(action: action, phoneNumberOrCode: phoneNumberOrCode)
-                    }
-                    self.state = .initial
+                case .success(let code):
+//                    if case let .processing(action) = self.state {
+//                        self.handle(action: action, result: phoneOrCode)
+//                    }
+                    self?.state = .initial
+                    self?.coordinator?.showConfirmSignUpScene(for: code)
+           }
+        }
+    }
+
+    private func handleSignIn(result: Result<User, Error>) {
+        DispatchQueue.main.async { [weak self] in
+//            guard let self = self else { return }
+            switch result {
+                case .failure(let error):
+                    self?.handle(error: error)
+
+                case .success(let user):
+//                    self.state = .authSuccessed(user)
+                    self?.coordinator?.showMainScene(for: user)
             }
         }
     }
+
+    private func handle(error: Error) {
+        switch error {
+            case LoginError.missingPhoneNumber:
+                self.handle(error: LoginError.missingPhoneNumber, state: .missingPhoneNumber)
+
+            case LoginError.missingCode:
+                self.handle(error: LoginError.missingCode, state: .missingCode)
+
+            default:
+                self.handle(error: error, state: .authFailed)
+        }
+    }
+
 
     private func handle(error: Error, state: LoginState) {
         self.state = state
         errorPresenter.show(error: error)
     }
 
-    private func handle(action: LoginAction, phoneNumberOrCode: String) {
-        switch action {
-            case .authWith, .comfirmPhoneNumberWith:
-                coordinator?.showMainScene(for: phoneNumberOrCode)
-
-            case .signUpWith:
-                coordinator?.showConfirmSignUpScene(for: phoneNumberOrCode)
-
-            default:
-                break
-        }
-    }
+//    private func handle(action: LoginAction, result: String = "") {
+//        switch action {
+//            case .authWith, .comfirmPhoneNumberWith:
+//                coordinator?.showMainScene(for: result)
+//
+//            case .signUpWith:
+//                coordinator?.showConfirmSignUpScene(for: code)
+//
+//            default:
+//                break
+//        }
+//    }
 }

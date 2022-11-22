@@ -71,6 +71,15 @@ final class SignUpView: SignActionView {
         }
 
         setupLayouts()
+
+
+
+
+
+
+
+
+        textField.text = "+16505553535"
     }
 
     private func setupLayouts() {
@@ -90,10 +99,10 @@ final class SignUpView: SignActionView {
         }
 
         textField.snp.makeConstraints { make in
-            make.top.equalTo(explainNumberLabel.snp.bottom).offset(ConstantsUI.padding)
-            make.leading.equalToSuperview().offset(ConstantsUI.phoneTextFieldPadding)
-            make.trailing.equalToSuperview().offset(-ConstantsUI.phoneTextFieldPadding)
-            make.height.equalTo(ConstantsUI.phoneTextFieldHeight)
+            make.top.equalTo(explainNumberLabel.snp.bottom).offset(Constants.UI.padding)
+            make.leading.equalToSuperview().offset(Constants.UI.phoneTextFieldPadding)
+            make.trailing.equalToSuperview().offset(-Constants.UI.phoneTextFieldPadding)
+            make.height.equalTo(Constants.UI.phoneTextFieldHeight)
         }
 
         actionButton.snp.makeConstraints { make in
@@ -105,7 +114,7 @@ final class SignUpView: SignActionView {
             make.top.equalTo(actionButton.snp.bottom).offset(20)
             make.centerX.equalToSuperview()
 
-            make.bottom.equalToSuperview().offset(-ConstantsUI.padding)
+            make.bottom.equalToSuperview().offset(-Constants.UI.padding)
         }
 //
 //        activityView.snp.makeConstraints { make in

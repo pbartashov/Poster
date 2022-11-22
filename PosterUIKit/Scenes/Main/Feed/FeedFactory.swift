@@ -18,13 +18,13 @@ struct FeedFactory {
 
     func viewModelWith(feedCoordinator: FeedCoordinatorProtocol?,
                        postsCoordinator: PostsCoordinatorProtocol?,
-                       userName: String
+                       user: User
     ) -> FeedViewModel<PostsViewModel> {
 
 
-        let user = User(name: "",
-                        avatarData: (UIImage(named: "profileImage") ?? UIImage(systemName: "person"))?.pngData(),
-                        status: "Hardly coding")
+//        let user = User(id: "6", name: "",
+//                        avatarData: (UIImage(named: "profileImage") ?? UIImage(systemName: "person"))?.pngData(),
+//                        status: "Hardly coding")
 
 
         let contextProvider = CoreDataContextProvider.shared

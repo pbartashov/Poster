@@ -51,7 +51,7 @@ final class StoriesViewCell: UICollectionViewCell {
     }
 
     func setup(with story: Story) {
-        avatarView.image = story.author.avatar
+        avatarView.image = story.author.avatarData?.asImage
     }
 }
 

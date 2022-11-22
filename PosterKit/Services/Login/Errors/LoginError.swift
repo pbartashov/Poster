@@ -12,6 +12,7 @@ enum LoginError: Error {
     case missingCode
 //    case missingPassword
     case invalidPhoneNumber
+    case invalidCode
 //    case wrongPassword
 //    case weakPassword
     case userNotFound
@@ -33,6 +34,9 @@ extension LoginError : LocalizedError {
 
             case .invalidPhoneNumber:
                 return "invalidPhoneNumberLoginError".localized
+
+            case .invalidCode:
+                return "invalidCodeLoginError".localized
 
 //            case .wrongPassword:
 //                return "wrongPasswordLoginError".localized

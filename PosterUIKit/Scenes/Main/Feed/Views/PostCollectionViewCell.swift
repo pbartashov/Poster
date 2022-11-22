@@ -102,20 +102,20 @@ final class PostCollectionViewCell: UICollectionViewCell {
             make.edges.equalToSuperview()
         }
 //        NSLayoutConstraint.activate([
-//            authorLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: ConstantsUI.padding),
-//            authorLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: ConstantsUI.padding),
-//            authorLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -ConstantsUI.padding),
+//            authorLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.UI.padding),
+//            authorLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.UI.padding),
+//            authorLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.UI.padding),
 //
 //            postImageView.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 12),
 //            postImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
 //            postImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
 //            postImageView.heightAnchor.constraint(equalTo: contentView.widthAnchor),
 //
-//            descriptionLabel.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: ConstantsUI.padding),
+//            descriptionLabel.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: Constants.UI.padding),
 //            descriptionLabel.leadingAnchor.constraint(equalTo: authorLabel.leadingAnchor),
 //            descriptionLabel.trailingAnchor.constraint(equalTo: authorLabel.trailingAnchor),
 //
-//            likesAndViewsStack.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: ConstantsUI.padding),
+//            likesAndViewsStack.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: Constants.UI.padding),
 //            likesAndViewsStack.leadingAnchor.constraint(equalTo: authorLabel.leadingAnchor),
 //            likesAndViewsStack.trailingAnchor.constraint(equalTo: authorLabel.trailingAnchor),
 //

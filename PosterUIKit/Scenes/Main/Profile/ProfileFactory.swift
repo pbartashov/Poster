@@ -18,13 +18,13 @@ struct ProfileFactory {
 
     func viewModelWith(profileCoordinator: ProfileCoordinatorProtocol?,
                        postsCoordinator: PostsCoordinatorProtocol?,
-                       userName: String
+                       userService: UserServiceProtocol
     ) -> ProfileViewModel<PostsViewModel> {
 
 
-        let user = User(name: userName,
-                        avatarData: (UIImage(named: "profileImage") ?? UIImage(systemName: "person"))?.pngData(),
-                        status: "Hardly coding")
+//        let user = User(id: "5", name: userName,
+//                        avatarData: (UIImage(named: "profileImage") ?? UIImage(systemName: "person"))?.pngData(),
+//                        status: "Hardly coding")
 
 
         let contextProvider = CoreDataContextProvider.shared
@@ -37,8 +37,8 @@ struct ProfileFactory {
         
         return ProfileViewModel(//postService: postService,
                                 coordinator: profileCoordinator,
-//                                userService: userService,
-                                userName: userName,
+                                userService: userService,
+//                                user: user,
                                 //postRepository: postRepository,
                                 postsViewModel: postsViewModel,
                                 errorPresenter: ErrorPresenter.shared)
