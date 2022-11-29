@@ -28,13 +28,14 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
 
     enum FeedCollectionItem: Hashable {
         case storyItem(Story)
-        case postItem(Post)
+        case postItem(PostViewModel)
     }
 
 
     // MARK: - Properties
 
     private let viewModel: ViewModelType
+//    private let postViewModelProvider: PostViewModelProvider
 
     private var subscriptions: Set<AnyCancellable> = []
 //    private var presentPostSubscription: AnyCancellable?
@@ -53,10 +54,11 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
     // MARK: - LifeCicle
 
     init(viewModel: ViewModelType
-         //         hourlyWeatherViewControllerFactory: HourlyWeatherViewControllerFactory,
+//         postViewModelProvider: PostViewModelProvider
          //         dailyWeatherViewControllerFactory: DailyWeatherViewControllerFactory
     ) {
         self.viewModel = viewModel
+//        self.postViewModelProvider = postViewModelProvider
         //        self.hourlyWeatherViewControllerFactory = hourlyWeatherViewControllerFactory
         //        self.dailyWeatherViewControllerFactory = dailyWeatherViewControllerFactory
 
@@ -192,8 +194,8 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
                     let section = NSCollectionLayoutSection(group: group)
                     section.orthogonalScrollingBehavior = .continuous
                     section.boundarySupplementaryItems = [storiesHeaderItem]
-                    section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: Constants.UI.padding,
-                                                                    bottom: 32, trailing: Constants.UI.padding)
+                    section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 0,
+                                                                    bottom: 32, trailing: 0)
                     return section
 
                 case .postsSection:
@@ -221,8 +223,8 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
 //                                                                    bottom: 0,
 //                                                                    trailing: sectionSideInset)
 
-                    section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: Constants.UI.padding,
-                                                                    bottom: 0, trailing: Constants.UI.padding)
+//                    section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: Constants.UI.padding,
+//                                                                    bottom: 0, trailing: Constants.UI.padding)
                     section.boundarySupplementaryItems = [postsHeaderItem]
 
                     return section
@@ -267,6 +269,7 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
                     else {
                         return nil
                     }
+//                    let postViewModel = self.postViewModelProvider.makeViewModel(for: post)
                     cell.setup(with: post)
 
                     return cell

@@ -28,18 +28,19 @@ public final class MainDependancyContainer: MainDependancyContainerProtocol {
 
     // MARK: - LifeCicle
 
-    init(feedCoordinator: FeedCoordinatorProtocol? = nil,
-         feedPostsCoordinator: PostsCoordinatorProtocol? = nil,
-         profileCoordinator: ProfileCoordinatorProtocol? = nil,
-         profilePostsCoordinator: PostsCoordinatorProtocol? = nil,
-         favoritesCoordinator: PostsCoordinatorProtocol? = nil,
+    init(
+//        feedCoordinator: FeedCoordinatorProtocol? = nil,
+//         feedPostsCoordinator: PostsCoordinatorProtocol? = nil,
+//         profileCoordinator: ProfileCoordinatorProtocol? = nil,
+//         profilePostsCoordinator: PostsCoordinatorProtocol? = nil,
+//         favoritesCoordinator: PostsCoordinatorProtocol? = nil,
          userService: UserServiceProtocol
     ) {
-        self.feedCoordinator = feedCoordinator
-        self.feedPostsCoordinator = feedPostsCoordinator
-        self.profileCoordinator = profileCoordinator
-        self.profilePostsCoordinator = profilePostsCoordinator
-        self.favoritesCoordinator = favoritesCoordinator
+//        self.feedCoordinator = feedCoordinator
+//        self.feedPostsCoordinator = feedPostsCoordinator
+//        self.profileCoordinator = profileCoordinator
+//        self.profilePostsCoordinator = profilePostsCoordinator
+//        self.favoritesCoordinator = favoritesCoordinator
         self.userService = userService
     }
 
@@ -47,8 +48,8 @@ public final class MainDependancyContainer: MainDependancyContainerProtocol {
 
     func makeMainViewController(user: User) -> UIViewController {
         let feedNavigationController = UINavigationController()
-        feedCoordinator = FeedCoordinator(navigationController: feedNavigationController)
-        feedPostsCoordinator = PostsCoordinator(navigationController: feedNavigationController)
+        let feedCoordinator = FeedCoordinator(navigationController: feedNavigationController)
+        let feedPostsCoordinator = PostsCoordinator(navigationController: feedNavigationController)
 
         let feedViewController = makeFeedViewController(user: user,
                                                         feedCoordinator: feedCoordinator,
@@ -57,17 +58,20 @@ public final class MainDependancyContainer: MainDependancyContainerProtocol {
         feedNavigationController.setViewControllers([feedViewController], animated: false)
 
         let profileNavigationController = UINavigationController()
-        profileCoordinator = ProfileCoordinator(navigationController: profileNavigationController)
-        profilePostsCoordinator = PostsCoordinator(navigationController: profileNavigationController)
+        let profileCoordinator = ProfileCoordinator(navigationController: profileNavigationController)
+        let profilePostsCoordinator = PostsCoordinator(navigationController: profileNavigationController)
 
-        let profileViewController = makeProfileViewController(user: user,
-                                                              profileCoordinator: profileCoordinator,
-                                                              profilePostsCoordinator: profilePostsCoordinator,
+        let profileDependancyContainer = ProfileDependancyContainer(profileCoordinator: profileCoordinator,
+                                                                    postsCoordinator: profilePostsCoordinator,
+                                                                    userService: userService)
+        profileCoordinator.dependancyContainer = profileDependancyContainer
+
+        let profileViewController = makeProfileViewController(profileDependancyContainer: profileDependancyContainer,
                                                               tag: Tab.profile.index)
         profileNavigationController.setViewControllers([profileViewController], animated: false)
 
         let favoritesNavigationController = UINavigationController()
-        favoritesCoordinator = PostsCoordinator(navigationController: favoritesNavigationController)
+        let favoritesCoordinator = PostsCoordinator(navigationController: favoritesNavigationController)
         let favoritesViewController = makeFavoritesViewController(coordinator: favoritesCoordinator,
                                                                   tag: Tab.favorites.index)
         favoritesNavigationController.setViewControllers([favoritesViewController], animated: false)
@@ -81,6 +85,12 @@ public final class MainDependancyContainer: MainDependancyContainerProtocol {
         ErrorPresenter.shared.initialize(with: tabBarController)
 
         //        mainTabController = tabBarController
+
+        self.feedCoordinator = feedCoordinator
+        self.feedPostsCoordinator = feedPostsCoordinator
+        self.profileCoordinator = profileCoordinator
+        self.profilePostsCoordinator = profilePostsCoordinator
+        self.favoritesCoordinator = favoritesCoordinator
 
         return tabBarController
     }
@@ -103,16 +113,11 @@ public final class MainDependancyContainer: MainDependancyContainerProtocol {
         return feedViewController
     }
 
-    func makeProfileViewController(user: User,
-                                   profileCoordinator: ProfileCoordinatorProtocol?,
-                                   profilePostsCoordinator: PostsCoordinatorProtocol?,
+    func makeProfileViewController(profileDependancyContainer: ProfileDependancyContainerProtocol,
                                    tag: Int
     ) -> UIViewController {
-        let profileFactory = ProfileFactory()
-        let profileViewModel = profileFactory.viewModelWith(profileCoordinator: profileCoordinator,
-                                                            postsCoordinator: profilePostsCoordinator,
-                                                            userService: userService)
-        let profileViewController = profileFactory.viewControllerWith(viewModel: profileViewModel)
+        let profileViewModel = profileDependancyContainer.makeProfileViewModel()
+        let profileViewController = profileDependancyContainer.makeProfileViewController(viewModel: profileViewModel)
 
         profileViewController.tabBarItem = UITabBarItem(title: "profileMainDependancyContainer".localized,
                                                         image: UIImage(systemName: "person.circle"),

@@ -35,7 +35,8 @@ final class FeedCoordinator: NavigationCoordinator, FeedCoordinatorProtocol {
     }
 
     func showStory() {
-
+        #warning("!!!")
+//        pushViewController(_ viewController: UIViewController?)
     }
 
 }

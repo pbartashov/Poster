@@ -39,7 +39,9 @@ final class LoginCoordinator: NavigationCoordinator, LoginCoordinatorProtocol {
     //MARK: - Metods
 
     func showMainScene(for user: User) {
-        switchToMainScene(user)
+        DispatchQueue.main.async {
+            self.switchToMainScene(user)
+        }
     }
 
     func showWelcomeScene() {
@@ -62,12 +64,7 @@ final class LoginCoordinator: NavigationCoordinator, LoginCoordinatorProtocol {
         pushViewController(signInViewController)
     }
 
-    private func pushViewController(_ viewController: UIViewController?) {
-        guard let viewController = viewController else {
-            return
-        }
-        navigationController?.pushViewController(viewController, animated: true)
-    }
+   
 
 
 //    func showCreateAccount(for login: String,

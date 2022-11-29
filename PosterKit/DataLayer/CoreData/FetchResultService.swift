@@ -6,35 +6,21 @@
 //
 
 import CoreData
+import Combine
 
-public enum FetchResultServiceState {
-    case willChangeContent
-    case insert(at: IndexPath)
-    case update(at: IndexPath)
-    case move(from: IndexPath, to: IndexPath)
-    case delete(at: IndexPath)
-    case didChangeContent
-}
-
+//https://www.mattmoriarity.com/observing-core-data-changes-with-combine/creating-pipelines/
 final class FetchResultService: NSObject, NSFetchedResultsControllerDelegate {
 
     // MARK: - Properties
 
-    var stateChanged: ((FetchResultServiceState) -> Void)?
-    private var state: FetchResultServiceState? {
-        didSet {
-            if let state = state {
-                stateChanged?(state)
-            }
-        }
+    private let onObjectsChange = CurrentValueSubject<[NSFetchRequestResult], Never>([])
+
+    var objects: AnyPublisher<[NSFetchRequestResult], Never> {
+        onObjectsChange.eraseToAnyPublisher()
     }
+
     private var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>?
     private let context: NSManagedObjectContext
-
-    var results: [NSFetchRequestResult]? {
-        fetchedResultsController?.fetchedObjects
-    }
-
 
     // MARK: - LifeCicle
 
@@ -44,11 +30,16 @@ final class FetchResultService: NSObject, NSFetchedResultsControllerDelegate {
 
     // MARK: - Metods
 
-    func startFetching(with request: NSFetchRequest<NSFetchRequestResult>) throws {
+    private func sendCurrentObjects() {
+        self.onObjectsChange.send(self.fetchedResultsController?.fetchedObjects ?? [])
+    }
+
+    func startFetching(with request: NSFetchRequest<NSFetchRequestResult>,
+                       sectionNameKeyPath: String? = nil) throws {
         let controller = NSFetchedResultsController(fetchRequest: request,
-                                                              managedObjectContext: context,
-                                                              sectionNameKeyPath: nil,
-                                                              cacheName: nil)
+                                                    managedObjectContext: context,
+                                                    sectionNameKeyPath: sectionNameKeyPath,
+                                                    cacheName: nil)
         controller.delegate = self
 
         do {
@@ -58,48 +49,11 @@ final class FetchResultService: NSObject, NSFetchedResultsControllerDelegate {
         }
 
         fetchedResultsController = controller
+        sendCurrentObjects()
     }
 
     // MARK: - NSFetchedResultsControllerDelegate
-
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        state = .willChangeContent
-    }
-
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange anObject: Any,
-                    at indexPath: IndexPath?,
-                    for type: NSFetchedResultsChangeType,
-                    newIndexPath: IndexPath?) {
-
-        switch type {
-            case .insert:
-                if let indexPath = newIndexPath {
-                    state = .insert(at: indexPath)
-                }
-
-            case .update:
-                if let indexPath = indexPath {
-                    state = .update(at: indexPath)
-                }
-
-            case .move:
-                if let indexPath = indexPath,
-                   let newIndexPath = newIndexPath {
-                    state = .move(from: indexPath, to: newIndexPath)
-                }
-
-            case .delete:
-                if let indexPath = indexPath {
-                    state = .delete(at: indexPath)
-                }
-                
-            @unknown default:
-                break
-        }
-    }
-
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        state = .didChangeContent
+        sendCurrentObjects()
     }
 }

@@ -17,13 +17,19 @@ public final class FavoritesViewModel: PostsViewModel, FavoritesViewModelProtoco
 
     //MARK: - LifeCicle
 
-    public init(postService: PostServiceProtocol,
+    public init(//postService: PostServiceProtocol,
+        storageReader: StorageReaderProtocol,
+        storageWriter: StorageWriterProtocol,
+        requestFilter: Filter,
          coordinator: PostsCoordinatorProtocol?,
          errorPresenter: ErrorPresenterProtocol
     ) {
 //        self.favoritesPostRepository = postRepository
         super.init(coordinator: coordinator,
-                   postService: postService,
+//                   postService: postService,
+                   storageReader: storageReader,
+                   storageWriter: storageWriter,
+                   requestFilter: requestFilter,
                    errorPresenter: errorPresenter)
 
 //        setupHandlers()

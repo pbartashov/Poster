@@ -24,7 +24,7 @@ extension ProfileViewModel: DragDropProtocol {
     func dragItems(for indexPath: IndexPath) -> [UIDragItem] {
         let post = posts[indexPath.row]
 
-        let textData = post.description.data(using: .utf8)
+        let textData = post.content.data(using: .utf8)
         let textItemProvider = NSItemProvider()
         textItemProvider.registerDataRepresentation(forTypeIdentifier: UTType.plainText.identifier,
                                                     visibility: .all
@@ -36,13 +36,13 @@ extension ProfileViewModel: DragDropProtocol {
         var dragItems = [
             UIDragItem(itemProvider: textItemProvider)
         ]
-
-        guard let image = post.imageData?.asImage else { return dragItems }
-
-        let imageProvider = NSItemProvider(object: image)
-        dragItems.append(
-            UIDragItem(itemProvider: imageProvider)
-        )
+        #warning("TODO")
+//        guard let image = post.imageUrl?.asImage else { return dragItems }
+//
+//        let imageProvider = NSItemProvider(object: image)
+//        dragItems.append(
+//            UIDragItem(itemProvider: imageProvider)
+//        )
 
         return dragItems
     }
@@ -84,12 +84,12 @@ extension ProfileViewModel: DragDropProtocol {
 
             #warning("Use UserService && open Create Post")
 
-            let newPost = Post(url: UUID().uuidString,
-                               author: User(id: "id", name: "Drag&Drop"),
-                               description: description,
-                               imageData: image.pngData())
-
-            perfomAction(.insert((newPost, destinationIndex)))
+//            let newPost = Post(url: UUID().uuidString,
+//                               author: User(id: "id", name: "Drag&Drop"),
+//                               description: description,
+//                               imageData: image.pngData())
+//
+//            perfomAction(.insert((newPost, destinationIndex)))
 
             completion()
         }

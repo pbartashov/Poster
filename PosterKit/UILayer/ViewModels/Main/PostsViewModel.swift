@@ -10,8 +10,8 @@ import Combine
 public enum PostsAction {
     case requstPosts
 //    case selected(post: Post)
-    case insert((post: Post, index: Int))
-    case store(post: Post)
+    case insert((post: PostViewModel, index: Int))
+    case store(post: PostViewModel)
     case deletePost(at: IndexPath)
     case showSearchPromt
     case cancelSearch
@@ -20,7 +20,8 @@ public enum PostsAction {
 
 public enum PostsState {
     case initial
-    case loaded([Post])
+    case postsLoaded
+    //([Post])
     case isFiltered(with: String?)
 }
 
@@ -28,8 +29,8 @@ public protocol PostsViewModelProtocol: ViewModelProtocol
 where State == PostsState,
       Action == PostsAction {
 
-    var posts: [Post] { get }
-    var postsPublisher: Published<[Post]>.Publisher { get }
+    var posts: [PostViewModel] { get }
+    var postsPublisher: Published<[PostViewModel]>.Publisher { get }
 //    var onPostSelected: ((Post) -> Void)? { get set }
 //    var requestPosts: (() -> Void)? { get set }
 //    var deletePost: ((IndexPath) -> Void)? { get set }
@@ -42,14 +43,17 @@ public class PostsViewModel: ViewModel<PostsState, PostsAction>,
 
     private weak var coordinator: PostsCoordinatorProtocol?
 //    private let errorPresenter: ErrorPresenterProtocol
-    let postService: PostServiceProtocol
+//    let storageService: StorageServiceProtocol
+    let storageReader: StorageReaderProtocol
+    let storageWriter: StorageWriterProtocol
 
     private var subscriptions: Set<AnyCancellable> = []
 
-    @Published public var posts: [Post] = []
-    public var postsPublisher: Published<[Post]>.Publisher { $posts }
+    @Published public var posts: [PostViewModel] = []
+    public var postsPublisher: Published<[PostViewModel]>.Publisher { $posts }
 
     public private(set) var searchText: String?
+    private var requestFilter: Filter
 
 //    public var onPostSelected: ((Post) -> Void)?
 //    public var requestPosts: (() -> Void)?
@@ -58,11 +62,17 @@ public class PostsViewModel: ViewModel<PostsState, PostsAction>,
     //MARK: - LifeCicle
 
     public init(coordinator: PostsCoordinatorProtocol?,
-                postService: PostServiceProtocol,
+//                storageService: StorageServiceProtocol,
+                storageReader: StorageReaderProtocol,
+                storageWriter: StorageWriterProtocol,
+                requestFilter: Filter,
                 errorPresenter: ErrorPresenterProtocol
     ) {
         self.coordinator = coordinator
-        self.postService = postService
+//        self.storageService = storageService
+        self.storageReader = storageReader
+        self.storageWriter = storageWriter
+        self.requestFilter = requestFilter
         super.init(state: .initial, errorPresenter: errorPresenter)
 
         setupBindings()
@@ -75,14 +85,17 @@ public class PostsViewModel: ViewModel<PostsState, PostsAction>,
             .receive(on: DispatchQueue.main)
             .sink { [weak self] posts in
                 guard let self = self else { return }
-                self.state = .loaded(posts)
+                self.state = .postsLoaded
                 if self.searchText != nil, posts.isEmpty {
                     self.showRetrySearch()
                 }
             }
             .store(in: &subscriptions)
 
-        postService.postsPublisher
+        storageReader.postsPublisher
+            .map { [storageReader] posts in
+                posts.map { PostViewModel(from: $0, storageReader: storageReader) }
+            }
             .assign(to: &$posts)
 
     }
@@ -110,7 +123,7 @@ public class PostsViewModel: ViewModel<PostsState, PostsAction>,
                 posts.insert(post, at: index)
 
             case .store(let post):
-                store(post: post)
+                store(post: post.post)
 
             case .deletePost(let indexPath):
                 deletePost(at: indexPath)
@@ -133,7 +146,7 @@ public class PostsViewModel: ViewModel<PostsState, PostsAction>,
                                       searchCompletion: { [weak self] text in
             self?.handleSearch(with: text)
         },
-                                      cancelComlpetion: { [weak self] in
+                                      cancelCompletion: { [weak self] in
             self?.perfomAction(.cancelSearch)
         })
     }
@@ -141,9 +154,10 @@ public class PostsViewModel: ViewModel<PostsState, PostsAction>,
     private func requestPosts() {
         Task {
             do {
-                let filter = Filter(authorName: searchText?.lowercased())
+//                let filter = Filter(authorName: searchText?.lowercased())
 //                posts = try await postService.getPosts(filteredBy: filter)
-                try await postService.getPosts(filteredBy: filter)
+                requestFilter.content = searchText?.lowercased()
+                try await storageReader.startFetchingPosts(filteredBy: requestFilter)
             } catch {
                 errorPresenter.show(error: error)
             }
@@ -153,7 +167,7 @@ public class PostsViewModel: ViewModel<PostsState, PostsAction>,
     private func store(post: Post) {
         Task { [weak self] in
             do {
-                try await self?.postService.store(post: post)
+                try await self?.storageWriter.store(post: post)
             } catch {
                 self?.errorPresenter.show(error: error)
             }
@@ -165,7 +179,7 @@ public class PostsViewModel: ViewModel<PostsState, PostsAction>,
             guard let self = self else { return }
             do {
                 let post = self.posts[indexPath.row]
-                try await self.postService.remove(post: post)
+                try await self.storageWriter.remove(post: post.post)
             } catch {
                 self.errorPresenter.show(error: error)
             }
@@ -176,3 +190,43 @@ public class PostsViewModel: ViewModel<PostsState, PostsAction>,
 //
 //    }
 }
+
+//extension PostsViewModel: PostViewModelProvider {
+//    public func makeViewModel(for post: Post) -> PostViewModel {
+//        let postViewModel = PostViewModel(from: post)
+//
+//        Task {
+//            try await withThrowingTaskGroup(of: (User?, Data?).self) { group in
+//                group.addTask {
+//                    let user = try? await self.storageReader.getUser(byId: post.authorId)
+//                    return (user, nil)
+//                }
+//
+//                group.addTask {
+//                    let postImageData = try? await self.storageReader.getImageData(byId: post.uid)
+//                    return (nil, postImageData)
+//                }
+//
+//                for try await (user, postImageData) in group {
+//                    if let user = user {
+//                        postViewModel.authorName = user.name
+//                        postViewModel.authorAvatar = user.avatarData
+//                    } else if let postImageData = postImageData {
+//                        postViewModel.imageData = postImageData
+//                    }
+//                }
+//            }
+//
+////            if let user = try? await storageReader.getUser(byId: post.authorId) {
+////                postViewModel.authorName = user.name
+////                postViewModel.authorAvatar = user.avatarData
+////            }
+////
+////            if let postImageData = try? await storageReader.getImageData(byId: post.uid) {
+////                postViewModel.imageData = postImageData
+////            }
+//        }
+//
+//        return postViewModel
+//    }
+//}

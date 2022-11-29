@@ -82,17 +82,42 @@
 "titleLabelPhotosTableViewCell" = "Фото";
 
 // PostsCoordinator
-"searchTextFieldPlaceholderPostsCoordinator" = "Имя автора";
+"searchTextFieldPlaceholderPostsCoordinator" = "Что ищем?";
 "searchActionTitlePostsCoordinator" = "Искать";
 "cancelActionTitlePostsCoordinator" = "Отменить поиск";
 
 // PostsViewModel
-"searchPromptTitlePostsViewModel" = "Поиск по автору";
+"searchPromptTitlePostsViewModel" = "Поиск по содержимому";
 "retryPromptTitlePostsViewModel" = "Ничего не нашли...🤷";
 "retryPromptMessagePostsViewModel" = "Попробуйте еще";
 
+// UserProfileView
+"tapImageLabelUserProfileView" = "Нажмите для выбора аватара";
+"firstNameLabelUserProfileView" = "Имя";
+"firstNamePlaceholderUserProfileView" = "имя";
+"lastNameLabelUserProfileView" = "Фамилия";
+"lastNamePlaceholderUserProfileView" = "фамилия";
+"genderLabelUserProfileView" = "Пол";
+"birthDateLabelUserProfileView" = "Дата рождения";
+//"birthDatePlaceholderUserProfileView" = "01.01.2020";
+"nativeTownLabelUserProfileView" = "Родной город";
+"nativeTownPlaceholderUserProfileView" = "напишите название";
+"phoneNumberLabelUserProfileView" = "Номер телефона";
+"phoneNumberPlaceholderUserProfileView" = "+00000000000";
+"statusLabelUserProfileView" = "Статус";
+"statusPlaceholderUserProfileView" = "ваш статус";
+
+// Gender
+"maleGender" = "мужской";
+"femaleGender" = "женский";
+
+// UserProfileViewController
+"titleUserProfileViewController" = "Основная информация";
 
 
+
+// PostsView
+//"loadingPostsView" = "Загрузка...";
 
 
 

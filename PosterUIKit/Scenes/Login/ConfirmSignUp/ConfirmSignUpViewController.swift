@@ -9,7 +9,7 @@ import UIKit
 import PosterKit
 import Combine
 
-final class ConfirmSignUpViewController: SignActionViewController {
+final class ConfirmSignUpViewController: ScrollableViewController<LoginViewModelProtocol> {
 
     //MARK: - Properties
 
@@ -88,5 +88,4 @@ final class ConfirmSignUpViewController: SignActionViewController {
             }
             .store(in: &subsriptions)
     }
-
 }

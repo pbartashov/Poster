@@ -6,10 +6,14 @@
 //
 
 import CoreData
+import Combine
 
 //https://www.userdesk.io/blog/repository-pattern-using-core-data-and-swift/
 /// Protocol that describes a Post repository.
 public protocol PostRepositoryInterface {
+
+    var postsPublisher: AnyPublisher<[Post], Never> { get }
+
     /// Get a post using a predicate
     func getPosts(predicate: NSPredicate?) async throws -> [Post]
     /// Creates a Post on the persistance layer.
@@ -20,13 +24,9 @@ public protocol PostRepositoryInterface {
     func delete(post: Post) async throws
     /// Saves changes to Repository.
     func saveChanges() async throws
-    
-    
-    
-    var fetchResults: [Post] { get }
-    
-    func setupResultsControllerStateChangedHandler(stateChanged:((FetchResultServiceState) -> Void)?)
-    
+
+//    func setupResultsControllerStateChangedHandler(stateChanged:((FetchResultServiceState) -> Void)?)
+//    
     func startFetchingWith(predicate: NSPredicate?,
                            sortDescriptors: [NSSortDescriptor]?) throws
 }
@@ -45,19 +45,23 @@ public final class PostRepository {
 
 extension PostRepository: PostRepositoryInterface {
     
-    public var fetchResults: [Post] {
-        mapToPosts(postEntities: repository.fetchResults)
+    public var postsPublisher: AnyPublisher<[Post], Never> {
+        repository.fetchedResultsPublisher
+            .map { postEntities in
+                postEntities.map { $0.toDomainModel() }
+            }
+            .eraseToAnyPublisher()
     }
     
-    private func mapToPosts(postEntities: [PostEntity]) -> [Post] {
-        postEntities.map { $0.toDomainModel() }
-    }
-    
+//    private func mapToPosts(postEntities: [PostEntity]) -> [Post] {
+//        postEntities.map { $0.toDomainModel() }
+//    }
+//
     /// Get Posts using a predicate
     public func getPosts(predicate: NSPredicate?) async throws -> [Post] {
         let postEntities = try await repository.get(predicate: predicate, sortDescriptors: nil)
         // Transform the NSManagedObject objects to domain objects
-        return mapToPosts(postEntities: postEntities)
+        return postEntities.map { $0.toDomainModel() }
     }
     
     /// Creates a Post on the persistance layer.
@@ -78,7 +82,7 @@ extension PostRepository: PostRepositoryInterface {
     }
     
     private func getPostEntity(for post: Post) async throws -> PostEntity {
-        let predicate = NSPredicate(format: "url == %@", post.url)
+        let predicate = NSPredicate(format: "uid == %@", post.uid)
         let postEntities = try await repository.get(predicate: predicate, sortDescriptors: nil)
         guard let postEntity = postEntities.first else {
             throw DatabaseError.notFound
@@ -89,11 +93,6 @@ extension PostRepository: PostRepositoryInterface {
     /// Save the NSManagedObjectContext.
     public func saveChanges() async throws {
         try await repository.saveChanges()
-    }
-    
-    /// Sets up a FetchResultService with stateChanged handler.
-    public func setupResultsControllerStateChangedHandler(stateChanged:((FetchResultServiceState) -> Void)?) {
-        repository.setupResultsControllerStateChangedHandler(stateChanged: stateChanged)
     }
     
     /// Starts fetching with given NSPredicate and array of NSSortDescriptors.

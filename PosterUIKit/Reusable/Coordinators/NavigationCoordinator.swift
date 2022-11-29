@@ -22,10 +22,32 @@ class NavigationCoordinator {
     //MARK: - Metods
 
     func pop(animated: Bool) {
-        navigationController?.popViewController(animated: animated)
+        DispatchQueue.main.async {
+            self.navigationController?.popViewController(animated: animated)
+        }
     }
 
     func dismiss(animated: Bool) {
-        navigationController?.dismiss(animated: animated)
+        DispatchQueue.main.async {
+            self.navigationController?.dismiss(animated: animated)
+        }
+    }
+
+    func pushViewController(_ viewController: UIViewController?, animated: Bool = true) {
+        guard let viewController = viewController else {
+            return
+        }
+        DispatchQueue.main.async {
+            self.navigationController?.pushViewController(viewController, animated: animated)
+        }
+    }
+
+    func presentViewController(_ viewController: UIViewController?, animated: Bool = true) {
+        guard let viewController = viewController else {
+            return
+        }
+        DispatchQueue.main.async {
+            self.navigationController?.present(viewController, animated: animated)
+        }
     }
 }

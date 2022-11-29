@@ -12,7 +12,7 @@ struct FeedFactory {
 
     //MARK: - Properties
 
-    //    static var create = ProfileFactory()
+    //    static var create = FeedFactory()
 
     //MARK: - Metods
 
@@ -29,10 +29,17 @@ struct FeedFactory {
 
         let contextProvider = CoreDataContextProvider.shared
         let postRepository = PostRepository(context: contextProvider.backgroundContext)
-        let postService = FeedPostService(repository: postRepository)
+        let storageWriter = LocalStorageWriter(repository: postRepository)
+
+        let storageReader = CloudStorageReader(userCloudStorage: UserCloudStorage(),
+                                               postCloudStorage: PostCloudStorage(),
+                                               imageCloudStorage: ImageCloudStorage())
+        let requestFilter = Filter()
 
         let postsViewModel = PostsViewModel(coordinator: postsCoordinator,
-                                            postService: postService,
+                                            storageReader: storageReader,
+                                            storageWriter: storageWriter,
+                                            requestFilter: requestFilter,
                                             errorPresenter: ErrorPresenter.shared)
         
         return FeedViewModel(//postService: postService,
@@ -41,6 +48,7 @@ struct FeedFactory {
                              //                                userName: userName,
 //                             postRepository: postRepository,
                              postsViewModel: postsViewModel,
+//                             postViewModelProvider: postsViewModel,
                              errorPresenter: ErrorPresenter.shared)
     }
     

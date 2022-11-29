@@ -10,6 +10,7 @@ target 'Poster' do
   pod 'FirebaseAuth'
   pod 'FirebaseFirestore'
   pod 'FirebaseFirestoreSwift'
+  pod 'FirebaseStorage'
 
 end
 
@@ -21,6 +22,7 @@ target 'PosterUIKit' do
   pod 'FirebaseAuth'
   pod 'FirebaseFirestore'
   pod 'FirebaseFirestoreSwift'
+  pod 'FirebaseStorage'
 
 end
 
@@ -31,5 +33,6 @@ target 'PosterKit' do
   pod 'FirebaseAuth'
   pod 'FirebaseFirestore'
   pod 'FirebaseFirestoreSwift'
+  pod 'FirebaseStorage'
 
 end

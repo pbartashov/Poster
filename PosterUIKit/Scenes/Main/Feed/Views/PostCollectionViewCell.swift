@@ -13,7 +13,7 @@ final class PostCollectionViewCell: UICollectionViewCell {
 
     //MARK: - Views
 
-    private let postView = PostView()
+    private let postCellView = PostViewCell(viewFactory: ViewFactory())
 
 //    private let authorLabel: UILabel = {
 //        let label = UILabel()
@@ -93,12 +93,12 @@ final class PostCollectionViewCell: UICollectionViewCell {
 //            contentView.addSubview($0)
 //            $0.translatesAutoresizingMaskIntoConstraints = false
 //        }
-        contentView.addSubview(postView)
+        contentView.addSubview(postCellView)
         setupLayouts()
     }
 
     private func setupLayouts() {
-        postView.snp.makeConstraints { make in
+        postCellView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
 //        NSLayoutConstraint.activate([
@@ -123,10 +123,10 @@ final class PostCollectionViewCell: UICollectionViewCell {
 //        ])
     }
 
-    func setup(with post: Post
+    func setup(with post: PostViewModel
 //               , filter: ColorFilter?
     ) {
-        postView.setup(with: post)
+        postCellView.setup(with: post)
 
 //        authorLabel.text = post.author
 //        descriptionLabel.text = post.description
@@ -158,5 +158,10 @@ final class PostCollectionViewCell: UICollectionViewCell {
 //            }
 //            .value
 //        }
+    }
+
+    override func prepareForReuse() {
+        postCellView.reset()
+        #warning("other")
     }
 }

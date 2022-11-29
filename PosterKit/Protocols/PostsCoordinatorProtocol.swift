@@ -10,7 +10,7 @@ public protocol PostsCoordinatorProtocol: AnyObject {
                           message: String?,
                           text: String?,
                           searchCompletion: ((String) -> Void)?,
-                          cancelComlpetion: (() -> Void)?)
+                          cancelCompletion: (() -> Void)?)
 }
 
 
@@ -19,11 +19,11 @@ extension PostsCoordinatorProtocol {
                           message: String? = nil,
                           text: String? = nil,
                           searchCompletion: ((String) -> Void)? = nil,
-                          cancelComlpetion: (() -> Void)? = nil) {
+                          cancelCompletion: (() -> Void)? = nil) {
         showSearchPrompt(title: title,
                          message: message,
                          text: text,
                          searchCompletion: searchCompletion,
-                         cancelComlpetion: cancelComlpetion)
+                         cancelCompletion: cancelCompletion)
     }
 }

@@ -17,7 +17,7 @@ final class PostCoordinator: NavigationCoordinator, PostCoordinatorProtocol {
 
     func showInfo() {
 //        let infoViewController = InfoViewController()
-//        navigationController?.present(infoViewController, animated: true, completion: nil)
+//        presentViewController(infoViewController)
     }
 }
 

@@ -26,23 +26,25 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
     //MARK: - Properties
 
     private(set) var viewModel: ViewModelType
+//    private var postViewModelProvider: PostViewModelProvider
 
     private var subscriptions: Set<AnyCancellable> = []
 
     var postsSectionNumber = 0
     private var currentColorFilter: ColorFilter? {
         didSet {
-            for (i, post) in viewModel.posts.enumerated() {
+            for (i, postViewModel) in viewModel.posts.enumerated() {
                 let indexPath = IndexPath(row: i, section: postsSectionNumber)
                 if let cell = tableView.cellForRow(at: indexPath) as? PostTableViewCell {
-                    cell.setup(with: post, filter: currentColorFilter)
+//                    let postViewModel = postViewModelProvider.makeViewModel(for: post)
+                    cell.setup(with: postViewModel, filter: currentColorFilter)
                 }
             }
         }
     }
 
-    private lazy var postsDataSource: UITableViewDiffableDataSource<PostSectionType, Post> = {
-        let tableViewDataSource = UITableViewDiffableDataSource<PostSectionType, Post>(
+    private lazy var postsDataSource: UITableViewDiffableDataSource<PostSectionType, PostViewModel> = {
+        let tableViewDataSource = UITableViewDiffableDataSource<PostSectionType, PostViewModel>(
             tableView: tableView,
             cellProvider: { [weak self] (tableView, indexPath, post) -> UITableViewCell? in
                 return self?.getPostCell(indexPath: indexPath, post: post)
@@ -51,8 +53,8 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
         return tableViewDataSource
     }()
 
-    private var postsSnapshot: NSDiffableDataSourceSnapshot<PostSectionType, Post> {
-        var snapshot = NSDiffableDataSourceSnapshot<PostSectionType, Post>()
+    private var postsSnapshot: NSDiffableDataSourceSnapshot<PostSectionType, PostViewModel> {
+        var snapshot = NSDiffableDataSourceSnapshot<PostSectionType, PostViewModel>()
         snapshot.appendSections(postSections)
         snapshot.appendItems(postItems)
 
@@ -63,7 +65,7 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
         [PostSectionType.posts]
     }
 
-    var postItems: [Post] {
+    var postItems: [PostViewModel] {
         viewModel.posts
     }
 
@@ -84,7 +86,7 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
         return tableView
     }()
 
-    private lazy var colorFilterSelecor: UISegmentedControl = {
+    private lazy var colorFilterSelector: UISegmentedControl = {
         let off = UIAction(title: "offColorFilterPostsViewController".localized) { _ in
             self.currentColorFilter = nil
         }
@@ -114,8 +116,11 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
 
     //MARK: - LifeCicle
 
-    init(viewModel: ViewModelType) {
+    init(viewModel: ViewModelType
+//         postViewModelProvider: PostViewModelProvider
+    ) {
         self.viewModel = viewModel
+//        self.postViewModelProvider = postViewModelProvider
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -129,7 +134,7 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
 
         view.backgroundColor = .backgroundColor
 
-        view.addSubview(colorFilterSelecor)
+        view.addSubview(colorFilterSelector)
         view.addSubview(tableView)
 
         setupLayout()
@@ -154,7 +159,7 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
                     case .initial:
                         break
 
-                    case .loaded(_):
+                    case .postsLoaded:
                         if self?.view.window != nil {
                             self?.applySnapshot()
                         }
@@ -173,12 +178,12 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
     }
 
     private func setupLayout() {
-        colorFilterSelecor.snp.makeConstraints { make in
+        colorFilterSelector.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
         }
 
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(colorFilterSelecor.snp.bottom)
+            make.top.equalTo(colorFilterSelector.snp.bottom)
             make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
@@ -203,10 +208,15 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
         cancelSearchBarItem = cancelSearchItem
     }
 
-    func getPostCell(indexPath: IndexPath, post: Post) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier,
-                                                 for: indexPath)
-        as! PostTableViewCell
+    func getPostCell(indexPath: IndexPath, post: PostViewModel) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier,
+                                                       for: indexPath)
+                as? PostTableViewCell
+        else {
+            return UITableViewCell()
+        }
+
+//        let postViewModel = postViewModelProvider.makeViewModel(for: post)
 
         cell.setup(with: post,
                    filter: self.currentColorFilter)

@@ -18,6 +18,10 @@ protocol ViewFactoryProtocol {
     func makeSmallTextLabel() -> UILabel
 
     func makeTextField() -> UITextField
+
+    func makeImagedLabel(imageSystemName: String) -> ImagedLabel
+    func makeLabeledTextField(label: String, placeholder: String?) -> LabeledView<UITextField>
+    func makeLabeledPhoneField(label: String, placeholder: String?) -> LabeledView<UITextField>
 }
 
 //extension ViewFactoryProtocol {
@@ -160,6 +164,44 @@ struct ViewFactory: ViewFactoryProtocol {
         //        textField.rightViewMode = .always
 
         return textField
+    }
+
+    func makeImagedLabel(imageSystemName: String) -> ImagedLabel {
+        let label = makeTextLabel()
+
+        let image = UIImage(systemName: imageSystemName)
+        let imageView = UIImageView(image: image)
+        imageView.tintColor = .brandTextBlackColor
+
+        return ImagedLabel(imageView: imageView, label: label, spacing: Constants.UI.smallPadding)
+    }
+
+    func makeLabeledTextField(label: String, placeholder: String?) -> LabeledView<UITextField> {
+        makeLabeledTextField(with: TextFieldWithPadding(), label: label, placeholder: placeholder)
+    }
+
+    func makeLabeledPhoneField(label: String, placeholder: String?) -> LabeledView<UITextField> {
+        makeLabeledTextField(with: PhoneTextField(), label: label, placeholder: placeholder)
+    }
+
+    private func makeLabeledTextField(with textField: TextFieldWithPadding,
+                                      label: String,
+                                      placeholder: String?
+    ) -> LabeledView<UITextField> {
+        let labelView = makeBoldTextLabel()
+        labelView.text = label
+        labelView.textAlignment = .left
+
+        textField.layer.cornerRadius = 8
+        textField.layer.masksToBounds = true
+        textField.backgroundColor = .backgroundGrayColor
+        textField.placeholder = placeholder
+        textField.textPadding = UIEdgeInsets(top: Constants.UI.padding / 2,
+                                             left: Constants.UI.padding,
+                                             bottom: Constants.UI.padding / 2,
+                                             right: Constants.UI.padding)
+
+        return LabeledView(label: labelView, view: textField, spacing: Constants.UI.smallPadding)
     }
 }
 

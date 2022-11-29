@@ -14,19 +14,19 @@ extension PostEntity: DomainModel {
 
     #warning("TODO")
     func toDomainModel() -> Post {
-        Post(url: url ?? "",
-             author: User(id: "kdfjgodfjsadfo"),
-             description: postDescription ?? "",
-             imageData: imageData,
+        Post(uid: url ?? "",
+             authorId: User(uid: "kdfjgodfjsadfo").uid,
+             content: content ?? "",
+//             imageData: imageData,
              likes: Int(likes),
              views: Int(views))
     }
 
     func copyDomainModel(model: Post) {
-        url = model.url
-        author = model.author.id
-        postDescription = model.description
-        imageData = model.imageData
+        url = model.uid
+        author = model.authorId
+        content = model.content
+//        imageData = model.imageUrl
         likes = Int32(model.likes)
         views = Int32(model.views)
     }

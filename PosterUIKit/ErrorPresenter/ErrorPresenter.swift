@@ -57,6 +57,11 @@ final class ErrorPresenter: ErrorPresenterProtocol {
                 alert.addAction(cancelAction)
 
                 self?.presenter?.present(alert, animated: true)
+
+
+
+                #warning("remove")
+                print(error)
             }
         }
     }

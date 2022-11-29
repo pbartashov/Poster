@@ -9,7 +9,7 @@ import UIKit
 import PosterKit
 import Combine
 
-final class SignUpViewController: SignActionViewController {
+final class SignUpViewController: ScrollableViewController<LoginViewModelProtocol> {
 
     //MARK: - Properties
 

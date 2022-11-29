@@ -9,6 +9,9 @@ import UIKit
 
 struct LoginViewFactory: ViewFactoryProtocol {
 
+
+
+
     // MARK: - Properties
 
     let viewFactory: ViewFactory
@@ -79,5 +82,17 @@ struct LoginViewFactory: ViewFactoryProtocol {
         textField.keyboardType = .phonePad
 
         return textField
+    }
+
+    func makeImagedLabel(imageSystemName: String) -> ImagedLabel {
+        viewFactory.makeImagedLabel(imageSystemName: imageSystemName)
+    }
+
+    func makeLabeledTextField(label: String, placeholder: String?) -> LabeledView<UITextField> {
+        viewFactory.makeLabeledPhoneField(label: label, placeholder: placeholder)
+    }
+
+    func makeLabeledPhoneField(label: String, placeholder: String?) -> LabeledView<UITextField> {
+        viewFactory.makeLabeledPhoneField(label: label, placeholder: placeholder)
     }
 }

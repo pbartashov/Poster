@@ -26,7 +26,7 @@ where T: ProfileViewModelProtocol&DragDropProtocol,
     private enum Cell: Hashable {
         case profile(ProfileHeaderViewCell)
         case photos(PhotosTableViewCell)
-        case post(Post)
+        case post(PostViewModel)
     }
 
     //MARK: - Properties
@@ -92,7 +92,9 @@ where T: ProfileViewModelProtocol&DragDropProtocol,
 
     //MARK: - LifeCicle
 
-    init(viewModel: ViewModelType) {
+    init(viewModel: ViewModelType
+//         postViewModelProvider: PostViewModelProvider
+    ) {
         self.profileViewModel = viewModel
         super.init(viewModel: profileViewModel.postsViewModel)
     }
@@ -239,7 +241,9 @@ where T: ProfileViewModelProtocol&DragDropProtocol,
 extension ProfileViewController: ProfileHeaderViewDelegate {
     func statusButtonTapped() {
 //        profileViewModel.user?.status = profileHeaderView.statusText
-        profileHeaderView.setup(with: profileViewModel.user)
+        profileViewModel.perfomAction(.showUserProfile)
+//        profileHeaderView.setup(with: profileViewModel.user)
+
     }
 
     func avatarTapped(sender: UIView) {

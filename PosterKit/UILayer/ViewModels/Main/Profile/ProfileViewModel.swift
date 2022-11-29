@@ -5,10 +5,14 @@
 //  Created by Павел Барташов on 25.06.2022.
 //
 
+#warning("REMOVE")
+import UIKit
+
 public enum ProfileAction {
     case showPhotos
-    case selected(post: Post)
-    case insert((post: Post, index: Int))
+    case showUserProfile
+    case selected(post: PostViewModel)
+    case insert((post: PostViewModel, index: Int))
     case posts(action: PostsAction)
 }
 
@@ -23,8 +27,8 @@ where State == ProfileState,
     associatedtype PostsViewModelType: PostsViewModelProtocol
 
     var postsViewModel: PostsViewModelType { get }
-    var posts: [Post] { get }
-    var postsPublisher: Published<[Post]>.Publisher { get }
+    var posts: [PostViewModel] { get }
+    var postsPublisher: Published<[PostViewModel]>.Publisher { get }
 
     var user: User? { get }
 }
@@ -39,7 +43,7 @@ public final class ProfileViewModel<T>: ViewModel<ProfileState, ProfileAction>,
     private weak var coordinator: ProfileCoordinatorProtocol?
 
 //    private let favoritesPostRepository: PostRepositoryInterface
-//    private let postService: PostServiceProtocol
+//    private let storageService: PostServiceProtocol
     public let postsViewModel: PostsViewModelType
 
     private weak var userService: UserServiceProtocol?
@@ -48,11 +52,11 @@ public final class ProfileViewModel<T>: ViewModel<ProfileState, ProfileAction>,
         userService?.currentUser
     }
 
-    public var posts: [Post] {
+    public var posts: [PostViewModel] {
         postsViewModel.posts
     }
 
-    public var postsPublisher: Published<[Post]>.Publisher {
+    public var postsPublisher: Published<[PostViewModel]>.Publisher {
         postsViewModel.postsPublisher
     }
 
@@ -68,7 +72,7 @@ public final class ProfileViewModel<T>: ViewModel<ProfileState, ProfileAction>,
          errorPresenter: ErrorPresenterProtocol
     ) {
         
-//        self.postService = postService
+//        self.storageService = storageService
         self.coordinator = coordinator
         self.userService = userService
 //        self.userName = userName
@@ -114,6 +118,9 @@ public final class ProfileViewModel<T>: ViewModel<ProfileState, ProfileAction>,
         switch action {
             case .showPhotos:
                 coordinator?.showPhotos()
+
+            case .showUserProfile:
+                coordinator?.showUserProfile()
 
             case .selected(let post):
                 postsViewModel.perfomAction(.store(post: post))

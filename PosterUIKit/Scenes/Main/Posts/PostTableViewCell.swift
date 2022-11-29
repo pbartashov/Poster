@@ -10,11 +10,11 @@ import PosterKit
 import iOSIntPackage
 
 #warning("final")
-class PostTableViewCell: UITableViewCell {
+final class PostTableViewCell: UITableViewCell {
 
     //MARK: - Views
 
-    private let postView = PostView()
+    private let postCellView = PostViewCell(viewFactory: ViewFactory())
 
 //    private let authorLabel: UILabel = {
 //        let label = UILabel()
@@ -96,12 +96,12 @@ class PostTableViewCell: UITableViewCell {
 //            contentView.addSubview($0)
 //            $0.translatesAutoresizingMaskIntoConstraints = false
 //        }
-        contentView.addSubview(postView)
+        contentView.addSubview(postCellView)
         setupLayouts()
     }
 
     private func setupLayouts() {
-        postView.snp.makeConstraints { make in
+        postCellView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
 //        NSLayoutConstraint.activate([
@@ -126,8 +126,8 @@ class PostTableViewCell: UITableViewCell {
 //        ])
     }
 
-    func setup(with post: Post, filter: ColorFilter?) {
-        postView.setup(with: post, filter: filter)
+    func setup(with post: PostViewModel, filter: ColorFilter?) {
+        postCellView.setup(with: post, filter: filter)
         
 //        authorLabel.text = post.author
 //        descriptionLabel.text = post.description
@@ -159,5 +159,9 @@ class PostTableViewCell: UITableViewCell {
 //            }
 //            .value
 //        }
+    }
+
+    override func prepareForReuse() {
+        postCellView.reset()
     }
 }

@@ -95,7 +95,7 @@ public final class LoginInspector: LoginDelegate {
             do {
                 try await userService.setCurrentUser(byId: userId, phoneNumber: phoneNumber)
 
-                if let user = try await userService.currentUser {
+                if let user = userService.currentUser {
                     completion?(.success(user))
                 } else {
                     completion?(.failure(DatabaseError.notFound))

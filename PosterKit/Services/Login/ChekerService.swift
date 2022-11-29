@@ -59,8 +59,6 @@ public struct ChekerService: CheckerServiceProtocol {
                     handle(error: error, completion: completion)
                     return
                 }
-                // Sign in using the verificationID and the code sent to the user
-                // ...
 
                 UserDefaults.standard.set(verificationID, forKey: "authVerificationID")
                 completion?(.success(phoneNumber))
@@ -97,8 +95,6 @@ public struct ChekerService: CheckerServiceProtocol {
             completion?(.failure(error))
         }
     }
-
-
 }
 
 fileprivate extension AuthErrorCode {

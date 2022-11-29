@@ -5,31 +5,40 @@
 //  Created by Павел Барташов on 06.03.2022.
 //
 
-//import UIKit
-#warning("remove UIKIT")
-
 public struct Post {
-    public let url: String
-    public let author: User
-    public let description: String
-    public let imageData: Data?
+    public let uid: String
+    public let authorId: String
+    public let content: String
+//    public let imageUrl: String?
     public let likes: Int
     public let views: Int
 
-    public init(url: String,
-                author: User,
-                description: String = "",
-                imageData: Data? = nil,
+    public init(uid: String,
+                authorId: String,
+                content: String = "",
+//                imageUrl: String? = nil,
                 likes: Int = 0,
                 views: Int = 0
     ) {
-        self.url = url
-        self.author = author
-        self.description = description
-        self.imageData = imageData
+        self.uid = uid
+        self.authorId = authorId
+        self.content = content
+//        self.imageUrl = imageUrl
         self.likes = likes
         self.views = views
     }
 }
 
 extension Post: Hashable { }
+
+extension Post: Codable {
+    enum CodingKeys: String, CodingKey {
+        case uid
+        case authorId = "author_id"
+        case content
+//        case imageUrl = "image_url"
+        case likes
+        case views
+        //        case timestamp
+    }
+}

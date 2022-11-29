@@ -16,7 +16,7 @@ final class PostsCoordinator: NavigationCoordinator, PostsCoordinatorProtocol {
                           message: String? = nil,
                           text: String? = nil,
                           searchCompletion: ((String) -> Void)? = nil,
-                          cancelComlpetion: (() -> Void)? = nil) {
+                          cancelCompletion: (() -> Void)? = nil) {
 
         let alert = UIAlertController(title: title,
                                       message: message,
@@ -41,13 +41,13 @@ final class PostsCoordinator: NavigationCoordinator, PostsCoordinatorProtocol {
         }
         alert.addAction(search)
 
-        if cancelComlpetion != nil {
+        if cancelCompletion != nil {
             let cancel = UIAlertAction(title: "cancelActionTitlePostsCoordinator".localized, style: .default) { _ in
-                cancelComlpetion?()
+                cancelCompletion?()
             }
             alert.addAction(cancel)
         }
 
-        navigationController?.present(alert, animated: true)
+        presentViewController(alert)
     }
 }

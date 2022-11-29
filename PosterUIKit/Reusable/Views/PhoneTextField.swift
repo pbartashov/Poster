@@ -8,10 +8,27 @@
 
 import UIKit
 
-class PhoneTextField: UITextField {
+class PhoneTextField: TextFieldWithPadding {
 
     // MARK: - Properties
 
+    override var text: String? {
+        get {
+            super.text
+        }
+        set {
+            super.text = formattedNumber(number: newValue)
+        }
+    }
+    override var placeholder: String? {
+        get {
+            super.placeholder
+        }
+        set {
+            super.placeholder = formattedNumber(number: newValue)
+        }
+    }
+    
     var phoneNumberMask = "+_ (___) ___-__-__" {
         didSet {
             placeholder = phoneNumberMask
@@ -34,7 +51,7 @@ class PhoneTextField: UITextField {
 
     // MARK: - LifeCicle
 
-    override init(frame: CGRect) {
+    override init(frame: CGRect = .zero) {
         super.init(frame: frame)
         delegate = self
         placeholder = phoneNumberMask
@@ -49,7 +66,8 @@ class PhoneTextField: UITextField {
 
 
 
-    func formattedNumber(number: String) -> String {
+    func formattedNumber(number: String?) -> String? {
+        guard let number = number else { return nil }
         let cleanPhoneNumber = number.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
 
         var result = ""

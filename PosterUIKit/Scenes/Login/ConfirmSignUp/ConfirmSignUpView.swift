@@ -56,7 +56,7 @@ final class ConfirmSignUpView: SignActionView {
         return label
     }()
 
-    private let logoImageView = UIImageView(image: UIImage(named: "CheckMark"))
+    private let logoImageView = UIImageView(image: UIImage(named: "LogoCheckMark"))
 
 
     //MARK: - LifeCicle

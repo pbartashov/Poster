@@ -31,6 +31,7 @@ final class ProfileHeaderViewCell: UITableViewCell {
                                               width: Constants.UI.avatarImageSize,
                                               height: Constants.UI.avatarImageSize))
         image.layer.borderWidth = 3
+        image.layer.borderColor = UIColor.brandYellowColor.cgColor
         image.layer.cornerRadius = image.frame.width / 2
         image.layer.masksToBounds = true
 
@@ -125,7 +126,7 @@ final class ProfileHeaderViewCell: UITableViewCell {
 
     func setup(with user: User?) {
         avatarImageView.image = user?.avatarData?.asImage
-        fullNameLabel.text = user?.name
+        fullNameLabel.text = user?.displayedName
         statusLabel.text = user?.status
     }
 

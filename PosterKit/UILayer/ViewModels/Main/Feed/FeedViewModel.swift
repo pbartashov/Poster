@@ -9,7 +9,7 @@ import Combine
 
 public enum FeedAction {
     case requestData
-    case selected(post: Post)
+    case selected(post: PostViewModel)
 //    case showSignUp
 //    case showSignIn
 //    case authWith(phoneNumber: String)
@@ -31,7 +31,7 @@ where State == FeedState,
       Action == FeedAction {
 
     var storiesPublisher: Published<[Story]>.Publisher { get }
-    var postsPublisher: Published<[Post]>.Publisher { get }
+    var postsPublisher: Published<[PostViewModel]>.Publisher { get }
 }
 
 
@@ -50,9 +50,10 @@ public final class FeedViewModel<T>: ViewModel<FeedState, FeedAction>,
     @Published var stories: [Story] = []
     public var storiesPublisher: Published<[Story]>.Publisher { $stories }
 
-    public var postsPublisher: Published<[Post]>.Publisher { postsViewModel.postsPublisher }
+    public var postsPublisher: Published<[PostViewModel]>.Publisher { postsViewModel.postsPublisher }
 
-    private var postsViewModel: PostsViewModelType
+    private let postsViewModel: PostsViewModelType
+//    private let postViewModelProvider: PostViewModelProvider
 
 
 
@@ -66,6 +67,7 @@ public final class FeedViewModel<T>: ViewModel<FeedState, FeedAction>,
 //                userName: String,
 //                postRepository: PostRepositoryInterface,
                 postsViewModel: PostsViewModelType,
+//                postViewModelProvider: PostViewModelProvider,
                 errorPresenter: ErrorPresenterProtocol
     ) {
 //        self.postService = postService
@@ -74,6 +76,7 @@ public final class FeedViewModel<T>: ViewModel<FeedState, FeedAction>,
 //        self.userName = userName
 //        self.favoritesPostRepository = postRepository
         self.postsViewModel = postsViewModel
+//        self.postViewModelProvider = postViewModelProvider
 
         super.init(state: .initial, errorPresenter: errorPresenter)
 
@@ -129,3 +132,9 @@ public final class FeedViewModel<T>: ViewModel<FeedState, FeedAction>,
     }
 
 }
+//
+//extension FeedViewModel: PostViewModelProvider {
+//    public func makeViewModel(for post: Post) -> PostViewModel {
+//        postViewModelProvider.makeViewModel(for: post)
+//    }
+//}
