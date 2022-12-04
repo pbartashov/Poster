@@ -10,17 +10,20 @@ import Combine
 import SnapKit
 import PosterKit
 
-enum SaveCancelButton {
-    case save
-    case cancel
-    case avatar
-}
+//enum SaveCancelButton {
+//    case save
+//    case cancel
+////    case avatar
+//}
 
-final class UserProfileView: ViewWithButton<SaveCancelButton> {
+final class UserProfileView: UIView {
+//    ViewWithButton<SaveCancelButton> {
 
-    //MARK: - Properties
+    // MARK: - Properties
 
 //    private let dateFormatter: DateFormatter
+
+    private weak var imagePickerViewDelegate: ImagePickerViewDelegate?
 
     let viewFactory: ViewFactoryProtocol
 
@@ -68,9 +71,8 @@ final class UserProfileView: ViewWithButton<SaveCancelButton> {
 
     var avatarImage: UIImage? {
         get { avatarImageView.image }
-        set {
-            avatarImageView.image = newValue
-            setAvatarViewBorderWidth()
+        set { avatarImageView.image = newValue
+//            setAvatarViewBorderWidth()
         }
     }
 
@@ -83,49 +85,55 @@ final class UserProfileView: ViewWithButton<SaveCancelButton> {
         }
     }
 
-    //MARK: - Views
+    // MARK: - Views
 
-    private lazy var avatarImageView: UIImageView = {
-        let imageView = UIImageView(frame: CGRect(x: 0,
-                                                  y: 0,
-                                                  width: Constants.UI.avatarImageSize,
-                                                  height: Constants.UI.avatarImageSize))
-        //        let imageView = UIImageView()
-        imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = UIColor.brandYellowColor.cgColor
-        imageView.layer.cornerRadius = imageView.frame.width / 2
-        imageView.layer.masksToBounds = true
-
-        let tapRecognizer = UITapGestureRecognizer(target: self,
-                                                   action: #selector(avatarTapped))
-        imageView.addGestureRecognizer(tapRecognizer)
-        imageView.isUserInteractionEnabled = true
+    private lazy var avatarImageView: ImagePickerView = {
+        let imageView = viewFactory.makeAvatarPickerView(delegate: imagePickerViewDelegate)
 
         return imageView
     }()
 
-    private lazy var tapImageLabel: UILabel = {
-        let label = viewFactory.makeSmallTextLabel()
-        label.numberOfLines = 0
-        label.text = "tapImageLabelUserProfileView".localized
-//        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-//        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+//    private lazy var avatarImageView: UIImageView = {
+//        let imageView = UIImageView(frame: CGRect(x: 0,
+//                                                  y: 0,
+//                                                  width: Constants.UI.avatarImageSize,
+//                                                  height: Constants.UI.avatarImageSize))
+//        //        let imageView = UIImageView()
+//        imageView.layer.borderWidth = 1
+//        imageView.layer.borderColor = UIColor.brandYellowColor.cgColor
+//        imageView.layer.cornerRadius = imageView.frame.width / 2
+//        imageView.layer.masksToBounds = true
+//
+//        let tapRecognizer = UITapGestureRecognizer(target: self,
+//                                                   action: #selector(avatarTapped))
+//        imageView.addGestureRecognizer(tapRecognizer)
+//        imageView.isUserInteractionEnabled = true
+//
+//        return imageView
+//    }()
 
-        return label
-    }()
+//    private lazy var tapImageLabel: UILabel = {
+//        let label = viewFactory.makeSmallTextLabel()
+//        label.numberOfLines = 0
+//        label.text = "tapImageLabelUserProfileView".localized
+////        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+////        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+//
+//        return label
+//    }()
 
-    lazy var clearAvatarButton: UIButton = {
-        let config = UIImage.SymbolConfiguration(pointSize: 10)
-        let image = UIImage(systemName: "xmark", withConfiguration: config)
-        let action = UIAction(image: image) { [weak self] _ in
-            self?.avatarImageView.image = nil
-        }
-
-        var configuration = UIButton.Configuration.plain()
-        configuration.baseForegroundColor = .brandYellowColor
-
-        return UIButton(configuration: configuration, primaryAction: action)
-    }()
+//    lazy var clearAvatarButton: UIButton = {
+//        let config = UIImage.SymbolConfiguration(pointSize: 10)
+//        let image = UIImage(systemName: "xmark", withConfiguration: config)
+//        let action = UIAction(image: image) { [weak self] _ in
+//            self?.avatarImageView.image = nil
+//        }
+//
+//        var configuration = UIButton.Configuration.plain()
+//        configuration.baseForegroundColor = .brandYellowColor
+//
+//        return UIButton(configuration: configuration, primaryAction: action)
+//    }()
 
     private lazy var firstNameView: LabeledView<UITextField> = {
         let view = viewFactory.makeLabeledTextField(label: "firstNameLabelUserProfileView".localized,
@@ -197,9 +205,7 @@ final class UserProfileView: ViewWithButton<SaveCancelButton> {
     }()
 
     lazy var activityView: UIActivityIndicatorView = {
-        let activity = UIActivityIndicatorView(style: .large)
-        activity.startAnimating()
-        activity.isHidden = true
+        let activity = viewFactory.makeActivityIndicatorView()
 
         return activity
     }()
@@ -217,12 +223,14 @@ final class UserProfileView: ViewWithButton<SaveCancelButton> {
 
 
 
-    //MARK: - LifeCicle
+    // MARK: - LifeCicle
 
-    init(viewFactory: ViewFactoryProtocol
+    init(viewFactory: ViewFactoryProtocol,
+         imagePickerViewDelegate: ImagePickerViewDelegate?
 //         dateFormatter: DateFormatter
     ) {
         self.viewFactory = viewFactory
+        self.imagePickerViewDelegate = imagePickerViewDelegate
 //        self.dateFormatter = dateFormatter
         super.init(frame: .zero)
         initialize()
@@ -232,12 +240,13 @@ final class UserProfileView: ViewWithButton<SaveCancelButton> {
         fatalError("init(coder:) has not been implemented")
     }
 
-    //MARK: - Metods
+    // MARK: - Metods
 
     private func initialize() {
-        [tapImageLabel,
+        [
+            //tapImageLabel,
          avatarImageView,
-         clearAvatarButton,
+//         clearAvatarButton,
          stackView,
          activityView
         ].forEach {
@@ -259,10 +268,10 @@ final class UserProfileView: ViewWithButton<SaveCancelButton> {
     }
 
     private func setupLayouts() {
-        tapImageLabel.snp.makeConstraints { make in
-            make.top.leading.equalTo(avatarImageView).offset(Constants.UI.padding)
-            make.trailing.bottom.equalTo(avatarImageView).offset(-Constants.UI.padding)
-        }
+//        tapImageLabel.snp.makeConstraints { make in
+//            make.top.leading.equalTo(avatarImageView).offset(Constants.UI.padding)
+//            make.trailing.bottom.equalTo(avatarImageView).offset(-Constants.UI.padding)
+//        }
         
         activityView.snp.makeConstraints { make in
             make.center.equalToSuperview()
@@ -274,10 +283,10 @@ final class UserProfileView: ViewWithButton<SaveCancelButton> {
             make.width.height.equalTo(Constants.UI.avatarImageSize).priority(.required)
         }
 
-        clearAvatarButton.snp.makeConstraints { make in
-            make.centerX.equalTo(avatarImageView.snp.trailing)
-            make.centerY.equalTo(avatarImageView.snp.top)
-        }
+//        clearAvatarButton.snp.makeConstraints { make in
+//            make.centerX.equalTo(avatarImageView.snp.trailing)
+//            make.centerY.equalTo(avatarImageView.snp.top)
+//        }
 
         stackView.snp.makeConstraints { make in
             make.top.equalTo(avatarImageView.snp.bottom).offset(Constants.UI.padding)
@@ -288,18 +297,17 @@ final class UserProfileView: ViewWithButton<SaveCancelButton> {
         }
     }
 
-    @objc private func avatarTapped() {
-        sendButtonTapped(.avatar)
-    }
+//    @objc private func avatarTapped() {
+//        sendButtonTapped(.avatar)
+//    }
 
-    private func setAvatarViewBorderWidth() {
-        switch avatarImageView.image {
-            case .none:
-                avatarImageView.layer.borderWidth = 1
-
-            case .some:
-                avatarImageView.layer.borderWidth = 0
-        }
-    }
+//    private func setAvatarViewBorderWidth() {
+//        switch avatarImageView.image {
+//            case .none:
+//                avatarImageView.layer.borderWidth = 1
+//
+//            case .some:
+//                avatarImageView.layer.borderWidth = 0
+//        }
+//    }
 }
-

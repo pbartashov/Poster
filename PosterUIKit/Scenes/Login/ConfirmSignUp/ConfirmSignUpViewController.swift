@@ -11,11 +11,11 @@ import Combine
 
 final class ConfirmSignUpViewController: ScrollableViewController<LoginViewModelProtocol> {
 
-    //MARK: - Properties
+    // MARK: - Properties
 
     let phoneNumber: String
 
-    //MARK: - Views
+    // MARK: - Views
 
     private lazy var confirmSignUpView: ConfirmSignUpView = {
         let viewFactory = ViewFactory()
@@ -23,7 +23,7 @@ final class ConfirmSignUpViewController: ScrollableViewController<LoginViewModel
     }()
 
 
-    //MARK: - LifeCicle
+    // MARK: - LifeCicle
 
     init(viewModel: LoginViewModelProtocol,
          phoneNumber: String) {
@@ -44,7 +44,7 @@ final class ConfirmSignUpViewController: ScrollableViewController<LoginViewModel
     }
 
 
-    //MARK: - Metods
+    // MARK: - Metods
 
     private func initialize() {
         super.addSubView(confirmSignUpView)

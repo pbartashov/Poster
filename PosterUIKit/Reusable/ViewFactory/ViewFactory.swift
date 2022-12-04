@@ -8,8 +8,10 @@
 import UIKit
 
 protocol ViewFactoryProtocol {
-    func makeFilledButton(action: UIAction?) -> UIButton
+    func makeBlackFilledButton(action: UIAction?) -> UIButton
+    func makeYellowFilledButton(action: UIAction?) -> UIButton
     func makePlainButton(action: UIAction?) -> UIButton
+    func makeVerticalPlainButton(action: UIAction?) -> UIButton
 
     func makeH2Label() -> UILabel
     func makeH3Label() -> UILabel
@@ -18,10 +20,18 @@ protocol ViewFactoryProtocol {
     func makeSmallTextLabel() -> UILabel
 
     func makeTextField() -> UITextField
+    func makeTextView() -> UITextView
 
     func makeImagedLabel(imageSystemName: String) -> ImagedLabel
     func makeLabeledTextField(label: String, placeholder: String?) -> LabeledView<UITextField>
     func makeLabeledPhoneField(label: String, placeholder: String?) -> LabeledView<UITextField>
+
+    func makeContainerView() -> UIView
+    func makeImageView() -> UIImageView
+    func makePostImagePickerView(delegate: ImagePickerViewDelegate?) -> ImagePickerView
+    func makeAvatarPickerView(delegate: ImagePickerViewDelegate?) -> ImagePickerView
+
+    func makeActivityIndicatorView() -> UIActivityIndicatorView
 }
 
 //extension ViewFactoryProtocol {
@@ -67,9 +77,17 @@ struct ViewFactory: ViewFactoryProtocol {
     //        return button
     //    }
 
-    func makeFilledButton(action: UIAction?) -> UIButton {
+    func makeBlackFilledButton(action: UIAction?) -> UIButton {
+        makeFilledButton(action: action, backGroundColor: .brandTextBlackColor)
+    }
+
+    func makeYellowFilledButton(action: UIAction?) -> UIButton {
+        makeFilledButton(action: action, backGroundColor: .brandYellowColor)
+    }
+
+    private func makeFilledButton(action: UIAction?, backGroundColor: UIColor) -> UIButton {
         var configuration = UIButton.Configuration.filled()
-        configuration.baseBackgroundColor = .brandTextBlackColor
+        configuration.baseBackgroundColor = backGroundColor
         configuration.contentInsets = NSDirectionalEdgeInsets(
             top: Constants.UI.buttonVerticalPadding,
             leading: Constants.UI.buttonHorizontalPadding,
@@ -77,7 +95,7 @@ struct ViewFactory: ViewFactoryProtocol {
             trailing: Constants.UI.buttonHorizontalPadding
         )
 
-        configuration.background.cornerRadius = 10
+        configuration.background.cornerRadius = Constants.UI.cornerRadius
         configuration.cornerStyle = .fixed
 
         return UIButton(configuration: configuration, primaryAction: action)
@@ -86,6 +104,28 @@ struct ViewFactory: ViewFactoryProtocol {
     func makePlainButton(action: UIAction?) -> UIButton {
         var configuration = UIButton.Configuration.plain()
         configuration.baseForegroundColor = .brandTextBlackColor
+
+        return UIButton(configuration: configuration, primaryAction: action)
+    }
+
+    func makeVerticalPlainButton(action: UIAction?) -> UIButton {
+        var configuration = UIButton.Configuration.plain()
+//        configuration.contentInsets = NSDirectionalEdgeInsets(
+//            top: Constants.UI.buttonVerticalPadding,
+//            leading: Constants.UI.buttonHorizontalPadding,
+//            bottom: Constants.UI.buttonVerticalPadding,
+//            trailing: Constants.UI.buttonHorizontalPadding
+//        )
+
+//        configuration.background.backgroundColor = .yellow
+
+
+
+        configuration.baseForegroundColor = .brandTextBlackColor
+        configuration.background.cornerRadius = Constants.UI.cornerRadius
+        configuration.cornerStyle = .fixed
+        configuration.imagePadding = Constants.UI.padding
+        configuration.imagePlacement = .top
 
         return UIButton(configuration: configuration, primaryAction: action)
     }
@@ -135,8 +175,6 @@ struct ViewFactory: ViewFactoryProtocol {
         return label
     }
 
-
-
     func makeTextField() -> UITextField {
         let textField = UITextField()
         return configured(textField: textField)
@@ -166,6 +204,8 @@ struct ViewFactory: ViewFactoryProtocol {
         return textField
     }
 
+    // MARK: - ImagedLabels
+
     func makeImagedLabel(imageSystemName: String) -> ImagedLabel {
         let label = makeTextLabel()
 
@@ -194,7 +234,7 @@ struct ViewFactory: ViewFactoryProtocol {
 
         textField.layer.cornerRadius = 8
         textField.layer.masksToBounds = true
-        textField.backgroundColor = .backgroundGrayColor
+        textField.backgroundColor = .brandBackgroundGrayColor
         textField.placeholder = placeholder
         textField.textPadding = UIEdgeInsets(top: Constants.UI.padding / 2,
                                              left: Constants.UI.padding,
@@ -203,5 +243,92 @@ struct ViewFactory: ViewFactoryProtocol {
 
         return LabeledView(label: labelView, view: textField, spacing: Constants.UI.smallPadding)
     }
+
+    // MARK: - UITextViews
+
+    func makeTextView() -> UITextView {
+        let textview = UITextView()
+        textview.isScrollEnabled = false;
+        textview.font = .brandTextFont
+        textview.layer.cornerRadius = Constants.UI.cornerRadius
+        textview.layer.masksToBounds = true
+        
+        return textview
+    }
+
+    func makeImageView() -> UIImageView {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.layer.cornerRadius = Constants.UI.cornerRadius
+        imageView.layer.masksToBounds = true
+        imageView.layer.borderColor = UIColor.brandYellowColor.cgColor
+        imageView.layer.borderWidth = 1
+
+        return imageView
+    }
+
+    // MARK: - ImagePickerViews
+
+    func makeAvatarPickerView(delegate: ImagePickerViewDelegate?) -> ImagePickerView {
+        let imagePickerView = makeImagePickerView(delegate: delegate)
+//        imagePickerView.clearButtonOffset = 15
+        imagePickerView.text = "tapImageLabelUserProfileView".localized
+
+        return imagePickerView
+    }
+
+    func makePostImagePickerView(delegate: ImagePickerViewDelegate?) -> ImagePickerView {
+        let imagePickerView = makeImagePickerView(delegate: delegate)
+        imagePickerView.cornerRadius = .fixed(Constants.UI.cornerRadius)
+        imagePickerView.clearButtonOffset = 15
+        imagePickerView.clearButtonBackgroundColor = .brandBackgroundGrayColor
+        imagePickerView.text = "tapImageLabelDetailedPostViewController".localized
+
+        return imagePickerView
+    }
+
+    private func makeImagePickerView(delegate: ImagePickerViewDelegate?) -> ImagePickerView {
+        let imagePickerView = ImagePickerView(delegate: delegate,
+                                              foregroundColor: .brandYellowColor)
+        imagePickerView.font = .brandSmallTextFont
+
+        return imagePickerView
+    }
+
+    // MARK: - UIActivityIndicatorView
+
+    func makeActivityIndicatorView() -> UIActivityIndicatorView {
+        let activity = UIActivityIndicatorView(style: .large)
+        activity.startAnimating()
+        activity.isHidden = true
+        activity.color = .brandYellowColor
+
+        return activity
+    }
 }
 
+extension ViewFactory: UserInfoViewFactory {
+    func makeAuthorNameLabel() -> UILabel {
+        let label = makeH3Label()
+        label.textAlignment = .left
+
+        return label
+    }
+
+    func makeAuthorStatusLabel() -> UILabel {
+        let label = makeSmallTextLabel()
+        label.textAlignment = .left
+        label.textColor = .brandTextGrayColor
+
+        return label
+    }
+
+    func makeContainerView() -> UIView {
+        let view = UIView()
+        var transform3D = CATransform3DIdentity
+        transform3D.m34 = -1 / 500
+        view.layer.sublayerTransform = transform3D
+
+        return view
+    }
+}

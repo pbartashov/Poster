@@ -17,12 +17,12 @@ import PosterKit
 
 final class LoginCoordinator: NavigationCoordinator, LoginCoordinatorProtocol {
 
-    //MARK: - Properties
+    // MARK: - Properties
 
     private let switchToMainScene: (User) -> Void
     var dependencyContainer: LoginDependencyContainerProtocol?
 
-    //MARK: - LifeCicle
+    // MARK: - LifeCicle
 
     init(//navigationController: UINavigationController,
          switchToMainScene: @escaping (User) -> Void
@@ -32,11 +32,11 @@ final class LoginCoordinator: NavigationCoordinator, LoginCoordinatorProtocol {
         self.switchToMainScene = switchToMainScene
 //             self.dependencyContainer = dependencyContainer
 //        super.init(navigationController: navigationController)
-             super.init()
+             super.init(navigationController: nil)
 //        self.navigationController = navigationController
     }
 
-    //MARK: - Metods
+    // MARK: - Metods
 
     func showMainScene(for user: User) {
         DispatchQueue.main.async {

@@ -12,7 +12,7 @@ import iOSIntPackage
 #warning("final")
 final class PostTableViewCell: UITableViewCell {
 
-    //MARK: - Views
+    // MARK: - Views
 
     private let postCellView = PostViewCell(viewFactory: ViewFactory())
 
@@ -74,7 +74,7 @@ final class PostTableViewCell: UITableViewCell {
 //        return stack
 //    }()
 
-    //MARK: - LifeCicle
+    // MARK: - LifeCicle
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -86,7 +86,7 @@ final class PostTableViewCell: UITableViewCell {
         super.init(coder: coder)
     }
 
-    //MARK: - Metods
+    // MARK: - Metods
     private func initialize() {
 //        [authorLabel,
 //         postImageView,

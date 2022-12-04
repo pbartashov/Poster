@@ -9,93 +9,129 @@ import SnapKit
 import PosterKit
 
 protocol ProfileHeaderViewDelegate: AnyObject {
-    func statusButtonTapped()
+    func editUserProfileButtonTapped()
+    func addPostButtonTapped()
+    func addStoryButtonTapped()
+    func addPhotoButtonTapped()
     func avatarTapped(sender: UIView)
 }
 
 final class ProfileHeaderViewCell: UITableViewCell {
 
-    //MARK: - Properties
+    // MARK: - Properties
 
+    let viewFactory: ViewFactoryProtocol&UserInfoViewFactory = ViewFactory()
     weak var delegate: ProfileHeaderViewDelegate?
 
-    var statusText: String {
-        statusTextField.text ?? ""
-    }
+//
+//    var statusText: String {
+//        statusTextField.text ?? ""
+//    }
 
-    //MARK: - Views
+    // MARK: - Views
 
-    private lazy var avatarImageView: UIImageView = {
-        let image = UIImageView(frame: CGRect(x: Constants.UI.padding,
-                                              y: Constants.UI.padding,
-                                              width: Constants.UI.avatarImageSize,
-                                              height: Constants.UI.avatarImageSize))
-        image.layer.borderWidth = 3
-        image.layer.borderColor = UIColor.brandYellowColor.cgColor
-        image.layer.cornerRadius = image.frame.width / 2
-        image.layer.masksToBounds = true
+    private lazy var userInfoView: UserInfoView = {
+        let view = UserInfoView(viewFactory: viewFactory,
+                                padding: Constants.UI.padding,
+                                authorAvatarImageSize: Constants.UI.avatarImageSize)
+        view.backgroundColor = .brandBackgroundColor
 
         let tapRecognizer = UITapGestureRecognizer(target: self,
                                                    action: #selector(avatarTapped))
-        image.addGestureRecognizer(tapRecognizer)
-        image.isUserInteractionEnabled = true
+        view.avatarView.addGestureRecognizer(tapRecognizer)
+        view.avatarView.isUserInteractionEnabled = true
 
-        return image
+        return view
     }()
 
-    private let fullNameLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .left
-        label.font = .systemFont(ofSize: 18, weight: .bold)
-        label.textColor = .textColor
-
-        return label
-    }()
-
-    private let statusLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .left
-        label.font = .systemFont(ofSize: 14, weight: .regular)
-        label.textColor = .secondaryTextColor
-
-        return label
-    }()
-
-    private let statusTextField: UITextField = {
-        let textField = UITextField()
-        textField.font = .systemFont(ofSize: 15, weight: .regular)
-        textField.textColor = .textColor
-        textField.backgroundColor = .lightBackgroundColor
-
-        let redPlaceholderText = NSAttributedString(string: "statusTextFieldPlaceholderProfileHeaderView".localized,
-                                                    attributes: [.foregroundColor: UIColor.placeholderTextColor])
-        textField.attributedPlaceholder = redPlaceholderText
-
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
-        textField.leftView = paddingView
-        textField.leftViewMode = .always
-        textField.rightView = paddingView
-        textField.rightViewMode = .always
-
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.black.cgColor
-        textField.layer.cornerRadius = 12
-        textField.layer.masksToBounds = true
-
-        return textField
-    }()
-
-    private lazy var setStatusButton: UIButton = {
-        let action = UIAction(title: "setStatusButtonProfileHeaderView".localized) { [weak self] _ in
-            self?.setStatusButtonTapped()
+    private lazy var editUserProfileButton: UIButton = {
+        let action = UIAction(title: "editButtonProfileHeaderView".localized) { [weak self] _ in
+            self?.delegate?.editUserProfileButtonTapped()
         }
 
-        let button = LoginViewFactory().makePlainButton(action: action)
-
-        return button
+        return viewFactory.makeYellowFilledButton(action: action)
     }()
 
-    //MARK: - LifeCicle
+    private lazy var userActivityPanel: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [
+            publishedPostsCountLabel,
+            subsribesCountLabel,
+            followersCountLabel
+        ])
+        stack.distribution = .fillEqually
+
+        return stack
+    }()
+    
+    private lazy var publishedPostsCountLabel: UILabel = {
+        let label = viewFactory.makeTextLabel()
+        label.numberOfLines = 0
+
+        return label
+    }()
+
+    private lazy var subsribesCountLabel: UILabel = {
+        let label = viewFactory.makeTextLabel()
+        label.numberOfLines = 0
+
+        return label
+    }()
+
+    private lazy var followersCountLabel: UILabel = {
+        let label = viewFactory.makeTextLabel()
+        label.numberOfLines = 0
+
+        return label
+    }()
+
+    private let separator: UIView = {
+        let view = UIView()
+        view.backgroundColor = .brandLightGray
+
+        return view
+    }()
+
+    private lazy var userActionsPanel: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [
+            addPostButton,
+//            UIView(),
+            addStoryButton,
+            addPhotoButton
+        ])
+        stack.spacing = Constants.UI.padding
+        stack.distribution = .fillEqually
+
+        return stack
+    }()
+
+    private lazy var addPostButton: UIButton = {
+        let image = UIImage(systemName: "square.and.pencil")
+        let action = UIAction(title: "addPostProfileHeaderView".localized, image: image) { [weak self] _ in
+            self?.delegate?.addPostButtonTapped()
+        }
+
+        return viewFactory.makeVerticalPlainButton(action: action)
+     }()
+
+    private lazy var addStoryButton: UIButton = {
+        let image = UIImage(systemName: "camera")
+        let action = UIAction(title: "addStoryProfileHeaderView".localized, image: image) { [weak self] _ in
+            self?.delegate?.addStoryButtonTapped()
+        }
+
+        return viewFactory.makeVerticalPlainButton(action: action)
+    }()
+
+    private lazy var addPhotoButton: UIButton = {
+        let image = UIImage(systemName: "photo")
+        let action = UIAction(title: "eaddPhotoProfileHeaderView".localized, image: image) { [weak self] _ in
+            self?.delegate?.addPhotoButtonTapped()
+        }
+
+        return viewFactory.makeVerticalPlainButton(action: action)
+    }()
+
+    // MARK: - LifeCicle
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -107,16 +143,16 @@ final class ProfileHeaderViewCell: UITableViewCell {
         super.init(coder: coder)
     }
 
-    //MARK: - Metods
+    // MARK: - Metods
 
     private func initialize() {
-        backgroundColor = .backgroundColor
+        backgroundColor = .brandBackgroundColor
 
-        [avatarImageView,
-        fullNameLabel,
-        statusLabel,
-        statusTextField,
-        setStatusButton
+        [editUserProfileButton,
+         userActivityPanel,
+         separator,
+         userActionsPanel,
+         userInfoView
         ].forEach {
             contentView.addSubview($0)
         }
@@ -124,51 +160,55 @@ final class ProfileHeaderViewCell: UITableViewCell {
         setupLayouts()
     }
 
-    func setup(with user: User?) {
-        avatarImageView.image = user?.avatarData?.asImage
-        fullNameLabel.text = user?.displayedName
-        statusLabel.text = user?.status
+    func setup(with user: UserViewModel?) {
+        if let user = user {
+            userInfoView.avatar = user.avatarData?.asImage
+            userInfoView.name = user.displayedName
+            userInfoView.status = user.status
+
+            publishedPostsCountLabel.text = user.publishedPostsCountText
+            subsribesCountLabel.text = user.subsribesCountText
+            followersCountLabel.text = user.followersCountText
+        }
     }
 
     private func setupLayouts() {
-        avatarImageView.snp.makeConstraints { make in
+        userInfoView.snp.makeConstraints { make in
             make.top.leading.equalToSuperview().offset(Constants.UI.padding)
-            make.width.height.equalTo(Constants.UI.avatarImageSize)
-        }
-
-        fullNameLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(27)
-            make.leading.equalTo(avatarImageView.snp.trailing).offset(Constants.UI.padding)
             make.trailing.equalToSuperview().offset(-Constants.UI.padding)
+            make.height.equalTo(Constants.UI.avatarImageSize)
         }
 
-        statusLabel.snp.makeConstraints { make in
-            make.leading.equalTo(avatarImageView.snp.trailing).offset(Constants.UI.padding)
-            make.trailing.equalToSuperview().offset(-Constants.UI.padding)
-            make.top.equalToSuperview().offset(82)
-        }
-
-        statusTextField.snp.makeConstraints { make in
-            make.top.equalTo(statusLabel.snp.bottom).offset(Constants.UI.padding / 2)
-            make.leading.equalTo(avatarImageView.snp.trailing).offset(Constants.UI.padding)
-            make.trailing.equalToSuperview().offset(-Constants.UI.padding)
-            make.height.equalTo(40)
-        }
-
-        setStatusButton.snp.makeConstraints { make in
-            make.top.equalTo(statusTextField.snp.bottom).offset(Constants.UI.padding)
+        editUserProfileButton.snp.makeConstraints { make in
+            make.top.equalTo(userInfoView.snp.bottom).offset(Constants.UI.padding)
             make.leading.equalToSuperview().offset(Constants.UI.padding)
             make.trailing.equalToSuperview().offset(-Constants.UI.padding)
-            make.height.equalTo(50)
-            make.bottom.equalToSuperview().offset(-Constants.UI.padding)
+//            make.height.equalTo(50)
         }
-    }
 
-    private func setStatusButtonTapped() {
-        delegate?.statusButtonTapped()
+        userActivityPanel.snp.makeConstraints { make in
+            make.top.equalTo(editUserProfileButton.snp.bottom).offset(Constants.UI.padding)
+            make.leading.trailing.equalTo(editUserProfileButton)
+            make.height.equalTo(Constants.UI.userActivityPanelHeight)
+        }
+
+        separator.snp.makeConstraints { make in
+            make.top.equalTo(userActivityPanel.snp.bottom).offset(Constants.UI.padding)
+            make.leading.trailing.equalTo(editUserProfileButton)
+            make.height.equalTo(Constants.UI.separatorHeight)
+        }
+
+        userActionsPanel.snp.makeConstraints { make in
+            make.top.equalTo(separator.snp.bottom).offset(Constants.UI.padding)
+            make.leading.trailing.equalTo(editUserProfileButton)
+//            make.centerX.equalToSuperview()
+            make.height.equalTo(Constants.UI.userActivityPanelHeight)
+
+            make.bottom.equalToSuperview().offset(-Constants.UI.padding).priority(.low)
+        }
     }
 
     @objc private func avatarTapped() {
-        delegate?.avatarTapped(sender: avatarImageView)
+        delegate?.avatarTapped(sender: userInfoView.avatarView)
     }
 }

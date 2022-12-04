@@ -10,12 +10,18 @@ import UIKit
 enum Constants {
     enum UI {
         static let avatarMaxSize: CGFloat = 500
-        static let compressionQuality = 0.5
+        static let imageMaxSize: CGFloat = 1000
+        static let jpgCompressionQuality = 0.5
+
         static let avatarImageSize: CGFloat = 100
-        static let storiesImageSize: CGFloat = 60
-        static let postImageAcpectRatio: CGFloat = 125 / 300
         static let authorAvatarImageSize: CGFloat = 60
+        static let storiesImageSize: CGFloat = 60
+//        static let activityViewSize: CGFloat = 50
+
+        static let postImageAcpectRatio: CGFloat = 125 / 300
+
         static let postHeaderHeight: CGFloat = 72
+        static let userActivityPanelHeight: CGFloat = 60
 
         static let postContentLabelHeight: CGFloat = 100
 
@@ -30,6 +36,8 @@ enum Constants {
         static let buttonHorizontalPadding: CGFloat = 32
 
         static let cornerRadius: CGFloat = 10
+
+        static let separatorHeight: CGFloat = 1
     }
 }
 

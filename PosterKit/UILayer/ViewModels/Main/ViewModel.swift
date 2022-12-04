@@ -17,7 +17,7 @@ public protocol ViewModelProtocol {
 
 public class ViewModel<State, Action>: ViewModelProtocol {
 
-    //MARK: - Properties
+    // MARK: - Properties
 
     public let errorPresenter: ErrorPresenterProtocol
 
@@ -25,14 +25,14 @@ public class ViewModel<State, Action>: ViewModelProtocol {
 
     public var statePublisher: Published<State>.Publisher { $state }
 
-    //MARK: - LifeCicle
+    // MARK: - LifeCicle
 
     public init(state: State, errorPresenter: ErrorPresenterProtocol) {
         self.state = state
         self.errorPresenter = errorPresenter
     }
 
-    //MARK: - Metods
+    // MARK: - Metods
 
     public func perfomAction(_ action: Action) { }
 }

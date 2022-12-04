@@ -19,66 +19,70 @@ class PostViewCell: ViewWithButton<PostViewButton> {
     // MARK: - Properties
 
     var subsriptions: Set<AnyCancellable> = []
-    private let viewFactory: ViewFactoryProtocol
+    private let viewFactory: ViewFactoryProtocol&UserInfoViewFactory
 
-    //MARK: - Views
+    // MARK: - Views
 
-    private let headerView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .backgroundColor
+//    private let headerView: UIView = {
+//        let view = UIView()
+//        view.backgroundColor = .backgroundColor
+//
+//        return view
+//    }()
+
+    private lazy var headerView: UserInfoView = {
+        let view = UserInfoView(viewFactory: viewFactory,
+                                padding: Constants.UI.padding,
+                                authorAvatarImageSize: Constants.UI.authorAvatarImageSize)
+        view.backgroundColor = .brandBackgroundColor
 
         return view
     }()
 
-    private let authorAvatarView: UIImageView = {
-        let imageView = UIImageView(frame: CGRect(x: 0,
-                                              y: 0,
-                                              width: Constants.UI.authorAvatarImageSize,
-                                              height: Constants.UI.authorAvatarImageSize))
+//    private let authorAvatarView: UIImageView = {
+//        let imageView = UIImageView(frame: CGRect(x: 0,
+//                                              y: 0,
+//                                              width: Constants.UI.authorAvatarImageSize,
+//                                              height: Constants.UI.authorAvatarImageSize))
+//        imageView.contentMode = .scaleAspectFill
+//        imageView.layer.cornerRadius = imageView.bounds.width / 2
+//        imageView.tintColor = .brandYellowColor
+//        imageView.layer.masksToBounds = true
+//
+//        return imageView
+//    }()
+//
+//    private lazy var authorNameLabel: UILabel = {
+//        let label = viewFactory.makeH3Label()
+//
+//        return label
+//    }()
+//
+//    private lazy var authorStatusLabel: UILabel = {
+//        let label = viewFactory.makeSmallTextLabel()
+//
+//        return label
+//    }()
+//
+//    private lazy var authorTextStack: UIStackView = {
+//        let textStack = UIStackView(arrangedSubviews: [authorNameLabel, authorStatusLabel])
+//        textStack.axis = .vertical
+//        textStack.spacing = Constants.UI.padding
+//
+////        let stack = UIStackView(arrangedSubviews: [authorAvatarView, textStack])
+////        stack.axis = .horizontal
+////        stack.alignment = .fill
+////        stack.distribution = .fill
+////        stack.spacing = Constants.UI.padding
+//        //        stack.backgroundColor = .yellow
+//
+//        return textStack
+//    }()
+
+    private lazy var postImageView: UIImageView = {
+        let imageView = viewFactory.makeImageView()
         imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = imageView.bounds.width / 2
-        imageView.tintColor = .brandYellowColor
-        imageView.layer.masksToBounds = true
-
-        return imageView
-    }()
-
-    private lazy var authorNameLabel: UILabel = {
-        let label = viewFactory.makeH3Label()
-
-        return label
-    }()
-
-    private lazy var authorStatusLabel: UILabel = {
-        let label = viewFactory.makeSmallTextLabel()
-
-        return label
-    }()
-
-    private lazy var authorTextStack: UIStackView = {
-        let textStack = UIStackView(arrangedSubviews: [authorNameLabel, authorStatusLabel])
-        textStack.axis = .vertical
-        textStack.spacing = Constants.UI.padding
-
-//        let stack = UIStackView(arrangedSubviews: [authorAvatarView, textStack])
-//        stack.axis = .horizontal
-//        stack.alignment = .fill
-//        stack.distribution = .fill
-//        stack.spacing = Constants.UI.padding
-        //        stack.backgroundColor = .yellow
-
-        return textStack
-    }()
-
-    private let postImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = Constants.UI.cornerRadius
-        imageView.layer.masksToBounds = true
-        imageView.layer.borderColor = UIColor.brandYellowColor.cgColor
-        imageView.layer.borderWidth = 1
-        //        imageView.backgroundColor = .backgroundGrayColor
-
+     
         return imageView
     }()
 
@@ -90,8 +94,7 @@ class PostViewCell: ViewWithButton<PostViewButton> {
 
         return label
     }()
-
-
+    
     private lazy var likesView: ImagedLabel = {
         let imagedLabel = viewFactory.makeImagedLabel(imageSystemName: "heart")
 
@@ -115,9 +118,7 @@ class PostViewCell: ViewWithButton<PostViewButton> {
     }()
 
     lazy var activityView: UIActivityIndicatorView = {
-        let activity = UIActivityIndicatorView(style: .large)
-        activity.startAnimating()
-        activity.isHidden = true
+        let activity = viewFactory.makeActivityIndicatorView()
 
         return activity
     }()
@@ -131,9 +132,9 @@ class PostViewCell: ViewWithButton<PostViewButton> {
         return viewFactory.makePlainButton(action: action)
     }()
 
-    //MARK: - LifeCicle
+    // MARK: - LifeCicle
 
-    init(viewFactory: ViewFactoryProtocol) {
+    init(viewFactory: ViewFactoryProtocol&UserInfoViewFactory) {
         self.viewFactory = viewFactory
         super.init(frame: .zero)
         initialize()
@@ -148,15 +149,15 @@ class PostViewCell: ViewWithButton<PostViewButton> {
 //        authorAvatarView.layer.cornerRadius = authorAvatarView.bounds.width / 2
 //    }
 
-    //MARK: - Metods
+    // MARK: - Metods
     private func initialize() {
-        backgroundColor = .backgroundGrayColor
+        backgroundColor = .brandBackgroundGrayColor
 
-        [authorAvatarView,
-         authorTextStack
-        ].forEach {
-            headerView.addSubview($0)
-        }
+//        [authorAvatarView,
+//         authorTextStack
+//        ].forEach {
+//            headerView.addSubview($0)
+//        }
 
         [headerView,
          postImageView,
@@ -177,18 +178,18 @@ class PostViewCell: ViewWithButton<PostViewButton> {
             make.height.equalTo(Constants.UI.postHeaderHeight)
         }
 
-        authorAvatarView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(Constants.UI.padding)
-            make.centerY.equalToSuperview()
-            make.height.width.equalTo(Constants.UI.authorAvatarImageSize)
-        }
-
-        authorTextStack.snp.makeConstraints { make in
-            make.leading.equalTo(authorAvatarView.snp.trailing).offset(Constants.UI.padding)
-            //.offset(Constants.UI.padding)
-            //            make.trailing.equalToSuperview().offset(-Constants.UI.padding)
-            make.centerY.equalToSuperview()
-        }
+//        authorAvatarView.snp.makeConstraints { make in
+//            make.leading.equalToSuperview().offset(Constants.UI.padding)
+//            make.centerY.equalToSuperview()
+//            make.height.width.equalTo(Constants.UI.authorAvatarImageSize)
+//        }
+//
+//        authorTextStack.snp.makeConstraints { make in
+//            make.leading.equalTo(authorAvatarView.snp.trailing).offset(Constants.UI.padding)
+//            //.offset(Constants.UI.padding)
+//            //            make.trailing.equalToSuperview().offset(-Constants.UI.padding)
+//            make.centerY.equalToSuperview()
+//        }
 
         contentLabel.snp.makeConstraints { make in
             make.top.equalTo(headerView.snp.bottom).offset(Constants.UI.padding)
@@ -235,17 +236,17 @@ class PostViewCell: ViewWithButton<PostViewButton> {
         viewsView.text = "\(post.views)"
 
         post.$authorName
-//            .map { $0 ?? "loadingPostsView".localized }
+            .assignOnMain(to: \.name, on: headerView)
+            .store(in: &subsriptions)
+
+        post.$authorStatus
             .receive(on: DispatchQueue.main)
-            .assign(to: \.text, on: authorNameLabel)
+            .assign(to: \.status, on: headerView)
             .store(in: &subsriptions)
 
         post.$authorAvatar
-            .map {
-                $0?.asImage ?? .avatarPlaceholder
-            }
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.image, on: authorAvatarView)
+            .map { $0?.asImage ?? .avatarPlaceholder }
+            .assignOnMain(to: \.avatar, on: headerView)
             .store(in: &subsriptions)
 
         post.$imageData

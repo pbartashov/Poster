@@ -7,7 +7,10 @@
 
 public protocol ProfileCoordinatorProtocol: AnyObject {
     func showPhotos()
+
     func showUserProfile()
-    func dismissUserProfile()
-//    func showImagePicker()
+//    func dismissUserProfile()
+
+    func showAddPhoto()
+//    func dismissAddPhoto()
 }

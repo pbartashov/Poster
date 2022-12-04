@@ -23,7 +23,7 @@ final public class LocalStorageWriter: StorageWriterProtocol {
         #warning("TODO")
     }
 
-    public func store(post: Post) async throws {
+    public func store(post: Post, imageData: Data?) async throws {
         try await repository.save(post: post)
         try await repository.saveChanges()
     }

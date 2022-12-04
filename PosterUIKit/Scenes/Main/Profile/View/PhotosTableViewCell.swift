@@ -9,13 +9,13 @@ import UIKit
 
 class PhotosTableViewCell: UITableViewCell {
 
-    //MARK: - Properties
+    // MARK: - Properties
 
     let photosCount = 4
     private let padding: CGFloat = 12
     private let interPhotoSpacing: CGFloat = 8
 
-    //MARK: - Views
+    // MARK: - Views
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -56,7 +56,7 @@ class PhotosTableViewCell: UITableViewCell {
         return stack
     }()
 
-    //MARK: - LifeCicle
+    // MARK: - LifeCicle
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -71,7 +71,7 @@ class PhotosTableViewCell: UITableViewCell {
         super.init(coder: coder)
     }
 
-    //MARK: - Metods
+    // MARK: - Metods
 
     private func setupLayouts() {
         //photoStack.height = (1 / 4) * (photoStack.width - 3 * 8)

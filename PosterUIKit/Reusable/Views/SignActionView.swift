@@ -11,7 +11,7 @@ import SnapKit
 
 class SignActionView: ViewWithButton<LoginButton> {
 
-    //MARK: - Properties
+    // MARK: - Properties
 
     let viewFactory: ViewFactoryProtocol
     let loginButton: LoginButton
@@ -34,7 +34,7 @@ class SignActionView: ViewWithButton<LoginButton> {
         }
     }
 
-    //MARK: - Views
+    // MARK: - Views
 
     lazy var textField: UITextField = {
         let textField = viewFactory.makeTextField()
@@ -51,18 +51,15 @@ class SignActionView: ViewWithButton<LoginButton> {
             self.sendButtonTapped(self.loginButton)
         }
 
-        return viewFactory.makeFilledButton(action: action)
+        return viewFactory.makeBlackFilledButton(action: action)
     }()
 
     lazy var activityView: UIActivityIndicatorView = {
-        let activity = UIActivityIndicatorView(style: .large)
-        activity.startAnimating()
-        activity.isHidden = true
-
+        let activity = viewFactory.makeActivityIndicatorView()
         return activity
     }()
 
-    //MARK: - LifeCicle
+    // MARK: - LifeCicle
 
     init(viewFactory: ViewFactoryProtocol,
          loginButton: LoginButton
@@ -77,7 +74,7 @@ class SignActionView: ViewWithButton<LoginButton> {
         fatalError("init(coder:) has not been implemented")
     }
 
-    //MARK: - Metods
+    // MARK: - Metods
 
     private func initialize() {
         [textField,

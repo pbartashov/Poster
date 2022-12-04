@@ -11,11 +11,11 @@ import SnapKit
 
 final class WelcomeView: ViewWithButton<LoginButton> {
 
-    //MARK: - Properties
+    // MARK: - Properties
 
     let viewFactory: ViewFactoryProtocol
 
-    //MARK: - Views
+    // MARK: - Views
 
     private let logoImageView = UIImageView(image: UIImage(named: "Logo"))
 
@@ -24,7 +24,7 @@ final class WelcomeView: ViewWithButton<LoginButton> {
             self?.sendButtonTapped(.signUp)
         }
 
-        return viewFactory.makeFilledButton(action: action)
+        return viewFactory.makeBlackFilledButton(action: action)
     }()
 
     private lazy var signInViewButton: UIButton = {
@@ -37,7 +37,7 @@ final class WelcomeView: ViewWithButton<LoginButton> {
 
 
 
-    //MARK: - LifeCicle
+    // MARK: - LifeCicle
 
     init(viewFactory: ViewFactoryProtocol) {
         self.viewFactory = viewFactory
@@ -49,7 +49,7 @@ final class WelcomeView: ViewWithButton<LoginButton> {
         fatalError("init(coder:) has not been implemented")
     }
 
-    //MARK: - Metods
+    // MARK: - Metods
 
     private func initialize() {
         [logoImageView,

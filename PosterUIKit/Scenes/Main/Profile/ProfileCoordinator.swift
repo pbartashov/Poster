@@ -24,7 +24,7 @@ final class ProfileCoordinator: NavigationCoordinator, ProfileCoordinatorProtoco
 
     // MARK: - Metods
 
-    //MARK: - Metods
+    // MARK: - Metods
 
     func showPhotos() {
         let photosViewController = dependancyContainer?.makePhotosViewController()
@@ -38,8 +38,13 @@ final class ProfileCoordinator: NavigationCoordinator, ProfileCoordinatorProtoco
         }
     }
 
-    func dismissUserProfile() {
-        dismiss(animated: true)
+//    func dismissUserProfile() {
+//        dismiss(animated: true)
+//    }
+
+    func showAddPhoto() {
+        let addPhotoViewController = dependancyContainer?.makeAddPhotoViewController()
+        presentViewController(addPhotoViewController)
     }
 
 //    func showImagePicker() {
@@ -47,4 +52,22 @@ final class ProfileCoordinator: NavigationCoordinator, ProfileCoordinatorProtoco
 //            presentViewController(imagePickerController)
 //        }
 //    }
+}
+
+extension ProfileCoordinator: DetailedPostCoordinatorProtocol {
+    func dismissDetailedPost() {
+        pop(animated: true)
+    }
+}
+
+extension ProfileCoordinator: UserProfileCoordinatorProtocol {
+    func dismissUserProfile() {
+        dismiss(animated: true)
+    }
+}
+
+extension ProfileCoordinator: AddPhotoCoordinatorProtocol {
+    func dismissAddPhoto() {
+        dismiss(animated: true)
+    }
 }

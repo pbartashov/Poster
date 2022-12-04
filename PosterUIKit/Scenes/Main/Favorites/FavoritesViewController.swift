@@ -8,13 +8,16 @@
 import UIKit
 import PosterKit
 
-final class FavoritesViewController<T>: PostsViewController<T>,
-                                        UITableViewDelegate where T: FavoritesViewModel {
-    //MARK: - LifeCicle
+final class FavoritesViewController<T>: PostsViewController<T>
+//                                        UITableViewDelegate
+where T: FavoritesViewModel {
+
+    // MARK: - LifeCicle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
+        navigationController?.navigationBar.tintColor = .brandYellowColor
+//        tableView.delegate = self
     }
 
     // MARK: - UITableViewDelegate methods

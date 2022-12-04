@@ -76,7 +76,8 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        navigationController?.navigationBar.tintColor = .brandYellowColor
         applySnapshot()
         bindViewModelToViews()
         fetchData()
@@ -122,6 +123,7 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
 
 //        collectionView.contentInsetAdjustmentBehavior = .never
 //        collectionView.contentInset = .init(top: 0, left: 0, bottom: 160, right: 0)
+        collectionView.delegate = self
 
         configureDataSource()
         configureRefreshControl()
@@ -404,30 +406,20 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
         dataSource.apply(snapshot)
     }
 
-    private func presentHourlyWeather() {
-//        let hourlyWeatherPublisher = viewModel.$hourlyWeather.eraseToAnyPublisher()
-//        let hourlyViewController = hourlyWeatherViewControllerFactory
-//            .makeHourlyWeatherViewController(for: viewModel.location.cityName,
-//                                             weathers: hourlyWeatherPublisher)
-//        navigationController?.pushViewController(hourlyViewController, animated: true)
+    private func showDetailedPost(at indexPath: IndexPath) {
+        if let item = postsItems?[indexPath.item],
+           case let .postItem(post) = item {
+            viewModel.perfomAction(.selected(post: post))
+        }
     }
 
-    private func presentDailyWeather() {
-//        let dailyWeatherPublisher = viewModel.$dailyWeather.eraseToAnyPublisher()
-//        let dailyViewController = dailyWeatherViewControllerFactory
-//            .makeDailyWeatherViewController(for: viewModel.location,
-//                                            weathers: dailyWeatherPublisher)
-//        navigationController?.pushViewController(dailyViewController, animated: true)
-    }
 
     // MARK: UICollectionViewDelegate
     public override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
         switch indexPath.section {
             case 1:
-                presentHourlyWeather()
-
-            case 2:
-                presentDailyWeather()
+                showDetailedPost(at: indexPath)
 
             default:
                 break

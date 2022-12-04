@@ -11,11 +11,11 @@ public protocol FavoritesViewModelProtocol: PostsViewModelProtocol {
 
 public final class FavoritesViewModel: PostsViewModel, FavoritesViewModelProtocol {
 
-    //MARK: - Properties
+    // MARK: - Properties
 
 //    private let favoritesPostRepository: PostRepositoryInterface
 
-    //MARK: - LifeCicle
+    // MARK: - LifeCicle
 
     public init(//postService: PostServiceProtocol,
         storageReader: StorageReaderProtocol,
@@ -35,7 +35,7 @@ public final class FavoritesViewModel: PostsViewModel, FavoritesViewModelProtoco
 //        setupHandlers()
     }
 
-    //MARK: - Metods
+    // MARK: - Metods
 
 //    private func setupHandlers() {
 //        requestPosts = { [weak self] in

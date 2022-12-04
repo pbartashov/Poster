@@ -10,7 +10,7 @@ import PosterKit
 
 final class ErrorPresenter: ErrorPresenterProtocol {
 
-    //MARK: - Properties
+    // MARK: - Properties
 
     static let shared = ErrorPresenter()
 
@@ -19,7 +19,7 @@ final class ErrorPresenter: ErrorPresenterProtocol {
     private var errorQueue: [Error] = []
     private var isErrorPresenting = false
 
-    //MARK: - LifeCicle
+    // MARK: - LifeCicle
 
     private init() { }
 
@@ -27,7 +27,7 @@ final class ErrorPresenter: ErrorPresenterProtocol {
         self.presenter = presenter
     }
 
-    //MARK: - Metods
+    // MARK: - Metods
 
     func show(error: Error) {
         guard presenter != nil else {

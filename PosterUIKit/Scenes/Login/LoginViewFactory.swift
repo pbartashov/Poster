@@ -46,8 +46,12 @@ struct LoginViewFactory: ViewFactoryProtocol {
     //        return button
     //    }
 
-    func makeFilledButton(action: UIAction?) -> UIButton {
-        viewFactory.makeFilledButton(action: action)
+    func makeBlackFilledButton(action: UIAction?) -> UIButton {
+        viewFactory.makeBlackFilledButton(action: action)
+    }
+
+    func makeYellowFilledButton(action: UIAction?) -> UIButton {
+        viewFactory.makeYellowFilledButton(action: action)
     }
 
     func makePlainButton(action: UIAction?) -> UIButton {
@@ -94,5 +98,33 @@ struct LoginViewFactory: ViewFactoryProtocol {
 
     func makeLabeledPhoneField(label: String, placeholder: String?) -> LabeledView<UITextField> {
         viewFactory.makeLabeledPhoneField(label: label, placeholder: placeholder)
+    }
+
+    func makeTextView() -> UITextView {
+        viewFactory.makeTextView()
+    }
+
+    func makeContainerView() -> UIView {
+        viewFactory.makeContainerView()
+    }
+
+    func makeImageView() -> UIImageView {
+        viewFactory.makeImageView()
+    }
+
+    func makeAvatarPickerView(delegate: ImagePickerViewDelegate?) -> ImagePickerView {
+        viewFactory.makeAvatarPickerView(delegate: delegate)
+    }
+
+    func makePostImagePickerView(delegate: ImagePickerViewDelegate?) -> ImagePickerView {
+        viewFactory.makePostImagePickerView(delegate: delegate)
+    }
+
+    func makeVerticalPlainButton(action: UIAction?) -> UIButton {
+        viewFactory.makeVerticalPlainButton(action: action)
+    }
+
+    func makeActivityIndicatorView() -> UIActivityIndicatorView {
+        viewFactory.makeActivityIndicatorView()
     }
 }

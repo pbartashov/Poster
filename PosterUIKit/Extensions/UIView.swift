@@ -36,4 +36,10 @@ public extension UIView {
             self?.alpha = 1
         }
     }
+
+    func makeEdgesConstraintsEqualToSuperview() {
+        self.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
 }

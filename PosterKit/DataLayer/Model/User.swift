@@ -21,6 +21,9 @@ public struct User {
     public var nativeTown: String?
     public var gender: Gender?
     public var birthDate: Date?
+    public var publishedPostsCount: Int?
+    public var subsribesCount: Int?
+    public var followersCount: Int?
 
     public var displayedName: String {
         var displayedName = ""
@@ -48,7 +51,10 @@ public struct User {
                 status: String? = nil,
                 nativeTown: String? = nil,
                 gender: Gender? = nil,
-                birthDate: Date? = nil
+                birthDate: Date? = nil,
+                publishedPostsCount: Int? = nil,
+                subsribesCount: Int? = nil,
+                followersCount: Int? = nil
     ) {
         self.uid = uid
         self.firstName = firstName
@@ -59,6 +65,9 @@ public struct User {
         self.nativeTown = nativeTown
         self.gender = gender
         self.birthDate = birthDate
+        self.publishedPostsCount = publishedPostsCount
+        self.subsribesCount = subsribesCount
+        self.followersCount = followersCount
     }
 }
 
@@ -75,6 +84,9 @@ extension User: Codable {
         case nativeTown
         case gender
         case birthDate
+        case publishedPostsCount
+        case subsribesCount
+        case followersCount
     }
 
 //    public init(from decoder: Decoder) throws {

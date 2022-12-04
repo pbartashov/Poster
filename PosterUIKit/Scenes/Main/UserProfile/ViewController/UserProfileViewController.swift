@@ -10,17 +10,17 @@ import PosterKit
 
 final class UserProfileViewController: ScrollableViewController<UserProfileViewModelProtocol> {
 
-    //MARK: - Properties
+    // MARK: - Properties
 
-    //MARK: - Views
+    // MARK: - Views
 
     private lazy var userProfileView: UserProfileView = {
         let viewFactory = ViewFactory()
-        return UserProfileView(viewFactory: viewFactory)
+        return UserProfileView(viewFactory: viewFactory, imagePickerViewDelegate: self)
     }()
 
 
-    //MARK: - LifeCicle
+    // MARK: - LifeCicle
     
 
 
@@ -36,7 +36,7 @@ final class UserProfileViewController: ScrollableViewController<UserProfileViewM
     }
 
 
-    //MARK: - Metods
+    // MARK: - Metods
 
     private func initialize() {
         super.addSubView(userProfileView)
@@ -75,18 +75,18 @@ final class UserProfileViewController: ScrollableViewController<UserProfileViewM
             .assign(to: \.datePlaceHolder, on: userProfileView)
             .store(in: &subsriptions)
 
-        userProfileView.buttonTappedPublisher
-            .sink { [weak self] button in
-                guard let self = self else { return }
-                switch button {
-                    case .avatar:
-                        self.showImagePicker()
-
-                    default:
-                        return
-                }
-            }
-            .store(in: &subsriptions)
+//        userProfileView.buttonTappedPublisher
+//            .sink { [weak self] button in
+//                guard let self = self else { return }
+//                switch button {
+//                    case .avatar:
+//                        self.showImagePicker()
+//
+//                    default:
+//                        return
+//                }
+//            }
+//            .store(in: &subsriptions)
 
         viewModel.statePublisher
             .receive(on: DispatchQueue.main)
@@ -126,28 +126,41 @@ final class UserProfileViewController: ScrollableViewController<UserProfileViewM
         }
     }
 
-    private func showImagePicker() {
-        let picker = UIImagePickerController()
-        picker.sourceType = .photoLibrary
-        picker.delegate = self
-
-        present(picker, animated: true)
-    }
+//    private func showImagePicker() {
+//        let picker = UIImagePickerController()
+//        picker.sourceType = .photoLibrary
+//        picker.delegate = self
+//
+//        present(picker, animated: true)
+//    }
 }
 
-// UIImagePickerControllerDelegate
-extension UserProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
-    ) {
-        guard let image = info[.originalImage] as? UIImage else { return }
+// MARK: - UIImagePickerControllerDelegate methods
+//extension UserProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+//    func imagePickerController(_ picker: UIImagePickerController,
+//                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
+//    ) {
+//        guard let image = info[.originalImage] as? UIImage else { return }
+//
+//        dismiss(animated: true)
+//
+//        userProfileView.avatarImage = image
+//    }
+//
+//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+//        dismiss(animated: true)
+//    }
+//}
 
-        dismiss(animated: true)
 
-        userProfileView.avatarImage = image
+
+// MARK: - UIImagePickerControllerDelegate methods
+extension UserProfileViewController: ImagePickerViewDelegate {
+    func present(_ viewController: UIViewController) {
+        present(viewController, animated: true)
     }
 
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+    func dismiss() {
         dismiss(animated: true)
     }
 }

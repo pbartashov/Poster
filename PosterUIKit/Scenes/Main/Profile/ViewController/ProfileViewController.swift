@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 import PosterKit
 
 extension PostSectionType {
@@ -14,11 +15,11 @@ extension PostSectionType {
 }
 
 final class ProfileViewController<T, U>: PostsViewController<U>,
-                                         UITableViewDelegate,
-                                         UITableViewDragDelegate,
-                                         UITableViewDropDelegate
+//                                         UITableViewDelegate,
+UITableViewDragDelegate,
+UITableViewDropDelegate
 where T: ProfileViewModelProtocol&DragDropProtocol,
-      U == T.PostsViewModelType {
+U == T.PostsViewModelType {
 
     typealias ViewModelType = T
     typealias SectionType = PostsViewController<U>.SectionType
@@ -29,7 +30,9 @@ where T: ProfileViewModelProtocol&DragDropProtocol,
         case post(PostViewModel)
     }
 
-    //MARK: - Properties
+    // MARK: - Properties
+
+    private var subscriptions: Set<AnyCancellable> = []
 
     private var profileViewModel: ViewModelType
 
@@ -69,12 +72,11 @@ where T: ProfileViewModelProtocol&DragDropProtocol,
         let cells = postItems.map { Cell.post($0) }
         snapshot.appendSections(postSections)
         snapshot.appendItems(cells, toSection: .posts)
-        postsSectionNumber = 2
 
         return snapshot
     }
 
-    //MARK: - Views
+    // MARK: - Views
 
     private weak var avatar: UIView?
     private weak var coverView: UIView?
@@ -90,10 +92,10 @@ where T: ProfileViewModelProtocol&DragDropProtocol,
 
     private lazy var photosTableViewCell = PhotosTableViewCell()
 
-    //MARK: - LifeCicle
+    // MARK: - LifeCicle
 
     init(viewModel: ViewModelType
-//         postViewModelProvider: PostViewModelProvider
+         //         postViewModelProvider: PostViewModelProvider
     ) {
         self.profileViewModel = viewModel
         super.init(viewModel: profileViewModel.postsViewModel)
@@ -105,18 +107,16 @@ where T: ProfileViewModelProtocol&DragDropProtocol,
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dragDelegate = self
-        tableView.dropDelegate = self
-        tableView.dragInteractionEnabled = true
+        initialize()
+
+//        profileViewModel.perfomAction(.requstPhotos)
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-//        let photos = Photos.randomPhotos(ofCount: photosTableViewCell.photosCount)
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        let photos = profileViewModel.photos.compactMap { $0.asImage }
 //        photosTableViewCell.setup(with: photos)
-    }
+//    }
 
     override func viewSafeAreaInsetsDidChange() {
         if isAvatarPresenting {
@@ -124,28 +124,56 @@ where T: ProfileViewModelProtocol&DragDropProtocol,
         }
     }
 
-    //MARK: - Metods
+    // MARK: - Metods
+
+    private func initialize() {
+        //        tableView.delegate = self
+        tableView.dragDelegate = self
+        tableView.dropDelegate = self
+        tableView.dragInteractionEnabled = true
+        postsSectionNumber = 2
+
+        navigationController?.navigationBar.tintColor = .brandYellowColor
+
+        bindViewModel()
+    }
+
+    private func bindViewModel() {
+        profileViewModel.photosPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] photosData in
+                let photos = photosData.compactMap { $0.asImage }
+                self?.photosTableViewCell.setup(with: photos)
+            }
+            .store(in: &subscriptions)
+    }
 
     override func applySnapshot() {
         cellsDataSource.apply(cellsSnapshot)
+    }
+
+    override func fetchData() {
+        super.fetchData()
+        profileViewModel.perfomAction(.requstPhotos)
     }
 
     private func moveAndScaleAvatarToCenter() {
         guard let avatar = avatar else {
             return
         }
+        avatar.transform = .identity
 
-        let layoutFrame = view.safeAreaLayoutGuide.layoutFrame
-        let scale = min(layoutFrame.size.width, layoutFrame.size.height) / avatar.bounds.width
-
+        let layoutFrame = tableView.safeAreaLayoutGuide.layoutFrame
+        let size = min(layoutFrame.size.width, layoutFrame.size.height) - 2 * Constants.UI.padding
+        let scale = size / avatar.bounds.width
+        let bounds = tableView.convert(avatar.bounds, from: avatar)
         let scaleTransform = CGAffineTransform(scaleX: scale, y: scale)
-        let translateTransform = CGAffineTransform(translationX: layoutFrame.midX - avatar.center.x,
-                                                   y: layoutFrame.midY - avatar.center.y)
-
+        let translateTransform = CGAffineTransform(translationX: layoutFrame.midX - bounds.midX,
+                                                   y: layoutFrame.midY - bounds.midY)
         avatar.transform = scaleTransform.concatenating(translateTransform)
     }
 
-    private func createCover() {
+    private func createCover(for sender: UIView) {
         let cover = UIView()
         cover.backgroundColor = .lightBackgroundColor
         cover.alpha = 0.0
@@ -160,8 +188,8 @@ where T: ProfileViewModelProtocol&DragDropProtocol,
         button.tintColor = .textColor
         button.alpha = 0.0
 
+        sender.superview?.insertSubview(cover, belowSubview: sender)
         view.addSubview(button)
-        profileHeaderView.addSubview(cover)
 
         cover.snp.makeConstraints { make in
             make.edges.equalTo(view)
@@ -200,13 +228,12 @@ where T: ProfileViewModelProtocol&DragDropProtocol,
             closeAvatarPresentationButton?.removeFromSuperview()
             avatar = nil
             isAvatarPresenting = false
-        }
-        )
+        })
     }
 
     // MARK: - UITableViewDelegate methods
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        super.tableView(tableView, didSelectRowAt: indexPath)
 
         if indexPath == IndexPath(row: 0, section: 1) {
             profileViewModel.perfomAction(.showPhotos)
@@ -223,7 +250,7 @@ where T: ProfileViewModelProtocol&DragDropProtocol,
 
     // MARK: - UITableViewDropDelegate methods
     func tableView(_ tableView: UITableView, canHandle session: UIDropSession) -> Bool {
-         profileViewModel.canHandle(session)
+        profileViewModel.canHandle(session)
     }
 
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
@@ -239,20 +266,18 @@ where T: ProfileViewModelProtocol&DragDropProtocol,
 
 // MARK: - ProfileHeaderViewDelegate methods
 extension ProfileViewController: ProfileHeaderViewDelegate {
-    func statusButtonTapped() {
-//        profileViewModel.user?.status = profileHeaderView.statusText
+    func editUserProfileButtonTapped() {
         profileViewModel.perfomAction(.showUserProfile)
-//        profileHeaderView.setup(with: profileViewModel.user)
-
     }
 
     func avatarTapped(sender: UIView) {
         isAvatarPresenting = true
 
-        createCover()
+        createCover(for: sender)
 
         avatar = sender
         profileHeaderView.bringSubviewToFront(sender)
+//        sender.superview?.bringSubviewToFront(sender)
 
         UIView.animate(withDuration: 0.5) { [weak self] in
             self?.coverView?.alpha = 0.5
@@ -263,5 +288,17 @@ extension ProfileViewController: ProfileHeaderViewDelegate {
                 self?.closeAvatarPresentationButton?.alpha = 1
             }
         }
+    }
+
+    func addPostButtonTapped() {
+        profileViewModel.perfomAction(.showAddPost)
+    }
+
+    func addStoryButtonTapped() {
+        profileViewModel.perfomAction(.showAddStory)
+    }
+
+    func addPhotoButtonTapped() {
+        profileViewModel.perfomAction(.showAddPhoto)
     }
 }

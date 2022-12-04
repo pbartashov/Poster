@@ -8,11 +8,11 @@ import PosterKit
 
 struct FavoritesFactory {
 
-    //MARK: - Properties
+    // MARK: - Properties
 
     //    static var create = FavoritesFactory()
 
-    //MARK: - Metods
+    // MARK: - Metods
 
     func viewModelWith(coordinator: PostsCoordinatorProtocol?) -> FavoritesViewModel {
         let contextProvider = CoreDataContextProvider.shared

@@ -90,7 +90,7 @@ public final class FeedViewModel<T>: ViewModel<FeedState, FeedAction>,
 
 
 
-    //MARK: - Metods
+    // MARK: - Metods
 
 //    private func setupViewModel() {
 //        postsViewModel.onPostSelected = { [weak self] post in
@@ -127,7 +127,7 @@ public final class FeedViewModel<T>: ViewModel<FeedState, FeedAction>,
                 postsViewModel.perfomAction(.requstPosts)
 
             case .selected(let post):
-                postsViewModel.perfomAction(.store(post: post))
+                postsViewModel.perfomAction(.selected(post: post))
         }
     }
 

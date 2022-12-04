@@ -11,9 +11,9 @@ import Combine
 
 final class SignInViewController: ScrollableViewController<LoginViewModelProtocol> {
     
-    //MARK: - Properties
+    // MARK: - Properties
 
-    //MARK: - Views
+    // MARK: - Views
     
     private lazy var signInView: SignInView = {
         let viewFactory = LoginViewFactory()
@@ -21,7 +21,7 @@ final class SignInViewController: ScrollableViewController<LoginViewModelProtoco
    }()
     
 
-    //MARK: - LifeCicle
+    // MARK: - LifeCicle
     
 
     override func viewDidLoad() {
@@ -36,7 +36,7 @@ final class SignInViewController: ScrollableViewController<LoginViewModelProtoco
     }
     
 
-    //MARK: - Metods
+    // MARK: - Metods
 
     private func initialize() {
         super.addSubView(signInView)

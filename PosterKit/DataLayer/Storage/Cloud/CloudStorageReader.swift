@@ -51,6 +51,6 @@ final public class CloudStorageReader: StorageReaderProtocol {
     }
 
     public func getImageData(byId uid: String) async throws -> Data? {
-        try await imageCloudStorage.getImageData(byId: uid)
+        try await imageCloudStorage.getImageData(withFileName: uid)
     }
 }

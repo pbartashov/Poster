@@ -2,52 +2,76 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>postViewsCount</key>
+	<key>publishedCount</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@numberOfViews@</string>
-		<key>numberOfViews</key>
+		<string>%#@numberOfPublishedPosts@</string>
+		<key>numberOfPublishedPosts</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>zero</key>
-			<string>%d просмотров</string>
+			<string>публикаций</string>
 			<key>one</key>
-			<string>%d просмотр</string>
+			<string>публикация</string>
 			<key>two</key>
-			<string>%d просмотра</string>
+			<string>публикации</string>
 			<key>few</key>
-			<string>%d просмотров</string>
+			<string>публикаций</string>
 			<key>many</key>
-			<string>%d просмотров</string>
+			<string>публикаций</string>
 			<key>other</key>
-			<string>%d просмотров</string>
+			<string>публикаций</string>
 		</dict>
 	</dict>
-	<key>postLikesCount</key>
+	<key>subsribesCount</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@numberOfLikes@</string>
-		<key>numberOfLikes</key>
+		<string>%#@numberOfSubscribers@</string>
+		<key>numberOfSubscribers</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>zero</key>
-			<string>%d лайков</string>
+			<string>подписок</string>
 			<key>one</key>
-			<string>%d лайк</string>
+			<string>подписка</string>
 			<key>two</key>
-			<string>%d лайка</string>
+			<string>подписи</string>
 			<key>few</key>
-			<string>%d лайков</string>
+			<string>подписок</string>
 			<key>many</key>
-			<string>%d лайков</string>
+			<string>подписок</string>
 			<key>other</key>
-			<string>%d лайков</string>
+			<string>подписок</string>
+		</dict>
+	</dict>
+	<key>followersCount</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@numberOfFollowers@</string>
+		<key>numberOfFollowers</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>подписчиков</string>
+			<key>one</key>
+			<string>подписчик</string>
+			<key>two</key>
+			<string>подписчика</string>
+			<key>few</key>
+			<string>подписчиков</string>
+			<key>many</key>
+			<string>подписчиков</string>
+			<key>other</key>
+			<string>подписчиков</string>
 		</dict>
 	</dict>
 </dict>

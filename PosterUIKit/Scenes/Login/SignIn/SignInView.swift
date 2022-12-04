@@ -11,10 +11,10 @@ import SnapKit
 
 final class SignInView: SignActionView {
 
-    //MARK: - Properties
+    // MARK: - Properties
 
 
-    //MARK: - Views
+    // MARK: - Views
 
     private lazy var titleLabel: UILabel = {
         let label = viewFactory.makeH2Label()
@@ -36,7 +36,7 @@ final class SignInView: SignActionView {
 
    
 
-    //MARK: - LifeCicle
+    // MARK: - LifeCicle
 
     init(viewFactory: ViewFactoryProtocol) {
         super.init(viewFactory: viewFactory, loginButton: LoginButton.confirm)
@@ -47,7 +47,7 @@ final class SignInView: SignActionView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    //MARK: - Metods
+    // MARK: - Metods
 
     private func initialize() {
         [titleLabel,

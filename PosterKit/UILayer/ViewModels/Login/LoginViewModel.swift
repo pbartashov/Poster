@@ -47,7 +47,7 @@ public protocol LoginViewModelProtocol {
 
 public final class LoginViewModel: LoginViewModelProtocol {
 
-    //MARK: - Properties
+    // MARK: - Properties
     
     private var loginDelegate: LoginDelegate?
     private weak var coordinator: LoginCoordinatorProtocol?
@@ -57,7 +57,7 @@ public final class LoginViewModel: LoginViewModelProtocol {
     @Published public var state: LoginState = .initial
     public var statePublisher: Published<LoginState>.Publisher { $state }
 
-    //MARK: - LifeCicle
+    // MARK: - LifeCicle
     
     public init(loginDelegate: LoginDelegate,
          coordinator: LoginCoordinatorProtocol?,
@@ -71,12 +71,16 @@ public final class LoginViewModel: LoginViewModelProtocol {
         self.errorPresenter = errorPresenter
     }
     
-    //MARK: - Metods
+    // MARK: - Metods
     
     public func perfomAction(_ action: LoginAction) {
         switch action {
             case .start:
-                showWelcome()
+//                showWelcome()
+                checkAuthFor(phoneNumber: "+1 (650) 555-35-35")
+
+
+
 
             case .showSignIn:
                 showSignIn()
@@ -105,7 +109,10 @@ public final class LoginViewModel: LoginViewModelProtocol {
     private func showWelcome() {
         coordinator?.showWelcomeScene()
 
-        Post.storeMock()
+
+
+        
+//        Post.storeMock()
     }
 
     private func showSignUp() {

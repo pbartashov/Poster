@@ -57,21 +57,22 @@ extension Post {
     }
 
     public static func storeMock() {
-        let postCloudStorage = PostCloudStorage()
-        let imageCloudStorage = ImageCloudStorage()
-        let storage = CloudStorageWriter(postCloudStorage: postCloudStorage, imageCloudStorage: imageCloudStorage)
-
-        Task {
-            for (i, (post, image)) in zip(demoPosts, demoPostsImages).enumerated() {
-                do {
-                    let newPost = try await storage.createPost(authorId: demoUsers[i].uid, content: post.content, imageData: image?.pngData())
-                    //                    if let data = image?.pngData() {
-                    //                        try await imageStorage.store(imageData: data, forId: newPost.uid)
-                    //                    }
-                } catch {
-                    print(error)
-                }
-            }
-        }
+        fatalError("Uncomment")
+//        let postCloudStorage = PostCloudStorage()
+//        let imageCloudStorage = ImageCloudStorage(root: Constants.Cloud.postImagesStorage)
+//        let storage = CloudStorageWriter(postCloudStorage: postCloudStorage, imageCloudStorage: imageCloudStorage)
+//
+//        Task {
+//            for (i, (post, image)) in zip(demoPosts, demoPostsImages).enumerated() {
+//                do {
+//                    let newPost = try await storage.createPost(authorId: demoUsers[i].uid, content: post.content, imageData: image?.pngData())
+//                    //                    if let data = image?.pngData() {
+//                    //                        try await imageStorage.store(imageData: data, forId: newPost.uid)
+//                    //                    }
+//                } catch {
+//                    print(error)
+//                }
+//            }
+//        }
     }
 }

@@ -9,7 +9,7 @@ import UIKit
 
 final class PhotosCollectionViewCell: UICollectionViewCell {
 
-    //MARK: - Views
+    // MARK: - Views
 
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -20,7 +20,7 @@ final class PhotosCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
 
-    //MARK: - LifeCicle
+    // MARK: - LifeCicle
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,7 +34,7 @@ final class PhotosCollectionViewCell: UICollectionViewCell {
         super.init(coder: coder)
     }
 
-    //MARK: - Metods
+    // MARK: - Metods
 
     private func setupLayouts() {
         imageView.snp.makeConstraints { make in

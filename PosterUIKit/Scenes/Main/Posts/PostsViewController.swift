@@ -19,11 +19,12 @@ extension PostSectionType {
     static let posts = PostSectionType(rawValue: "posts")
 }
 
-class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewController {
+class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewController,
+                                                                  UITableViewDelegate {
 
     typealias SectionType = PostSectionType
 
-    //MARK: - Properties
+    // MARK: - Properties
 
     private(set) var viewModel: ViewModelType
 //    private var postViewModelProvider: PostViewModelProvider
@@ -69,7 +70,7 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
         viewModel.posts
     }
 
-    //MARK: - Views
+    // MARK: - Views
 
     private(set) lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -77,8 +78,8 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
         tableView.register(PostTableViewCell.self,
                            forCellReuseIdentifier: PostTableViewCell.identifier)
 
-        tableView.backgroundColor = .backgroundColor
-
+        tableView.backgroundColor = .brandBackgroundColor
+        tableView.delegate = self
 //        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap))
 //        doubleTap.numberOfTapsRequired = 2
 //        tableView.addGestureRecognizer(doubleTap)
@@ -114,7 +115,7 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
 
     private var cancelSearchBarItem: UIBarButtonItem?
 
-    //MARK: - LifeCicle
+    // MARK: - LifeCicle
 
     init(viewModel: ViewModelType
 //         postViewModelProvider: PostViewModelProvider
@@ -132,16 +133,17 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .backgroundColor
+        view.backgroundColor = .brandBackgroundColor
 
         view.addSubview(colorFilterSelector)
         view.addSubview(tableView)
 
         setupLayout()
+        configureRefreshControl()
         bindViewModel()
         setupBarItems()
 
-        viewModel.perfomAction(.requstPosts)
+        fetchData()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -149,28 +151,30 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
         applySnapshot()
     }
 
-    //MARK: - Metods
+    // MARK: - Metods
 
     private func bindViewModel() {
         viewModel.statePublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
+                guard let self = self else { return }
                 switch state {
                     case .initial:
                         break
 
                     case .postsLoaded:
-                        if self?.view.window != nil {
-                            self?.applySnapshot()
+                        if self.view.window != nil {
+                            self.tableView.refreshControl?.endRefreshing()
+                            self.applySnapshot()
                         }
 
                     case .isFiltered(let text):
                         if let text = text {
-                            self?.cancelSearchBarItem?.isEnabled = true
-                            self?.navigationItem.title = "\("foundedResultsPostsViewController".localized): \(text)"
+                            self.cancelSearchBarItem?.isEnabled = true
+                            self.navigationItem.title = "\("foundedResultsPostsViewController".localized): \(text)"
                         } else {
-                            self?.cancelSearchBarItem?.isEnabled = false
-                            self?.navigationItem.title = nil
+                            self.cancelSearchBarItem?.isEnabled = false
+                            self.navigationItem.title = nil
                         }
                 }
             }
@@ -208,6 +212,21 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
         cancelSearchBarItem = cancelSearchItem
     }
 
+    private func configureRefreshControl() {
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self,
+                                                 action: #selector(handleRefreshControl),
+                                                 for: .valueChanged)
+    }
+
+    @objc func handleRefreshControl() {
+        fetchData()
+    }
+
+    func fetchData() {
+        viewModel.perfomAction(.requstPosts)
+    }
+
     func getPostCell(indexPath: IndexPath, post: PostViewModel) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier,
                                                        for: indexPath)
@@ -237,4 +256,13 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
 //            viewModel.perfomAction(.selected(post: post))
 //        }
 //    }
+
+// MARK: - UITableViewDelegate methods
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath.section == postsSectionNumber {
+            let post = viewModel.posts[indexPath.row]
+            viewModel.perfomAction(.selected(post: post))
+        }
+    }
 }

@@ -60,4 +60,3 @@ final class LabeledView<ViewType: UIView>: UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
 }
-

@@ -11,18 +11,18 @@ import PosterKit
 final class FeedCoordinator: NavigationCoordinator, FeedCoordinatorProtocol {
 
 
-    //MARK: - Properties
+    // MARK: - Properties
 
-    private let postCoordinator: PostCoordinatorProtocol
+//    private let postCoordinator: PostCoordinatorProtocol
 
-    //MARK: - LifeCicle
+    // MARK: - LifeCicle
 
     override init(navigationController: UINavigationController?) {
-        self.postCoordinator = PostCoordinator(navigationController: navigationController)
+//        self.postCoordinator = PostCoordinator(navigationController: navigationController)
         super.init(navigationController: navigationController)
     }
 
-    //MARK: - Metods
+    // MARK: - Metods
 
     func showPost(_ post: Post) {
 //        postCoordinator.navigationController = navigationController
@@ -39,4 +39,10 @@ final class FeedCoordinator: NavigationCoordinator, FeedCoordinatorProtocol {
 //        pushViewController(_ viewController: UIViewController?)
     }
 
+}
+
+extension FeedCoordinator: DetailedPostCoordinatorProtocol {
+    func dismissDetailedPost() {
+        pop(animated: true)
+    }
 }

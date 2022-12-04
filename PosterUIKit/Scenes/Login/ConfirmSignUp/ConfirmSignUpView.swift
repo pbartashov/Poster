@@ -11,7 +11,7 @@ import SnapKit
 
 final class ConfirmSignUpView: SignActionView {
 
-    //MARK: - Properties
+    // MARK: - Properties
 
     var phoneNumber: String {
         get {
@@ -22,7 +22,7 @@ final class ConfirmSignUpView: SignActionView {
         }
     }
 
-    //MARK: - Views
+    // MARK: - Views
 
     private lazy var titleLabel: UILabel = {
         let label = viewFactory.makeH2Label()
@@ -59,7 +59,7 @@ final class ConfirmSignUpView: SignActionView {
     private let logoImageView = UIImageView(image: UIImage(named: "LogoCheckMark"))
 
 
-    //MARK: - LifeCicle
+    // MARK: - LifeCicle
 
     init(viewFactory: ViewFactoryProtocol) {
         super.init(viewFactory: viewFactory, loginButton: LoginButton.signUp)
@@ -70,7 +70,7 @@ final class ConfirmSignUpView: SignActionView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    //MARK: - Metods
+    // MARK: - Metods
 
     private func initialize() {
         [titleLabel,

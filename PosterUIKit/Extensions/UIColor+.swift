@@ -41,11 +41,11 @@ extension UIColor {
                        darkMode: .gray)
     }
 
-    static var backgroundColor: UIColor {
+    static var brandBackgroundColor: UIColor {
         Self.makeColor(lightMode: .white, darkMode: .black)
     }
 
-    static var backgroundGrayColor: UIColor {
+    static var brandBackgroundGrayColor: UIColor {
         Self.makeColor(lightMode: UIColor(red: 245 / 255, green: 243 / 255, blue: 238 / 255, alpha: 1),
                        darkMode: .black)
     }

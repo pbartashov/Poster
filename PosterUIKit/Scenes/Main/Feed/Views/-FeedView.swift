@@ -33,7 +33,7 @@
 //        case none
 //    }
 //
-//    //MARK: - Properties
+//    // MARK: - Properties
 //
 //    var delegate: ViewWithButtonDelegate?
 //
@@ -67,7 +67,7 @@
 //        }
 //    }
 //
-//    //MARK: - Views
+//    // MARK: - Views
 //
 //    private lazy var showPost1Button: ClosureBasedButton = {
 //        let button = ViewFactory.create.button(withTitle: Buttons.post1.title)
@@ -120,7 +120,7 @@
 //        return button
 //    }()
 //
-//    //MARK: - LifeCicle
+//    // MARK: - LifeCicle
 //    
 //    override init(frame: CGRect) {
 //        super.init(frame: frame)
@@ -137,7 +137,7 @@
 //        self.delegate = delegate
 //    }
 //
-//    //MARK: - Metods
+//    // MARK: - Metods
 //
 //    private func initialize() {
 //        self.axis = .vertical

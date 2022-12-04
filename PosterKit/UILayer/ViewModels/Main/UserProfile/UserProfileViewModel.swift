@@ -51,7 +51,7 @@ public final class UserProfileViewModel: ViewModel<UserProfileState, UserProfile
 
     private var userService: UserServiceProtocol
 
-    private weak var coordinator: ProfileCoordinatorProtocol?
+    private weak var coordinator: UserProfileCoordinatorProtocol?
 
     public var user: User? {
         userService.currentUser
@@ -76,7 +76,7 @@ public final class UserProfileViewModel: ViewModel<UserProfileState, UserProfile
 
     public init(
         userService: UserServiceProtocol,
-        coordinator: ProfileCoordinatorProtocol?,
+        coordinator: UserProfileCoordinatorProtocol?,
         errorPresenter: ErrorPresenterProtocol
     ) {
         self.userService = userService
@@ -88,7 +88,7 @@ public final class UserProfileViewModel: ViewModel<UserProfileState, UserProfile
 
 
 
-    //MARK: - Metods
+    // MARK: - Metods
 
     private func setupViewModel() {
         #warning("Check")

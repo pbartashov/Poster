@@ -10,11 +10,11 @@ import PosterKit
 
 struct FeedFactory {
 
-    //MARK: - Properties
+    // MARK: - Properties
 
     //    static var create = FeedFactory()
 
-    //MARK: - Metods
+    // MARK: - Metods
 
     func viewModelWith(feedCoordinator: FeedCoordinatorProtocol?,
                        postsCoordinator: PostsCoordinatorProtocol?,
@@ -31,9 +31,14 @@ struct FeedFactory {
         let postRepository = PostRepository(context: contextProvider.backgroundContext)
         let storageWriter = LocalStorageWriter(repository: postRepository)
 
-        let storageReader = CloudStorageReader(userCloudStorage: UserCloudStorage(),
-                                               postCloudStorage: PostCloudStorage(),
-                                               imageCloudStorage: ImageCloudStorage())
+        let userCloudStorage = UserCloudStorage()
+        let postCloudStorage = PostCloudStorage()
+        let imageCloudStorage = ImageCloudStorage(root: PosterKit.Constants.Cloud.postImagesStorage,
+                                                  fileExtension: PosterKit.Constants.Cloud.imageFileExtension)
+
+        let storageReader = CloudStorageReader(userCloudStorage: userCloudStorage,
+                                               postCloudStorage: postCloudStorage,
+                                               imageCloudStorage: imageCloudStorage)
         let requestFilter = Filter()
 
         let postsViewModel = PostsViewModel(coordinator: postsCoordinator,

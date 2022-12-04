@@ -11,6 +11,9 @@ public protocol PostsCoordinatorProtocol: AnyObject {
                           text: String?,
                           searchCompletion: ((String) -> Void)?,
                           cancelCompletion: (() -> Void)?)
+
+    func showDetailedPost(_ post: PostViewModel?)
+//    func dismissDetailedPost()
 }
 
 

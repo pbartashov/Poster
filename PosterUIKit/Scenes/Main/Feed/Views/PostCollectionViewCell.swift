@@ -11,7 +11,7 @@ import PosterKit
 
 final class PostCollectionViewCell: UICollectionViewCell {
 
-    //MARK: - Views
+    // MARK: - Views
 
     private let postCellView = PostViewCell(viewFactory: ViewFactory())
 
@@ -73,7 +73,7 @@ final class PostCollectionViewCell: UICollectionViewCell {
 //        return stack
 //    }()
 
-    //MARK: - LifeCicle
+    // MARK: - LifeCicle
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -84,7 +84,7 @@ final class PostCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    //MARK: - Metods
+    // MARK: - Metods
     private func initialize() {
 //        [authorLabel,
 //         postImageView,

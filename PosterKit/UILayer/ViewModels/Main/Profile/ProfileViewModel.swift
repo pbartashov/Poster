@@ -5,15 +5,16 @@
 //  Created by Павел Барташов on 25.06.2022.
 //
 
-#warning("REMOVE")
-import UIKit
-
 public enum ProfileAction {
     case showPhotos
     case showUserProfile
-    case selected(post: PostViewModel)
+    case showAddPost
+    case showAddStory
+    case showAddPhoto
+//    case selected(post: PostViewModel)
     case insert((post: PostViewModel, index: Int))
     case posts(action: PostsAction)
+    case requstPhotos
 }
 
 public enum ProfileState {
@@ -30,26 +31,33 @@ where State == ProfileState,
     var posts: [PostViewModel] { get }
     var postsPublisher: Published<[PostViewModel]>.Publisher { get }
 
-    var user: User? { get }
+    var photos: [Data] { get }
+    var photosPublisher: Published<[Data]>.Publisher { get }
+
+    var user: UserViewModel? { get }
 }
 
-public final class ProfileViewModel<T>: ViewModel<ProfileState, ProfileAction>,
-                                        ProfileViewModelProtocol where T: PostsViewModelProtocol {
+public final class ProfileViewModel<T, U>: ViewModel<ProfileState, ProfileAction>,
+                                        ProfileViewModelProtocol where T: PostsViewModelProtocol,
+                                                                       U: PhotosViewModelProtocol {
 
     public typealias PostsViewModelType = T
+    public typealias PhotosViewModelType = U
 
-    //MARK: - Properties
+    // MARK: - Properties
 
     private weak var coordinator: ProfileCoordinatorProtocol?
 
 //    private let favoritesPostRepository: PostRepositoryInterface
 //    private let storageService: PostServiceProtocol
+    private let photosViewModel: PhotosViewModelType
+
     public let postsViewModel: PostsViewModelType
 
     private weak var userService: UserServiceProtocol?
 //    private let userName: String
-    public var user: User? {
-        userService?.currentUser
+    public var user: UserViewModel? {
+        UserViewModel(from: userService?.currentUser)
     }
 
     public var posts: [PostViewModel] {
@@ -60,7 +68,15 @@ public final class ProfileViewModel<T>: ViewModel<ProfileState, ProfileAction>,
         postsViewModel.postsPublisher
     }
 
-    //MARK: - LifeCicle
+    public var photos: [Data] {
+        photosViewModel.photos
+    }
+
+    public var photosPublisher: Published<[Data]>.Publisher {
+        photosViewModel.photosPublisher
+    }
+
+    // MARK: - LifeCicle
 
     public init(
 //        postService: PostServiceProtocol,
@@ -69,6 +85,7 @@ public final class ProfileViewModel<T>: ViewModel<ProfileState, ProfileAction>,
 //         userName: String,
 //         postRepository: PostRepositoryInterface,
          postsViewModel: PostsViewModelType,
+         photosViewModel: PhotosViewModelType,
          errorPresenter: ErrorPresenterProtocol
     ) {
         
@@ -78,13 +95,14 @@ public final class ProfileViewModel<T>: ViewModel<ProfileState, ProfileAction>,
 //        self.userName = userName
 //        self.favoritesPostRepository = postRepository
         self.postsViewModel = postsViewModel
+        self.photosViewModel = photosViewModel
 
         super.init(state: .initial, errorPresenter: errorPresenter)
 
 //        setupViewModel()
     }
 
-    //MARK: - Metods
+    // MARK: - Metods
 
 //    private func setupViewModel() {
 //        postsViewModel.onPostSelected = { [weak self] post in
@@ -122,14 +140,28 @@ public final class ProfileViewModel<T>: ViewModel<ProfileState, ProfileAction>,
             case .showUserProfile:
                 coordinator?.showUserProfile()
 
-            case .selected(let post):
-                postsViewModel.perfomAction(.store(post: post))
+            case .showAddPost:
+                postsViewModel.perfomAction(.createPost)
+
+            case .showAddStory:
+                errorPresenter.show(error: DatabaseError.error(desription: "NotImplemented".localized))
+
+            case .showAddPhoto:
+                coordinator?.showAddPhoto()
+
+                //            case .selected(let post):
+                //                let
+                //                postsViewModel.perfomAction(.store(post: post))
 
             case let .insert((post, index)):
                 postsViewModel.perfomAction(.insert((post, index)))
 
             case .posts(let action):
                 postsViewModel.perfomAction(action)
+
+            case .requstPhotos:
+                photosViewModel.perfomAction(.requestPhotos(limit: 4))
+
         }
     }
 }

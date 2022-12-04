@@ -33,7 +33,8 @@ public protocol StorageReaderProtocol {
 
 public protocol StorageWriterProtocol {
     func createPost(authorId: String, content: String, imageData: Data?) async throws
-    func store(post: Post) async throws
+    func store(post: Post, imageData: Data?) async throws
+//    func store(photo: Data?) async throws
     func remove(post: Post) async throws
 }
 

@@ -11,7 +11,7 @@ import Combine
 
 class ScrollableViewController<ViewModelType>: UIViewController {
 
-    //MARK: - Properties
+    // MARK: - Properties
 
     var viewModel: ViewModelType
 
@@ -19,11 +19,11 @@ class ScrollableViewController<ViewModelType>: UIViewController {
     var subsriptions: Set<AnyCancellable> = []
 
 
-    //MARK: - Views
+    // MARK: - Views
 
     private let scrollView = UIScrollView()
 
-    //MARK: - LifeCicle
+    // MARK: - LifeCicle
 
     init(viewModel: ViewModelType) {
         self.viewModel = viewModel
@@ -77,7 +77,7 @@ class ScrollableViewController<ViewModelType>: UIViewController {
                           object: nil)
     }
 
-    //MARK: - Metods
+    // MARK: - Metods
 
     private func initialize() {
         view.backgroundColor = .systemBackground

@@ -9,17 +9,17 @@ import UIKit
 
 class NavigationCoordinator {
 
-    //MARK: - Properties
+    // MARK: - Properties
 
     weak var navigationController: UINavigationController?
 
-    //MARK: - LifeCicle
+    // MARK: - LifeCicle
 
-    init(navigationController: UINavigationController? = nil) {
+    init(navigationController: UINavigationController?) {
         self.navigationController = navigationController
     }
 
-    //MARK: - Metods
+    // MARK: - Metods
 
     func pop(animated: Bool) {
         DispatchQueue.main.async {

@@ -5,13 +5,14 @@
 //  Created by Павел Барташов on 20.11.2022.
 //
 
-enum Constants {
-    enum Cloud {
-        static let usersCollection = "users"
-        static let postsCollection = "posts"
-        static let timestamp = "timestamp"
-        static let postImagesStorage = "post_images"
-        static let maxSizeToDownload: Int64 = 10 * 1024 * 1024
-//        static let photosStorage = ""
+public enum Constants {
+    public enum Cloud {
+        public static let usersCollection = "users"
+        public static let postsCollection = "posts"
+        public static let timestamp = "timestamp"
+        public static let postImagesStorage = "post_images"
+        public static let photosStorage = "user_photos"
+        public static let imageFileExtension = "jpg"
+        public static let maxSizeToDownload: Int64 = 10 * 1024 * 1024
     }
 }
