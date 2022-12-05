@@ -49,6 +49,3 @@ public final class UserViewModel {
         return "\(formatter.string(fromNumber: number))\n\(description)"
     }
 }
-
-
-

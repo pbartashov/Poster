@@ -10,11 +10,16 @@ import Combine
 final public class LocalStorageReader: StorageReaderProtocol {
 
     // MARK: - Properties
-    
+
+    public var storiesPublisher: AnyPublisher<[Story], Never>?
+
     private let repository: PostRepositoryInterface
 
     public var postsPublisher: AnyPublisher<[Post], Never> {
         repository.postsPublisher
+            .map { postViewModels in
+                postViewModels.map { $0.post }
+            }
             .eraseToAnyPublisher()
     }
 
@@ -34,12 +39,36 @@ final public class LocalStorageReader: StorageReaderProtocol {
     }
 
     public func getUser(byId uid: String) async throws -> User? {
-        #warning("TODO")
-        return nil
+        let predicate = NSPredicate(format: "authorId == %@", uid)
+        let posts = try await repository.getPosts(predicate: predicate)
+
+        guard let postViewModel = posts.first else { return nil }
+
+
+        print("getUser")
+        return User(uid: postViewModel.post.authorId,
+                    lastName: postViewModel.authorName,
+                    avatarData: postViewModel.authorAvatarData,
+                    status: postViewModel.authorStatus)
     }
 
     public func getImageData(byId uid: String) async throws -> Data? {
-#warning("TODO")
-        return nil
+        let predicate = NSPredicate(format: "uid == %@", uid)
+        let posts = try await repository.getPosts(predicate: predicate)
+
+        guard let postViewModel = posts.first else { return nil }
+
+        print("getImageData")
+
+
+//        } else if let postImageData = postImageData {
+//            imageData = postImageData
+//        }
+        return postViewModel.imageData
+    }
+
+
+    public func startFetchingStories(filteredBy filter: Filter?) async throws {
+        fatalError("Not implemented")
     }
 }

@@ -38,7 +38,9 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
                 let indexPath = IndexPath(row: i, section: postsSectionNumber)
                 if let cell = tableView.cellForRow(at: indexPath) as? PostTableViewCell {
 //                    let postViewModel = postViewModelProvider.makeViewModel(for: post)
-                    cell.setup(with: postViewModel, filter: currentColorFilter)
+                    cell.setup(with: postViewModel, filter: currentColorFilter) { [weak self] in
+                        self?.viewModel.perfomAction(.addToFavorites(post: postViewModel))
+                    }
                 }
             }
         }
@@ -235,13 +237,16 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
             return UITableViewCell()
         }
 
-//        let postViewModel = postViewModelProvider.makeViewModel(for: post)
+        //        let postViewModel = postViewModelProvider.makeViewModel(for: post)
 
         cell.setup(with: post,
-                   filter: self.currentColorFilter)
+                   filter: currentColorFilter) { [weak self] in
+            self?.viewModel.perfomAction(.addToFavorites(post: post))
+        }
+        
         return cell
     }
-
+    
     func applySnapshot() {
         postsDataSource.apply(postsSnapshot)
     }
@@ -264,5 +269,9 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
             let post = viewModel.posts[indexPath.row]
             viewModel.perfomAction(.selected(post: post))
         }
+    }
+
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        return nil
     }
 }

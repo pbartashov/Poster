@@ -10,6 +10,7 @@ import Combine
 public enum FeedAction {
     case requestData
     case selected(post: PostViewModel)
+    case addToFavorites(post: PostViewModel)
 //    case showSignUp
 //    case showSignIn
 //    case authWith(phoneNumber: String)
@@ -30,7 +31,7 @@ public protocol FeedViewModelProtocol: ViewModelProtocol
 where State == FeedState,
       Action == FeedAction {
 
-    var storiesPublisher: Published<[Story]>.Publisher { get }
+    var storiesPublisher: Published<[StoryViewModel]>.Publisher { get }
     var postsPublisher: Published<[PostViewModel]>.Publisher { get }
 }
 
@@ -43,12 +44,12 @@ public final class FeedViewModel<T>: ViewModel<FeedState, FeedAction>,
     // MARK: - Properties
 
 //    private var favoritesPostRepository: PostRepositoryInterface
-//    private var postService: PostServiceProtocol
+    private let storageReader: StorageReaderProtocol
 
     private weak var coordinator: FeedCoordinatorProtocol?
 
-    @Published var stories: [Story] = []
-    public var storiesPublisher: Published<[Story]>.Publisher { $stories }
+    @Published var stories: [StoryViewModel] = []
+    public var storiesPublisher: Published<[StoryViewModel]>.Publisher { $stories }
 
     public var postsPublisher: Published<[PostViewModel]>.Publisher { postsViewModel.postsPublisher }
 
@@ -61,7 +62,7 @@ public final class FeedViewModel<T>: ViewModel<FeedState, FeedAction>,
     // MARK: - LifeCicle
 
     public init(
-        //storiesService: StoriesServiceProtocol,
+        storageReader: StorageReaderProtocol,
 //                postService: PostServiceProtocol,
                 coordinator: FeedCoordinatorProtocol?,
 //                userName: String,
@@ -70,7 +71,7 @@ public final class FeedViewModel<T>: ViewModel<FeedState, FeedAction>,
 //                postViewModelProvider: PostViewModelProvider,
                 errorPresenter: ErrorPresenterProtocol
     ) {
-//        self.postService = postService
+        self.storageReader = storageReader
         self.coordinator = coordinator
         //        self.userService = userService
 //        self.userName = userName
@@ -80,57 +81,51 @@ public final class FeedViewModel<T>: ViewModel<FeedState, FeedAction>,
 
         super.init(state: .initial, errorPresenter: errorPresenter)
 
-//        setupViewModel()
+        setupBindings()
 
 
 
         
-        stories = Story.mock
+//        stories = Story.mock
       }
 
 
 
     // MARK: - Metods
 
-//    private func setupViewModel() {
-//        postsViewModel.onPostSelected = { [weak self] post in
-//            self?.postsViewModel.perfomAction(.store(post: post))
-////            Task { [weak self] in
-////                do {
-////                    try await self?.postsViewModel.perfomAction(.store(post: post))
-////                } catch {
-////                    self?.errorPresenter.show(error: error)
-////                }
-////            }
-//        }
-//
-////        postsViewModel.requestPosts = { [weak self] in
-////            self?.postService.getPosts { [weak self] result in
-////                switch result {
-////                    case .success(var posts):
-////                        if var text = self?.postsViewModel.searchText {
-////                            text = text.lowercased()
-////                            posts = posts.filter { $0.author.lowercased().contains(text)}
-////                        }
-////                        self?.postsViewModel.posts = posts
-////
-////                    case .failure(let error):
-////                        self?.errorPresenter.show(error: error)
-////                }
-////            }
-////        }
-//    }
+    private func setupBindings() {
+
+        storageReader.storiesPublisher?
+            .map { [storageReader] stories in
+                stories.map { StoryViewModel(from: $0, storageReader: storageReader) }
+            }
+            .assign(to: &$stories)
+
+    }
 
     public override func perfomAction(_ action: FeedAction) {
         switch action {
             case .requestData:
                 postsViewModel.perfomAction(.requstPosts)
+                requestStories()
 
             case .selected(let post):
                 postsViewModel.perfomAction(.selected(post: post))
+
+            case .addToFavorites(post: let post):
+                postsViewModel.perfomAction(.store(post: post))
         }
     }
 
+    private func requestStories() {
+        Task {
+            do {
+                try await storageReader.startFetchingStories()
+            } catch {
+                errorPresenter.show(error: error)
+            }
+        }
+    }
 }
 //
 //extension FeedViewModel: PostViewModelProvider {

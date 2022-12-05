@@ -9,6 +9,7 @@ public enum Constants {
     public enum Cloud {
         public static let usersCollection = "users"
         public static let postsCollection = "posts"
+        public static let storiesCollection = "stories"
         public static let timestamp = "timestamp"
         public static let postImagesStorage = "post_images"
         public static let photosStorage = "user_photos"

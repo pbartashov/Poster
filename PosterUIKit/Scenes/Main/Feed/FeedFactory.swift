@@ -35,10 +35,12 @@ struct FeedFactory {
         let postCloudStorage = PostCloudStorage()
         let imageCloudStorage = ImageCloudStorage(root: PosterKit.Constants.Cloud.postImagesStorage,
                                                   fileExtension: PosterKit.Constants.Cloud.imageFileExtension)
+        let storyCloudStorage = StoryCloudStorage()
 
         let storageReader = CloudStorageReader(userCloudStorage: userCloudStorage,
                                                postCloudStorage: postCloudStorage,
-                                               imageCloudStorage: imageCloudStorage)
+                                               imageCloudStorage: imageCloudStorage,
+                                               storyCloudStorage: storyCloudStorage)
         let requestFilter = Filter()
 
         let postsViewModel = PostsViewModel(coordinator: postsCoordinator,
@@ -47,7 +49,7 @@ struct FeedFactory {
                                             requestFilter: requestFilter,
                                             errorPresenter: ErrorPresenter.shared)
         
-        return FeedViewModel(//postService: postService,
+        return FeedViewModel(storageReader: storageReader,
                              coordinator: feedCoordinator,
                              //                                userService: userService,
                              //                                userName: userName,

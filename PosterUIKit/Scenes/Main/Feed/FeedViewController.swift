@@ -27,7 +27,7 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
 
 
     enum FeedCollectionItem: Hashable {
-        case storyItem(Story)
+        case storyItem(StoryViewModel)
         case postItem(PostViewModel)
     }
 
@@ -272,7 +272,9 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
                         return nil
                     }
 //                    let postViewModel = self.postViewModelProvider.makeViewModel(for: post)
-                    cell.setup(with: post)
+                    cell.setup(with: post) {
+                        self.viewModel.perfomAction(.addToFavorites(post: post))
+                    }
 
                     return cell
             }
@@ -292,7 +294,7 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
                         return nil
                     }
 
-                    headerView.setup(buttonTitle: "Подробнее на 24 часа")
+                    headerView.setup(labelTitle: "Подробнее на 24 часа")
 //                    self.presentHourlyWeatherSubscription = headerView
 //                        .buttonTappedPublisher
 //                        .eraseType()

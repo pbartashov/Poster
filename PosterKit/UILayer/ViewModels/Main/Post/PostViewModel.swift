@@ -10,10 +10,11 @@ import Combine
 public final class PostViewModel {
 
     // MARK: - Properties
-    private let storageReader: StorageReaderProtocol
+    private let storageReader: StorageReaderProtocol?
 
-    @Published public var authorAvatar: Data?
+    @Published public var authorAvatarData: Data?
     @Published public var imageData: Data?
+    @Published public var author: User?
     @Published public var authorName: String?
     @Published public var authorStatus: String?
 //    public let postUid: String
@@ -26,7 +27,7 @@ public final class PostViewModel {
     // MARK: - LifeCicle
 
     public init(from post: Post,
-                storageReader: StorageReaderProtocol
+                storageReader: StorageReaderProtocol? = nil
     ) {
         self.post = post
         self.storageReader = storageReader
@@ -37,6 +38,7 @@ public final class PostViewModel {
     public func fetchData() {
         Task {
             try await withThrowingTaskGroup(of: (User?, Data?).self) { [self] group in
+                guard let storageReader = storageReader else { return }
                 group.addTask { [self] in
                     let user = try? await storageReader.getUser(byId: post.authorId)
                     return (user, nil)
@@ -49,9 +51,15 @@ public final class PostViewModel {
 
                 for try await (user, postImageData) in group {
                     if let user = user {
+                        author = user
                         authorName = user.displayedName
                         authorStatus = user.status
-                        authorAvatar = user.avatarData
+                        authorAvatarData = user.avatarData
+
+
+
+                        print("authorName", authorName)
+                        print("authorStatus", authorStatus)
                     } else if let postImageData = postImageData {
                         imageData = postImageData
                     }

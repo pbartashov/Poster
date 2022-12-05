@@ -21,7 +21,7 @@ where T: FavoritesViewModel {
     }
 
     // MARK: - UITableViewDelegate methods
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: nil) { [weak self] (_, _, completionHandler) in
             self?.viewModel.perfomAction(.deletePost(at: indexPath))
 

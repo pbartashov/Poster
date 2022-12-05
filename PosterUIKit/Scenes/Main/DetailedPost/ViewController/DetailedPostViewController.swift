@@ -142,7 +142,7 @@ where T: DetailedPostViewModelProtocol {
                 .store(in: &subsriptions)
 
             postViewModel
-                .$authorAvatar
+                .$authorAvatarData
                 .map { $0?.asImage ?? .avatarPlaceholder }
                 .assignOnMain(to: \.authorAvatar, on: detailedPostView)
                 .store(in: &subsriptions)

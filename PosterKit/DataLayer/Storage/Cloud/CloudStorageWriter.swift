@@ -23,14 +23,14 @@ final public class CloudStorageWriter: StorageWriterProtocol {
 
     // MARK: - Metods
 
-    public func createPost(authorId: String, content: String, imageData: Data?) async throws {
-        let newPost = try await postCloudStorage.createPost(authorId: authorId, content: content)
+    public func createPost(author: User, content: String, imageData: Data?) async throws {
+        let newPost = try await postCloudStorage.createPost(authorId: author.uid, content: content)
         if let imageData = imageData {
             try await imageCloudStorage.store(imageData: imageData, withFileName: newPost.uid)
         }
     }
 
-    public func store(post: Post, imageData: Data?) async throws {
+    public func store(post: Post, imageData: Data?, author: User?) async throws {
         try await withThrowingTaskGroup(of: Void.self) { group in
             group.addTask { [postCloudStorage] in
                 try await postCloudStorage.save(post: post)

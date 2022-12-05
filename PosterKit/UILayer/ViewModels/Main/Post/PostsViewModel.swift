@@ -16,6 +16,7 @@ public enum PostsAction {
     case selected(post: PostViewModel)
     case showSearchPromt
     case cancelSearch
+    case addToFavorites(post: PostViewModel)
 //    case showError(Error)
 }
 
@@ -132,6 +133,9 @@ public class PostsViewModel: ViewModel<PostsState, PostsAction>,
                 state = .isFiltered(with: nil)
                 requestPosts()
 
+            case .addToFavorites(let post):
+                store(post: post)
+                
 //            case .showError(let error):
 //                errorPresenter.show(error: error)
         }
@@ -171,7 +175,9 @@ public class PostsViewModel: ViewModel<PostsState, PostsAction>,
     private func store(post: PostViewModel) {
         Task { [weak self] in
             do {
-                try await self?.storageWriter.store(post: post.post, imageData: post.imageData)
+                try await self?.storageWriter.store(post: post.post,
+                                                    imageData: post.imageData,
+                                                    author: post.author)
             } catch {
                 self?.errorPresenter.show(error: error)
             }

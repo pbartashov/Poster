@@ -244,7 +244,7 @@ class PostViewCell: ViewWithButton<PostViewButton> {
             .assign(to: \.status, on: headerView)
             .store(in: &subsriptions)
 
-        post.$authorAvatar
+        post.$authorAvatarData
             .map { $0?.asImage ?? .avatarPlaceholder }
             .assignOnMain(to: \.avatar, on: headerView)
             .store(in: &subsriptions)

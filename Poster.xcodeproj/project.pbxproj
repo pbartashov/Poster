@@ -163,10 +163,12 @@
 		6E96B4F3293C789D00371BEB /* AddPhotoCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E96B4F2293C789D00371BEB /* AddPhotoCoordinatorProtocol.swift */; };
 		6E96B4F5293C79B700371BEB /* UserProfileCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E96B4F4293C79B700371BEB /* UserProfileCoordinatorProtocol.swift */; };
 		6E96B4F8293C952C00371BEB /* PhotosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E96B4F7293C952C00371BEB /* PhotosViewModel.swift */; };
+		6ECB2DC2293DF8CA001FD0BE /* StoryCloudStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ECB2DC1293DF8CA001FD0BE /* StoryCloudStorage.swift */; };
+		6ECB2DC4293DFCA0001FD0BE /* -CloudStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ECB2DC3293DFCA0001FD0BE /* -CloudStorage.swift */; };
+		6ECB2DC7293DFFEB001FD0BE /* StoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ECB2DC6293DFFEB001FD0BE /* StoryViewModel.swift */; };
 		6ECCCD442929E957006094CD /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ECCCD432929E957006094CD /* UserService.swift */; };
 		6ECCCD482929FF9B006094CD /* CloudConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ECCCD472929FF9B006094CD /* CloudConstants.swift */; };
 		6ED56153292D4B1600A2731A /* PostCloudStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED56152292D4B1600A2731A /* PostCloudStorage.swift */; };
-		6ED56155292D4C5300A2731A /* -CloudPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED56154292D4C5300A2731A /* -CloudPost.swift */; };
 		6ED56157292D7FDD00A2731A /* -Post+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED56156292D7FDD00A2731A /* -Post+.swift */; };
 		6ED56159292D801400A2731A /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED56158292D801400A2731A /* Data+.swift */; };
 /* End PBXBuildFile section */
@@ -358,10 +360,12 @@
 		6E96B4F2293C789D00371BEB /* AddPhotoCoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoCoordinatorProtocol.swift; sourceTree = "<group>"; };
 		6E96B4F4293C79B700371BEB /* UserProfileCoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileCoordinatorProtocol.swift; sourceTree = "<group>"; };
 		6E96B4F7293C952C00371BEB /* PhotosViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewModel.swift; sourceTree = "<group>"; };
+		6ECB2DC1293DF8CA001FD0BE /* StoryCloudStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCloudStorage.swift; sourceTree = "<group>"; };
+		6ECB2DC3293DFCA0001FD0BE /* -CloudStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "-CloudStorage.swift"; sourceTree = "<group>"; };
+		6ECB2DC6293DFFEB001FD0BE /* StoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryViewModel.swift; sourceTree = "<group>"; };
 		6ECCCD432929E957006094CD /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		6ECCCD472929FF9B006094CD /* CloudConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudConstants.swift; sourceTree = "<group>"; };
 		6ED56152292D4B1600A2731A /* PostCloudStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCloudStorage.swift; sourceTree = "<group>"; };
-		6ED56154292D4C5300A2731A /* -CloudPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "-CloudPost.swift"; sourceTree = "<group>"; };
 		6ED56156292D7FDD00A2731A /* -Post+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "-Post+.swift"; sourceTree = "<group>"; };
 		6ED56158292D801400A2731A /* Data+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
 		A4EF5297CA4438A5593B999A /* Pods_PosterUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PosterUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -541,6 +545,7 @@
 		6E01177B2921B43C00D8F391 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				6ECB2DC5293DFFDF001FD0BE /* Story */,
 				6E96B4EF293C6BDC00371BEB /* AddPhoto */,
 				6E01179429231AB300D8F391 /* Favorites */,
 				6E132B072923C37F00B346BE /* Feed */,
@@ -1060,9 +1065,11 @@
 		6E8A5494292CED83005AF15D /* Cloud */ = {
 			isa = PBXGroup;
 			children = (
+				6ECB2DC0293DF8A0001FD0BE /* Stories */,
 				6E8A5495292CED99005AF15D /* Users */,
 				6ECCCD49292A02B2006094CD /* Posts */,
 				6E2D41892930296400D9963E /* Images */,
+				6ECB2DC3293DFCA0001FD0BE /* -CloudStorage.swift */,
 			);
 			path = Cloud;
 			sourceTree = "<group>";
@@ -1107,11 +1114,26 @@
 			path = Photos;
 			sourceTree = "<group>";
 		};
+		6ECB2DC0293DF8A0001FD0BE /* Stories */ = {
+			isa = PBXGroup;
+			children = (
+				6ECB2DC1293DF8CA001FD0BE /* StoryCloudStorage.swift */,
+			);
+			path = Stories;
+			sourceTree = "<group>";
+		};
+		6ECB2DC5293DFFDF001FD0BE /* Story */ = {
+			isa = PBXGroup;
+			children = (
+				6ECB2DC6293DFFEB001FD0BE /* StoryViewModel.swift */,
+			);
+			path = Story;
+			sourceTree = "<group>";
+		};
 		6ECCCD49292A02B2006094CD /* Posts */ = {
 			isa = PBXGroup;
 			children = (
 				6ED56152292D4B1600A2731A /* PostCloudStorage.swift */,
-				6ED56154292D4C5300A2731A /* -CloudPost.swift */,
 			);
 			path = Posts;
 			sourceTree = "<group>";
@@ -1513,7 +1535,7 @@
 				6E132B252925A19E00B346BE /* FeedCoordinatorProtocol.swift in Sources */,
 				6E132B2B292666EA00B346BE /* MockStories.swift in Sources */,
 				6E0117772921B30400D8F391 /* MockPosts.swift in Sources */,
-				6ED56155292D4C5300A2731A /* -CloudPost.swift in Sources */,
+				6ECB2DC7293DFFEB001FD0BE /* StoryViewModel.swift in Sources */,
 				6E58861F29382634000CA953 /* DetailedPostViewModel.swift in Sources */,
 				6E01177F2921B4AB00D8F391 /* ViewModel.swift in Sources */,
 				6E8A5497292CEDC5005AF15D /* UserCloudStorage.swift in Sources */,
@@ -1528,6 +1550,7 @@
 				6E2D41902931EFE600D9963E /* LocalStorageReader.swift in Sources */,
 				6E0117812921B4E600D8F391 /* PostsCoordinatorProtocol.swift in Sources */,
 				6E2D41982931F83400D9963E /* CloudStorageWriter.swift in Sources */,
+				6ECB2DC4293DFCA0001FD0BE /* -CloudStorage.swift in Sources */,
 				6E0117702921B30400D8F391 /* PostRepository.swift in Sources */,
 				6E132B322926EB2D00B346BE /* Filter.swift in Sources */,
 				6E6EDBC829335EB3007A81DA /* Gender.swift in Sources */,
@@ -1553,6 +1576,7 @@
 				6E96B4F8293C952C00371BEB /* PhotosViewModel.swift in Sources */,
 				6E0117732921B30400D8F391 /* CoreDataContextProvider.swift in Sources */,
 				6E5886142936DA44000CA953 /* KMBFormatter.swift in Sources */,
+				6ECB2DC2293DF8CA001FD0BE /* StoryCloudStorage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1729,13 +1753,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5454Z35HY9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Poster/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1757,13 +1782,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5454Z35HY9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Poster/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

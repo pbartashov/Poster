@@ -6,10 +6,15 @@
 //
 
 import SnapKit
+import Combine
 import PosterKit
 
 final class StoriesViewCell: UICollectionViewCell {
 
+    // MARK: - Properties
+
+    var subsriptions: Set<AnyCancellable> = []
+    
     // MARK: - Views
 
     private let avatarView: UIImageView = {
@@ -50,8 +55,13 @@ final class StoriesViewCell: UICollectionViewCell {
         }
     }
 
-    func setup(with story: Story) {
-        avatarView.image = story.author.avatarData?.asImage
+    func setup(with story: StoryViewModel) {
+        story.fetchData()
+
+        story.$authorAvatarData
+            .map { $0?.asImage ?? .avatarPlaceholder }
+            .assignOnMain(to: \.image, on: avatarView)
+            .store(in: &subsriptions)
     }
 }
 

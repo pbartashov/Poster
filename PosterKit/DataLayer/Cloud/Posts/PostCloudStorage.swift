@@ -152,5 +152,3 @@ public final class PostCloudStorage: PostCloudStorageProtocol {
         return query
     }
 }
-
-

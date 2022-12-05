@@ -77,10 +77,11 @@ public final class LoginViewModel: LoginViewModelProtocol {
         switch action {
             case .start:
 //                showWelcome()
+
                 checkAuthFor(phoneNumber: "+1 (650) 555-35-35")
 
 
-
+//                Story.storeMock()
 
             case .showSignIn:
                 showSignIn()

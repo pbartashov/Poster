@@ -10,23 +10,32 @@ import CoreData
 
 //https://www.userdesk.io/blog/repository-pattern-using-core-data-and-swift/
 extension PostEntity: DomainModel {
-    typealias DomainModelType = Post
+    typealias DomainModelType = PostViewModel
 
-    #warning("TODO")
-    func toDomainModel() -> Post {
-        Post(uid: url ?? "",
-             authorId: User(uid: "kdfjgodfjsadfo").uid,
-             content: content ?? "",
-//             imageData: imageData,
-             likes: Int(likes),
-             views: Int(views))
+    func toDomainModel() -> PostViewModel {
+        let post = Post(uid: uid ?? "",
+                        authorId: authorId ?? "",
+                        content: content ?? "",
+                        likes: Int(likes),
+                        views: Int(views))
+
+        let postViewModel = PostViewModel(from: post)
+        postViewModel.authorName = authorName
+        postViewModel.authorStatus = authorStatus
+        postViewModel.authorAvatarData = authorAvatarData
+        postViewModel.imageData = imageData
+
+        return postViewModel
     }
 
-    func copyDomainModel(model: Post) {
-        url = model.uid
-        author = model.authorId
+    func copyDomainModel(model: PostViewModel) {
+        uid = model.post.uid
+        authorId = "\(model.post.uid)\(model.post.authorId)"
+        authorName = model.authorName
+        authorStatus = model.authorStatus
         content = model.content
-//        imageData = model.imageUrl
+        authorAvatarData = model.authorAvatarData
+        imageData = model.imageData
         likes = Int32(model.likes)
         views = Int32(model.views)
     }

@@ -164,10 +164,12 @@ public final class DetailedPostViewModel: ViewModel<DetailedPostState, DetailedP
                                        content: content,
                                        likes: post.likes,
                                        views: post.views)
-                    try await storageWriter.store(post: newPost, imageData: imageData)
+                    try await storageWriter.store(post: newPost,
+                                                  imageData: imageData,
+                                                  author: userService.currentUser)
 
-                } else if let authorId = userService.currentUser?.uid {
-                    try await storageWriter.createPost(authorId: authorId,
+                } else if let user = userService.currentUser {
+                    try await storageWriter.createPost(author: user,
                                                        content: content,
                                                        imageData: imageData)
                 } else {

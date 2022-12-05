@@ -6,18 +6,30 @@
 //
 
 public struct Story {
-    public let url: String
-    public let author: User
-    public let description: String
+    public let uid: String
+    public let authorId: String
+    public let storyData: Data?
+    public let description: String?
 
-    public init(url: String,
-                author: User,
-                description: String = ""
+    public init(uid: String,
+                  authorId: String,
+                  storyData: Data? = nil,
+                  description: String? = nil
     ) {
-        self.url = url
-        self.author = author
+        self.uid = uid
+        self.authorId = authorId
+        self.storyData = storyData
         self.description = description
     }
 }
 
 extension Story: Hashable { }
+
+extension Story: Codable {
+    enum CodingKeys: String, CodingKey {
+        case uid
+        case authorId = "author_id"
+        case storyData
+        case description
+    }
+}

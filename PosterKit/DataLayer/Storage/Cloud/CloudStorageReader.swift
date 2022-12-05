@@ -14,6 +14,7 @@ final public class CloudStorageReader: StorageReaderProtocol {
     private let userCloudStorage: UserStorageProtocol
     private let postCloudStorage: PostCloudStorageProtocol
     private let imageCloudStorage: ImageCloudStorageProtocol
+    private let storyCloudStorage: StoryCloudStorageProtocol?
 
     private let postsSubject = CurrentValueSubject<[Post], Never>([])
 
@@ -21,15 +22,23 @@ final public class CloudStorageReader: StorageReaderProtocol {
         postsSubject.eraseToAnyPublisher()
     }
 
+    private let storiesSubject = CurrentValueSubject<[Story], Never>([])
+
+    public var storiesPublisher: AnyPublisher<[Story], Never>? {
+        storiesSubject.eraseToAnyPublisher()
+    }
+
     // MARK: - LifeCicle
 
     public init(userCloudStorage: UserStorageProtocol,
                 postCloudStorage: PostCloudStorageProtocol,
-                imageCloudStorage: ImageCloudStorageProtocol
+                imageCloudStorage: ImageCloudStorageProtocol,
+                storyCloudStorage: StoryCloudStorageProtocol? = nil
     ) {
         self.userCloudStorage = userCloudStorage
         self.postCloudStorage = postCloudStorage
         self.imageCloudStorage = imageCloudStorage
+        self.storyCloudStorage = storyCloudStorage
     }
 
     // MARK: - Metods
@@ -52,5 +61,11 @@ final public class CloudStorageReader: StorageReaderProtocol {
 
     public func getImageData(byId uid: String) async throws -> Data? {
         try await imageCloudStorage.getImageData(withFileName: uid)
+    }
+
+    public func startFetchingStories(filteredBy filter: Filter?) async throws {
+        if let stories = try await storyCloudStorage?.getStories(filteredBy: filter) {
+            storiesSubject.send(stories)
+        }
     }
 }
