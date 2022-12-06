@@ -85,7 +85,6 @@ U == T.PostsViewModelType {
     private lazy var profileHeaderView: ProfileHeaderViewCell = {
         let profileHeaderView = ProfileHeaderViewCell()
         profileHeaderView.delegate = self
-        profileHeaderView.setup(with: profileViewModel.user)
 
         return profileHeaderView
     }()
@@ -144,6 +143,14 @@ U == T.PostsViewModelType {
             .sink { [weak self] photosData in
                 let photos = photosData.compactMap { $0.asImage }
                 self?.photosTableViewCell.setup(with: photos)
+            }
+            .store(in: &subscriptions)
+
+        profileViewModel.userPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.profileHeaderView.setup(with: $0)
+
             }
             .store(in: &subscriptions)
     }

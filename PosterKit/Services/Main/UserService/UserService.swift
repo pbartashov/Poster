@@ -5,11 +5,13 @@
 //  Created by Павел Барташов on 20.11.2022.
 //
 
+import Combine
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 public protocol UserServiceProtocol: AnyObject {
     var currentUser: User? { get }
+    var currentUserPublisher: Published<User?>.Publisher { get }
 
     func setCurrentUser(byId: String, phoneNumber: String) async throws
     func save(_ user: User) throws
@@ -22,7 +24,10 @@ public final class UserService: UserServiceProtocol {
     
     private let userStorage: UserStorageProtocol
 
-    public var currentUser: User?
+    @Published public var currentUser: User?
+    public var currentUserPublisher: Published<User?>.Publisher {
+        $currentUser
+    }
 
     // MARK: - LifeCicle
 

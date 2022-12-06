@@ -93,7 +93,6 @@
 		6E2D41962931F6DA00D9963E /* CloudStorageReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2D41952931F6DA00D9963E /* CloudStorageReader.swift */; };
 		6E2D41982931F83400D9963E /* CloudStorageWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2D41972931F83400D9963E /* CloudStorageWriter.swift */; };
 		6E2D419A29322AD400D9963E /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2D419929322AD400D9963E /* PostViewModel.swift */; };
-		6E2D419C2932E3CD00D9963E /* -PostViewModelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2D419B2932E3CD00D9963E /* -PostViewModelProvider.swift */; };
 		6E2D41A12932F18800D9963E /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 6E2D41A52932F18800D9963E /* Localizable.stringsdict */; };
 		6E2D41A22932F18800D9963E /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 6E2D41A52932F18800D9963E /* Localizable.stringsdict */; };
 		6E2D41A32932F18800D9963E /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 6E2D41A52932F18800D9963E /* Localizable.stringsdict */; };
@@ -171,6 +170,8 @@
 		6ED56153292D4B1600A2731A /* PostCloudStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED56152292D4B1600A2731A /* PostCloudStorage.swift */; };
 		6ED56157292D7FDD00A2731A /* -Post+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED56156292D7FDD00A2731A /* -Post+.swift */; };
 		6ED56159292D801400A2731A /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED56158292D801400A2731A /* Data+.swift */; };
+		6EFF1A61293E9DD100337B07 /* FavoritesPostsHashProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EFF1A60293E9DD100337B07 /* FavoritesPostsHashProvider.swift */; };
+		6EFF1A63293E9EE100337B07 /* PostRepository+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EFF1A62293E9EE100337B07 /* PostRepository+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -293,7 +294,6 @@
 		6E2D41952931F6DA00D9963E /* CloudStorageReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudStorageReader.swift; sourceTree = "<group>"; };
 		6E2D41972931F83400D9963E /* CloudStorageWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudStorageWriter.swift; sourceTree = "<group>"; };
 		6E2D419929322AD400D9963E /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
-		6E2D419B2932E3CD00D9963E /* -PostViewModelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "-PostViewModelProvider.swift"; sourceTree = "<group>"; };
 		6E2D41A42932F18800D9963E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		6E2D41A62932F18D00D9963E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		6E2D41A729333D6000D9963E /* ImagedLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagedLabel.swift; sourceTree = "<group>"; };
@@ -368,6 +368,8 @@
 		6ED56152292D4B1600A2731A /* PostCloudStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCloudStorage.swift; sourceTree = "<group>"; };
 		6ED56156292D7FDD00A2731A /* -Post+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "-Post+.swift"; sourceTree = "<group>"; };
 		6ED56158292D801400A2731A /* Data+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
+		6EFF1A60293E9DD100337B07 /* FavoritesPostsHashProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPostsHashProvider.swift; sourceTree = "<group>"; };
+		6EFF1A62293E9EE100337B07 /* PostRepository+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostRepository+.swift"; sourceTree = "<group>"; };
 		A4EF5297CA4438A5593B999A /* Pods_PosterUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PosterUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA1BA5D842D184891307D8BE /* Pods-PosterUIKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PosterUIKit.release.xcconfig"; path = "Target Support Files/Pods-PosterUIKit/Pods-PosterUIKit.release.xcconfig"; sourceTree = "<group>"; };
 		C8031E3E88880E3879E09331 /* Pods-Poster.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Poster.debug.xcconfig"; path = "Target Support Files/Pods-Poster/Pods-Poster.debug.xcconfig"; sourceTree = "<group>"; };
@@ -475,7 +477,7 @@
 			children = (
 				6E2D418E2931EFD000D9963E /* Storage */,
 				6E0117682921B30400D8F391 /* Error */,
-				6E8A5494292CED83005AF15D /* Cloud */,
+				6E8A5494292CED83005AF15D /* Remote */,
 				6ECCCD472929FF9B006094CD /* CloudConstants.swift */,
 				6E0117602921B30400D8F391 /* CoreData */,
 				6E01176A2921B30400D8F391 /* Model */,
@@ -751,29 +753,30 @@
 		6E2D418E2931EFD000D9963E /* Storage */ = {
 			isa = PBXGroup;
 			children = (
-				6E2D41912931F60200D9963E /* Local */,
-				6E2D41942931F6BB00D9963E /* Cloud */,
+				6E2D41912931F60200D9963E /* Reader */,
+				6E2D41942931F6BB00D9963E /* Writer */,
 				6E2D418C2931EC7900D9963E /* StorageProtocol.swift */,
+				6EFF1A62293E9EE100337B07 /* PostRepository+.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
 		};
-		6E2D41912931F60200D9963E /* Local */ = {
-			isa = PBXGroup;
-			children = (
-				6E2D418F2931EFE600D9963E /* LocalStorageReader.swift */,
-				6E2D41922931F65D00D9963E /* LocalStorageWriter.swift */,
-			);
-			path = Local;
-			sourceTree = "<group>";
-		};
-		6E2D41942931F6BB00D9963E /* Cloud */ = {
+		6E2D41912931F60200D9963E /* Reader */ = {
 			isa = PBXGroup;
 			children = (
 				6E2D41952931F6DA00D9963E /* CloudStorageReader.swift */,
+				6E2D418F2931EFE600D9963E /* LocalStorageReader.swift */,
+			);
+			path = Reader;
+			sourceTree = "<group>";
+		};
+		6E2D41942931F6BB00D9963E /* Writer */ = {
+			isa = PBXGroup;
+			children = (
+				6E2D41922931F65D00D9963E /* LocalStorageWriter.swift */,
 				6E2D41972931F83400D9963E /* CloudStorageWriter.swift */,
 			);
-			path = Cloud;
+			path = Writer;
 			sourceTree = "<group>";
 		};
 		6E2F77D9291B186B007EB9ED /* Login */ = {
@@ -885,8 +888,8 @@
 				6E132B242925A19E00B346BE /* FeedCoordinatorProtocol.swift */,
 				6E96B4F2293C789D00371BEB /* AddPhotoCoordinatorProtocol.swift */,
 				6E2F780D291BD44E007EB9ED /* ErrorPresenterProtocol.swift */,
-				6E2D419B2932E3CD00D9963E /* -PostViewModelProvider.swift */,
 				6E96B4F4293C79B700371BEB /* UserProfileCoordinatorProtocol.swift */,
+				6EFF1A60293E9DD100337B07 /* FavoritesPostsHashProvider.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1062,7 +1065,7 @@
 			path = UserProfile;
 			sourceTree = "<group>";
 		};
-		6E8A5494292CED83005AF15D /* Cloud */ = {
+		6E8A5494292CED83005AF15D /* Remote */ = {
 			isa = PBXGroup;
 			children = (
 				6ECB2DC0293DF8A0001FD0BE /* Stories */,
@@ -1071,7 +1074,7 @@
 				6E2D41892930296400D9963E /* Images */,
 				6ECB2DC3293DFCA0001FD0BE /* -CloudStorage.swift */,
 			);
-			path = Cloud;
+			path = Remote;
 			sourceTree = "<group>";
 		};
 		6E8A5495292CED99005AF15D /* Users */ = {
@@ -1516,6 +1519,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6E0117932923178000D8F391 /* User.swift in Sources */,
+				6EFF1A63293E9EE100337B07 /* PostRepository+.swift in Sources */,
 				6E132B382927013B00B346BE /* -FeedPostService.swift in Sources */,
 				6E2F780C291BD237007EB9ED /* LoginCoordinatorProtocol.swift in Sources */,
 				6E0117782921B30400D8F391 /* DomainModel.swift in Sources */,
@@ -1541,7 +1545,6 @@
 				6E8A5497292CEDC5005AF15D /* UserCloudStorage.swift in Sources */,
 				6E2F780E291BD44E007EB9ED /* ErrorPresenterProtocol.swift in Sources */,
 				6E2D419A29322AD400D9963E /* PostViewModel.swift in Sources */,
-				6E2D419C2932E3CD00D9963E /* -PostViewModelProvider.swift in Sources */,
 				6E0117892923153100D8F391 /* -PostServiceProtocol.swift in Sources */,
 				6E96B4F1293C6BEF00371BEB /* AddPhotoViewModel.swift in Sources */,
 				6ECCCD482929FF9B006094CD /* CloudConstants.swift in Sources */,
@@ -1568,6 +1571,7 @@
 				6E96B4F5293C79B700371BEB /* UserProfileCoordinatorProtocol.swift in Sources */,
 				6E2D41962931F6DA00D9963E /* CloudStorageReader.swift in Sources */,
 				6E6EDBD929342822007A81DA /* UserProfileViewModel.swift in Sources */,
+				6EFF1A61293E9DD100337B07 /* FavoritesPostsHashProvider.swift in Sources */,
 				6E132B2129259C6300B346BE /* Story.swift in Sources */,
 				6E0117742921B30400D8F391 /* FetchResultService.swift in Sources */,
 				6E0117792921B30400D8F391 /* Post.swift in Sources */,

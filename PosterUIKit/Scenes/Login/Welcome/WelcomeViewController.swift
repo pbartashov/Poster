@@ -9,11 +9,13 @@ import UIKit
 import PosterKit
 import Combine
 
-final class WelcomeViewController: UIViewController {
+final class WelcomeViewController<T: LoginViewModelProtocol>: UIViewController {
+
+    typealias ViewModelType = T
 
     // MARK: - Properties
 
-    private var viewModel: LoginViewModelProtocol
+    private var viewModel: ViewModelType
 
     private var buttonTappedSubsription: AnyCancellable?
 
@@ -28,7 +30,7 @@ final class WelcomeViewController: UIViewController {
 
     // MARK: - LifeCicle
 
-    init(viewModel: LoginViewModelProtocol) {
+    init(viewModel: ViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

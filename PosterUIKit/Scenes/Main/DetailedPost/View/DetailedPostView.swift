@@ -8,6 +8,7 @@
 import UIKit
 import Combine
 import SnapKit
+import iOSIntPackage
 import PosterKit
 
 enum DetailedPostViewButton {
@@ -46,6 +47,13 @@ final class DetailedPostView: ViewWithButton<DetailedPostViewButton> {
 
     // MARK: - Properties
 
+    private var currentColorFilter: ColorFilter? {
+        didSet {
+            applyColorFilter()
+        }
+    }
+    private var originalImage: UIImage?
+
 //    private var originalPostViewModel: PostViewModel?
 
     private weak var imagePickerViewDelegate: ImagePickerViewDelegate?
@@ -61,6 +69,7 @@ final class DetailedPostView: ViewWithButton<DetailedPostViewButton> {
     var image: UIImage? {
         get { postImageView?.image }
         set {
+            originalImage = newValue
             postImageView?.image = newValue
 //            let aspectRatio: CGFloat
 //            if let size = newValue?.size {
@@ -174,6 +183,31 @@ final class DetailedPostView: ViewWithButton<DetailedPostViewButton> {
         return activity
     }()
 
+    private lazy var colorFilterSelector: UISegmentedControl = {
+        let off = UIAction(title: "offColorFilter".localized) { _ in
+            self.currentColorFilter = nil
+        }
+
+        let noir = UIAction(title: "noirColorFilter".localized) { _ in
+            self.currentColorFilter = .noir
+        }
+
+        let motionBlur = UIAction(title: "motionBlurColorFilter".localized) { _ in
+            self.currentColorFilter = .motionBlur(radius: 10)
+        }
+
+        let invert = UIAction(title: "invertColorFilter".localized) { _ in
+            self.currentColorFilter = .colorInvert
+        }
+
+        let control = UISegmentedControl(items: [off,
+                                                 noir,
+                                                 motionBlur,
+                                                 invert])
+        control.selectedSegmentIndex = 0
+
+        return control
+    }()
 //    lazy var stackView: UIStackView = {
 //        let stack = UIStackView()
 //        stack.axis = .vertical
@@ -215,7 +249,8 @@ final class DetailedPostView: ViewWithButton<DetailedPostViewButton> {
     // MARK: - Metods
 
     private func initialize() {
-        [headerView,
+        [colorFilterSelector,
+         headerView,
          postImageViewContainer,
          contentViewContainer,
 //         stackView,
@@ -235,8 +270,15 @@ final class DetailedPostView: ViewWithButton<DetailedPostViewButton> {
     }
 
     private func setupLayouts() {
-        headerView.snp.makeConstraints { make in
+
+        colorFilterSelector.snp.makeConstraints { make in
             make.top.leading.equalToSuperview().offset(Constants.UI.padding)
+            make.trailing.equalToSuperview().offset(-Constants.UI.padding)
+        }
+
+        headerView.snp.makeConstraints { make in
+            make.top.equalTo(colorFilterSelector.snp.bottom).offset(Constants.UI.padding)
+            make.leading.equalToSuperview().offset(Constants.UI.padding)
             make.trailing.equalToSuperview().offset(-Constants.UI.padding)
             make.height.equalTo(Constants.UI.postHeaderHeight)
         }
@@ -423,6 +465,29 @@ final class DetailedPostView: ViewWithButton<DetailedPostViewButton> {
                     .offset(postImageViewContainer.bounds.width * aspectRatio)
             }
             layoutIfNeeded()
+        }
+    }
+
+    private func applyColorFilter() {
+        postImageView?.image = originalImage
+
+        guard
+            let filter = currentColorFilter,
+            let image = postImageView?.image
+        else {
+            return
+        }
+
+        Task {
+            isBusy = true
+            postImageView?.image = await withCheckedContinuation { continuation in
+                ImageProcessor()
+                    .processImage(sourceImage: image, filter: filter) { processed in
+                        continuation.resume(returning: processed)
+                    }
+
+            }
+            isBusy = false
         }
     }
 //

@@ -80,7 +80,6 @@ class PhotosTableViewCell: UITableViewCell {
         let multiplier = 1.0 / photosCountFloat
         let constant = multiplier * (photosCountFloat - 1.0) * interPhotoSpacing
 
-        #warning("snp")
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: padding),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),

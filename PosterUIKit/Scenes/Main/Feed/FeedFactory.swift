@@ -41,11 +41,14 @@ struct FeedFactory {
                                                postCloudStorage: postCloudStorage,
                                                imageCloudStorage: imageCloudStorage,
                                                storyCloudStorage: storyCloudStorage)
+        let favoritesPostsHashProvider = PostRepository(context: contextProvider.backgroundContext)
+        try? favoritesPostsHashProvider.startFetchingWith(predicate: nil, sortDescriptors: nil)
         let requestFilter = Filter()
 
         let postsViewModel = PostsViewModel(coordinator: postsCoordinator,
                                             storageReader: storageReader,
                                             storageWriter: storageWriter,
+                                            favoritesPostsHashProvider: favoritesPostsHashProvider,
                                             requestFilter: requestFilter,
                                             errorPresenter: ErrorPresenter.shared)
         

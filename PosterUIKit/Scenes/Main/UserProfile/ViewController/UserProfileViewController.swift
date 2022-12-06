@@ -39,7 +39,7 @@ final class UserProfileViewController: ScrollableViewController<UserProfileViewM
     // MARK: - Metods
 
     private func initialize() {
-        super.addSubView(userProfileView)
+        super.addSubViewToScrollView(userProfileView)
         title = "titleUserProfileViewController".localized
         setupBarItems()
         bindViewModel()

@@ -7,7 +7,6 @@
 
 import UIKit
 import PosterKit
-import iOSIntPackage
 import Combine
 
 final class PostTableViewCell: UITableViewCell {
@@ -57,14 +56,14 @@ final class PostTableViewCell: UITableViewCell {
     }
 
     func setup(with post: PostViewModel,
-               filter: ColorFilter?,
                onAddToFavorites: (() -> Void)?
     ) {
-        postCellView.setup(with: post, filter: filter)
+        postCellView.setup(with: post)
         self.onAddToFavorites = onAddToFavorites
     }
 
     override func prepareForReuse() {
         postCellView.reset()
+        onAddToFavorites = nil
     }
 }

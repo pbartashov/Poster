@@ -32,20 +32,7 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
     private var subscriptions: Set<AnyCancellable> = []
 
     var postsSectionNumber = 0
-    private var currentColorFilter: ColorFilter? {
-        didSet {
-            for (i, postViewModel) in viewModel.posts.enumerated() {
-                let indexPath = IndexPath(row: i, section: postsSectionNumber)
-                if let cell = tableView.cellForRow(at: indexPath) as? PostTableViewCell {
-//                    let postViewModel = postViewModelProvider.makeViewModel(for: post)
-                    cell.setup(with: postViewModel, filter: currentColorFilter) { [weak self] in
-                        self?.viewModel.perfomAction(.addToFavorites(post: postViewModel))
-                    }
-                }
-            }
-        }
-    }
-
+    
     private lazy var postsDataSource: UITableViewDiffableDataSource<PostSectionType, PostViewModel> = {
         let tableViewDataSource = UITableViewDiffableDataSource<PostSectionType, PostViewModel>(
             tableView: tableView,
@@ -89,32 +76,6 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
         return tableView
     }()
 
-    private lazy var colorFilterSelector: UISegmentedControl = {
-        let off = UIAction(title: "offColorFilterPostsViewController".localized) { _ in
-            self.currentColorFilter = nil
-        }
-
-        let noir = UIAction(title: "noirColorFilterPostsViewController".localized) { _ in
-            self.currentColorFilter = .noir
-        }
-
-        let motionBlur = UIAction(title: "motionBlurColorFilterPostsViewController".localized) { _ in
-            self.currentColorFilter = .motionBlur(radius: 10)
-        }
-
-        let invert = UIAction(title: "invertColorFilterPostsViewController".localized) { _ in
-            self.currentColorFilter = .colorInvert
-        }
-
-        let control = UISegmentedControl(items: [off,
-                                                 noir,
-                                                 motionBlur,
-                                                 invert])
-        control.selectedSegmentIndex = 0
-
-        return control
-    }()
-
     private var cancelSearchBarItem: UIBarButtonItem?
 
     // MARK: - LifeCicle
@@ -137,7 +98,6 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
 
         view.backgroundColor = .brandBackgroundColor
 
-        view.addSubview(colorFilterSelector)
         view.addSubview(tableView)
 
         setupLayout()
@@ -184,13 +144,8 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
     }
 
     private func setupLayout() {
-        colorFilterSelector.snp.makeConstraints { make in
-            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-        }
-
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(colorFilterSelector.snp.bottom)
-            make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
 
@@ -226,7 +181,7 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
     }
 
     func fetchData() {
-        viewModel.perfomAction(.requstPosts)
+        viewModel.perfomAction(.requstPosts(filteredBy: nil))
     }
 
     func getPostCell(indexPath: IndexPath, post: PostViewModel) -> UITableViewCell {
@@ -239,8 +194,7 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
 
         //        let postViewModel = postViewModelProvider.makeViewModel(for: post)
 
-        cell.setup(with: post,
-                   filter: currentColorFilter) { [weak self] in
+        cell.setup(with: post) { [weak self] in
             self?.viewModel.perfomAction(.addToFavorites(post: post))
         }
         

@@ -8,7 +8,6 @@
 import UIKit
 import Combine
 import PosterKit
-import iOSIntPackage
 
 enum PostViewButton {
     case addToFavorites
@@ -128,8 +127,10 @@ class PostViewCell: ViewWithButton<PostViewButton> {
         let action = UIAction(image: image) { [weak self] _ in
             self?.sendButtonTapped(.addToFavorites)
         }
+        let button = viewFactory.makePlainButton(action: action)
+        button.isEnabled = false
 
-        return viewFactory.makePlainButton(action: action)
+        return button
     }()
 
     // MARK: - LifeCicle
@@ -222,7 +223,7 @@ class PostViewCell: ViewWithButton<PostViewButton> {
         }
     }
 
-    func setup(with post: PostViewModel, filter: ColorFilter? = nil) {
+    func setup(with post: PostViewModel) {
         post.fetchData()
 
         contentLabel.text = post.content
@@ -259,29 +260,24 @@ class PostViewCell: ViewWithButton<PostViewButton> {
                 }
 
                 activityView.isHidden = true
-
-                guard let filter = filter else {
-                    postImageView.image = image
-                    return
-                }
-
-                Task {
-                    postImageView.image = await Task.detached {
-                        await withCheckedContinuation { continuation in
-                            ImageProcessor()
-                                .processImage(sourceImage: image, filter: filter) { processed in
-                                    continuation.resume(returning: processed)
-                                }
-                        }
-                    }
-                    .value
-                }
+                postImageView.image = image
             }
+            .store(in: &subsriptions)
+
+        let isFavoritePublisher = post.$isFavorite
+            .compactMap { $0 }
+
+        isFavoritePublisher
+            .map { _ in true }
+            .assignOnMain(to: \.isEnabled, on: addToFavoritesButton)
+            .store(in: &subsriptions)
+
+        isFavoritePublisher
+            .assignOnMain(to: \.isHighlighted, on: addToFavoritesButton)
             .store(in: &subsriptions)
     }
 
     func reset() {
-        print("Reset")
         subsriptions.removeAll()
     }
 }

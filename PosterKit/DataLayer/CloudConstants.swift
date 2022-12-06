@@ -10,9 +10,13 @@ public enum Constants {
         public static let usersCollection = "users"
         public static let postsCollection = "posts"
         public static let storiesCollection = "stories"
+
         public static let timestamp = "timestamp"
+        public static let isRecommended = "is_recommended"
+
         public static let postImagesStorage = "post_images"
         public static let photosStorage = "user_photos"
+
         public static let imageFileExtension = "jpg"
         public static let maxSizeToDownload: Int64 = 10 * 1024 * 1024
     }

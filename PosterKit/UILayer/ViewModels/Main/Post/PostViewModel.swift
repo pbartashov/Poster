@@ -11,12 +11,14 @@ public final class PostViewModel {
 
     // MARK: - Properties
     private let storageReader: StorageReaderProtocol?
+    private let favoritesPostsHashProvider: FavoritesPostsHashProvider?
 
     @Published public var authorAvatarData: Data?
     @Published public var imageData: Data?
     @Published public var author: User?
     @Published public var authorName: String?
     @Published public var authorStatus: String?
+    @Published public var isFavorite: Bool?
 //    public let postUid: String
 //    public let authorId: String
     public let post: Post
@@ -27,13 +29,24 @@ public final class PostViewModel {
     // MARK: - LifeCicle
 
     public init(from post: Post,
-                storageReader: StorageReaderProtocol? = nil
+                storageReader: StorageReaderProtocol? = nil,
+                favoritesPostsHashProvider: FavoritesPostsHashProvider? = nil
     ) {
         self.post = post
         self.storageReader = storageReader
+        self.favoritesPostsHashProvider = favoritesPostsHashProvider
+
+        initialize()
     }
 
     // MARK: - Metods
+
+    private func initialize() {
+        let hash = post.uid.hashValue
+        favoritesPostsHashProvider?.hashPublisher
+            .map { $0.contains(hash) }
+            .assign(to: &$isFavorite)
+    }
 
     public func fetchData() {
         Task {
@@ -55,11 +68,6 @@ public final class PostViewModel {
                         authorName = user.displayedName
                         authorStatus = user.status
                         authorAvatarData = user.avatarData
-
-
-
-                        print("authorName", authorName)
-                        print("authorStatus", authorStatus)
                     } else if let postImageData = postImageData {
                         imageData = postImageData
                     }

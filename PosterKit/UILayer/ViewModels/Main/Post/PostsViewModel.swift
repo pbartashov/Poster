@@ -8,7 +8,7 @@
 import Combine
 
 public enum PostsAction {
-    case requstPosts
+    case requstPosts(filteredBy: Filter?)
     case createPost
     case insert((post: PostViewModel, index: Int))
     case store(post: PostViewModel)
@@ -48,6 +48,7 @@ public class PostsViewModel: ViewModel<PostsState, PostsAction>,
 //    let storageService: StorageServiceProtocol
     let storageReader: StorageReaderProtocol
     let storageWriter: StorageWriterProtocol
+    let favoritesPostsHashProvider: FavoritesPostsHashProvider?
 
     private var subscriptions: Set<AnyCancellable> = []
 
@@ -55,7 +56,7 @@ public class PostsViewModel: ViewModel<PostsState, PostsAction>,
     public var postsPublisher: Published<[PostViewModel]>.Publisher { $posts }
 
     public private(set) var searchText: String?
-    private var requestFilter: Filter
+    private var defaultRequestFilter: Filter
 
 //    public var onPostSelected: ((Post) -> Void)?
 //    public var requestPosts: (() -> Void)?
@@ -67,6 +68,7 @@ public class PostsViewModel: ViewModel<PostsState, PostsAction>,
 //                storageService: StorageServiceProtocol,
                 storageReader: StorageReaderProtocol,
                 storageWriter: StorageWriterProtocol,
+                favoritesPostsHashProvider: FavoritesPostsHashProvider?,
                 requestFilter: Filter,
                 errorPresenter: ErrorPresenterProtocol
     ) {
@@ -74,7 +76,8 @@ public class PostsViewModel: ViewModel<PostsState, PostsAction>,
 //        self.storageService = storageService
         self.storageReader = storageReader
         self.storageWriter = storageWriter
-        self.requestFilter = requestFilter
+        self.favoritesPostsHashProvider = favoritesPostsHashProvider
+        self.defaultRequestFilter = requestFilter
         super.init(state: .initial, errorPresenter: errorPresenter)
 
         setupBindings()
@@ -95,17 +98,18 @@ public class PostsViewModel: ViewModel<PostsState, PostsAction>,
             .store(in: &subscriptions)
 
         storageReader.postsPublisher
-            .map { [storageReader] posts in
-                posts.map { PostViewModel(from: $0, storageReader: storageReader) }
+            .map { [storageReader, favoritesPostsHashProvider] posts in
+                posts.map { PostViewModel(from: $0,
+                                          storageReader: storageReader,
+                                          favoritesPostsHashProvider: favoritesPostsHashProvider) }
             }
             .assign(to: &$posts)
-
     }
 
     public override func perfomAction(_ action: PostsAction) {
         switch action {
-            case .requstPosts:
-                requestPosts()
+            case let .requstPosts(filter):
+                requestPosts(filteredBy: filter)
 
             case .createPost:
                 coordinator?.showDetailedPost(nil)
@@ -134,7 +138,7 @@ public class PostsViewModel: ViewModel<PostsState, PostsAction>,
                 requestPosts()
 
             case .addToFavorites(let post):
-                store(post: post)
+                handleAddToFavorites(post: post)
                 
 //            case .showError(let error):
 //                errorPresenter.show(error: error)
@@ -159,13 +163,18 @@ public class PostsViewModel: ViewModel<PostsState, PostsAction>,
         })
     }
 
-    private func requestPosts() {
+    private func requestPosts(filteredBy filter: Filter? = nil) {
         Task {
             do {
-//                let filter = Filter(authorName: searchText?.lowercased())
-//                posts = try await postService.getPosts(filteredBy: filter)
-                requestFilter.content = searchText?.lowercased()
-                try await storageReader.startFetchingPosts(filteredBy: requestFilter)
+                var resultFilter: Filter
+                if let filter = filter {
+                    resultFilter = defaultRequestFilter.concatenated(to: filter)
+                } else {
+                    resultFilter = defaultRequestFilter
+                }
+                resultFilter.content = searchText?.lowercased()
+
+                try await storageReader.startFetchingPosts(filteredBy: resultFilter)
             } catch {
                 errorPresenter.show(error: error)
             }
@@ -185,10 +194,13 @@ public class PostsViewModel: ViewModel<PostsState, PostsAction>,
     }
 
     private func deletePost(at indexPath: IndexPath) {
+        delete(post: posts[indexPath.row])
+    }
+
+    private func delete(post: PostViewModel) {
         Task { [weak self] in
             guard let self = self else { return }
             do {
-                let post = self.posts[indexPath.row]
                 try await self.storageWriter.remove(post: post.post)
             } catch {
                 self.errorPresenter.show(error: error)
@@ -196,9 +208,14 @@ public class PostsViewModel: ViewModel<PostsState, PostsAction>,
         }
     }
 
-//    private func selected(post: Post) {
-//
-//    }
+    private func handleAddToFavorites(post: PostViewModel) {
+        guard let isFavorite = post.isFavorite else { return }
+        if isFavorite {
+            delete(post: post)
+        } else {
+            store(post: post)
+        }
+    }
 }
 
 //extension PostsViewModel: PostViewModelProvider {

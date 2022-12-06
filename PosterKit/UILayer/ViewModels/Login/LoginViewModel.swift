@@ -36,26 +36,27 @@ public enum LoginState {
 
 }
 
-#warning("PublishedViewModelProtocol")
-public protocol LoginViewModelProtocol {
-    var statePublisher: Published<LoginState>.Publisher { get }
-//    var state: LoginState { get }
-
-    func perfomAction(_ action: LoginAction)
-
+public protocol LoginViewModelProtocol: ViewModelProtocol
+where State == LoginState,
+      Action == LoginAction  {
+//    var statePublisher: Published<LoginState>.Publisher { get }
+////    var state: LoginState { get }
+//
+//    func perfomAction(_ action: LoginAction)
 }
 
-public final class LoginViewModel: LoginViewModelProtocol {
+public final class LoginViewModel: ViewModel<LoginState, LoginAction>,
+                                   LoginViewModelProtocol {
 
     // MARK: - Properties
     
     private var loginDelegate: LoginDelegate?
     private weak var coordinator: LoginCoordinatorProtocol?
 //    private var credentialStorage: CredentialStorageProtocol?
-    private let errorPresenter: ErrorPresenterProtocol
+//    private let errorPresenter: ErrorPresenterProtocol
 
-    @Published public var state: LoginState = .initial
-    public var statePublisher: Published<LoginState>.Publisher { $state }
+//    @Published public var state: LoginState = .initial
+//    public var statePublisher: Published<LoginState>.Publisher { $state }
 
     // MARK: - LifeCicle
     
@@ -68,12 +69,13 @@ public final class LoginViewModel: LoginViewModelProtocol {
         self.loginDelegate = loginDelegate
         self.coordinator = coordinator
 //        self.credentialStorage = credentialSto
-        self.errorPresenter = errorPresenter
+//        self.errorPresenter = errorPresenter
+        super.init(state: .initial, errorPresenter: errorPresenter)
     }
     
     // MARK: - Metods
     
-    public func perfomAction(_ action: LoginAction) {
+    public override func perfomAction(_ action: LoginAction) {
         switch action {
             case .start:
 //                showWelcome()

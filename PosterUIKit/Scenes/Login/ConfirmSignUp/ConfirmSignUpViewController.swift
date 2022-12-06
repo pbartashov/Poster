@@ -9,7 +9,9 @@ import UIKit
 import PosterKit
 import Combine
 
-final class ConfirmSignUpViewController: ScrollableViewController<LoginViewModelProtocol> {
+final class ConfirmSignUpViewController<T: LoginViewModelProtocol>: ScrollableViewController<T> {
+
+    typealias ViewModelType = T
 
     // MARK: - Properties
 
@@ -25,7 +27,7 @@ final class ConfirmSignUpViewController: ScrollableViewController<LoginViewModel
 
     // MARK: - LifeCicle
 
-    init(viewModel: LoginViewModelProtocol,
+    init(viewModel: ViewModelType,
          phoneNumber: String) {
         self.phoneNumber = phoneNumber
 
@@ -47,7 +49,7 @@ final class ConfirmSignUpViewController: ScrollableViewController<LoginViewModel
     // MARK: - Metods
 
     private func initialize() {
-        super.addSubView(confirmSignUpView)
+        super.addSubViewToScrollView(confirmSignUpView)
         bindViewModel()
     }
 

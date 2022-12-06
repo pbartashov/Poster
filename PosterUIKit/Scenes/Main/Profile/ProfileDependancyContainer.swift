@@ -81,12 +81,14 @@ struct ProfileDependancyContainer: ProfileDependancyContainerProtocol {
         let storageReader = CloudStorageReader(userCloudStorage: userCloudStorage,
                                                postCloudStorage: postCloudStorage,
                                                imageCloudStorage: imageCloudStorage)
-
+        let favoritesPostsHashProvider = PostRepository(context: contextProvider.backgroundContext)
+        try? favoritesPostsHashProvider.startFetchingWith(predicate: nil, sortDescriptors: nil)
         let requestFilter = Filter(authorId: userService.currentUser?.uid)
 
         let postsViewModel = PostsViewModel(coordinator: postsCoordinator,
                                             storageReader: storageReader,
                                             storageWriter: storageWriter,
+                                            favoritesPostsHashProvider: favoritesPostsHashProvider,
                                             requestFilter: requestFilter,
                                             errorPresenter: ErrorPresenter.shared)
         let photosViewModel = makePhotosViewModel()

@@ -5,6 +5,8 @@
 //  Created by Павел Барташов on 25.06.2022.
 //
 
+import Combine
+//
 public enum ProfileAction {
     case showPhotos
     case showUserProfile
@@ -34,7 +36,7 @@ where State == ProfileState,
     var photos: [Data] { get }
     var photosPublisher: Published<[Data]>.Publisher { get }
 
-    var user: UserViewModel? { get }
+    var userPublisher: Published<UserViewModel?>.Publisher { get }
 }
 
 public final class ProfileViewModel<T, U>: ViewModel<ProfileState, ProfileAction>,
@@ -56,8 +58,10 @@ public final class ProfileViewModel<T, U>: ViewModel<ProfileState, ProfileAction
 
     private weak var userService: UserServiceProtocol?
 //    private let userName: String
-    public var user: UserViewModel? {
-        UserViewModel(from: userService?.currentUser)
+
+    @Published var userViewModel: UserViewModel?
+    public var userPublisher: Published<UserViewModel?>.Publisher {
+        $userViewModel
     }
 
     public var posts: [PostViewModel] {
@@ -99,38 +103,32 @@ public final class ProfileViewModel<T, U>: ViewModel<ProfileState, ProfileAction
 
         super.init(state: .initial, errorPresenter: errorPresenter)
 
-//        setupViewModel()
+        setupViewModel()
     }
 
     // MARK: - Metods
 
-//    private func setupViewModel() {
-//        postsViewModel.onPostSelected = { [weak self] post in
-////            Task { [weak self] in
-////                do {
-//            self?.postsViewModel.perfomAction(.store(post: post))
-////                } catch {
-////                    self?.errorPresenter.show(error: error)
-////                }
-////            }
-//        }
+    private func setupViewModel() {
+        userService?.currentUserPublisher
+            .map { UserViewModel(from: $0) }
+            .assign(to: &$userViewModel)
+
+//        postsViewModel.requestPosts = { [weak self] in
+//            self?.postService.getPosts { [weak self] result in
+//                switch result {
+//                    case .success(var posts):
+//                        if var text = self?.postsViewModel.searchText {
+//                            text = text.lowercased()
+//                            posts = posts.filter { $0.author.lowercased().contains(text)}
+//                        }
+//                        self?.postsViewModel.posts = posts
 //
-////        postsViewModel.requestPosts = { [weak self] in
-////            self?.postService.getPosts { [weak self] result in
-////                switch result {
-////                    case .success(var posts):
-////                        if var text = self?.postsViewModel.searchText {
-////                            text = text.lowercased()
-////                            posts = posts.filter { $0.author.lowercased().contains(text)}
-////                        }
-////                        self?.postsViewModel.posts = posts
-////
-////                    case .failure(let error):
-////                        self?.errorPresenter.show(error: error)
-////                }
-////            }
-////        }
-//    }
+//                    case .failure(let error):
+//                        self?.errorPresenter.show(error: error)
+//                }
+//            }
+//        }
+    }
 
     public override func perfomAction(_ action: ProfileAction) {
         switch action {

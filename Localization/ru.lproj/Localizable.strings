@@ -76,10 +76,6 @@
 
 // PostsViewController
 "foundedResultsPostsViewController" = "Найдено для";
-"offColorFilterPostsViewController" = "Выкл";
-"noirColorFilterPostsViewController" = "Нуар";
-"motionBlurColorFilterPostsViewController" = "Размытие";
-"invertColorFilterPostsViewController" = "Инверсия";
 
 // PhotosTableViewCell
 "titleLabelPhotosTableViewCell" = "Фото";
@@ -130,7 +126,17 @@
 
 // Common errors
 "missingContent" = "Пост должен иметь контент.";
-"NotImplemented" = "Извините, функция еще в разработке."
+"NotImplemented" = "Извините, функция еще в разработке.";
+
+// StoriesSectionHeaderView
+"allStoriesSectionHeaderView" = "Все новости";
+"recommendedStoriesSectionHeaderView" = "Для вас";
+
+// ColorFilter
+"offColorFilter" = "Выкл";
+"noirColorFilter" = "Нуар";
+"motionBlurColorFilter" = "Размытие";
+"invertColorFilter" = "Инверсия";
 
 
 // PostsView

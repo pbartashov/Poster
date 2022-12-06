@@ -43,7 +43,7 @@ final class SignUpViewController: ScrollableViewController<LoginViewModelProtoco
     // MARK: - Metods
 
     private func initialize() {
-        super.addSubView(signUpView)
+        super.addSubViewToScrollView(signUpView)
         bindViewModel()
     }
 

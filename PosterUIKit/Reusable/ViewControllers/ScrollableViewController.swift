@@ -95,7 +95,7 @@ class ScrollableViewController<ViewModelType>: UIViewController {
         }
     }
 
-    func addSubView(_ view: UIView) {
+    func addSubViewToScrollView(_ view: UIView) {
         scrollView.addSubview(view)
 
         view.snp.remakeConstraints { make in

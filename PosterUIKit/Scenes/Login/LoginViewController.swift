@@ -8,17 +8,19 @@
 import UIKit
 import PosterKit
 
-final class LoginViewController: UINavigationController {
+final class LoginViewController<T: LoginViewModelProtocol>: UINavigationController {
+
+    typealias ViewModelType = T
 
     // MARK: - Properties
 
-    private var viewModel: LoginViewModelProtocol
+    private var viewModel: ViewModelType
 
     // MARK: - Views
 
     // MARK: - LifeCicle
 
-    init(viewModel: LoginViewModelProtocol) {
+    init(viewModel: ViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

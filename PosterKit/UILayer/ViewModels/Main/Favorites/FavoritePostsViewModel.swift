@@ -29,6 +29,7 @@ public final class FavoritesViewModel: PostsViewModel, FavoritesViewModelProtoco
 //                   postService: postService,
                    storageReader: storageReader,
                    storageWriter: storageWriter,
+                   favoritesPostsHashProvider: nil,
                    requestFilter: requestFilter,
                    errorPresenter: errorPresenter)
 

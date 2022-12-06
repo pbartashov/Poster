@@ -103,9 +103,15 @@ struct ViewFactory: ViewFactoryProtocol {
 
     func makePlainButton(action: UIAction?) -> UIButton {
         var configuration = UIButton.Configuration.plain()
-        configuration.baseForegroundColor = .brandTextBlackColor
+        let button = UIButton(configuration: configuration, primaryAction: action)
+        button.configurationUpdateHandler = { button in
+            var config = button.configuration
+            config?.baseForegroundColor = button.isHighlighted ?
+                .brandYellowColor : .brandTextBlackColor
+            button.configuration = config
+        }
 
-        return UIButton(configuration: configuration, primaryAction: action)
+        return button
     }
 
     func makeVerticalPlainButton(action: UIAction?) -> UIButton {

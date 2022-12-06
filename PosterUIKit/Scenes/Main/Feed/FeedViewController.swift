@@ -38,7 +38,7 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
 //    private let postViewModelProvider: PostViewModelProvider
 
     private var subscriptions: Set<AnyCancellable> = []
-//    private var presentPostSubscription: AnyCancellable?
+    private var isRecommendedSubscription: AnyCancellable?
 
 
     private var dataSource: UICollectionViewDiffableDataSource<Section, FeedCollectionItem>!
@@ -46,6 +46,7 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
 
     @Published private var storiesItems: [FeedCollectionItem]?
     @Published private var postsItems: [FeedCollectionItem]?
+    private var isRecommended: Bool = false
 
     // Factories
     //    private let hourlyWeatherViewControllerFactory: HourlyWeatherViewControllerFactory
@@ -95,10 +96,27 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
     // MARK: - Metods
 
     private func fetchData() {
-        viewModel.perfomAction(.requestData)
+        beginRefreshing()
+        if isRecommended {
+            viewModel.perfomAction(.requestRecommendedPosts)
+        } else {
+            viewModel.perfomAction(.requestData)
+        }
 //        Task {
 //            await viewModel.fetchWeathers()
 //        }
+    }
+
+    private func beginRefreshing() {
+        guard
+            let refreshControl = collectionView.refreshControl,
+            !refreshControl.isRefreshing
+        else {
+            return
+        }
+        let offsetY = collectionView.contentOffset.y - refreshControl.bounds.size.height
+        self.collectionView.setContentOffset(CGPoint(x: 0, y: offsetY), animated: true)
+        collectionView.refreshControl?.beginRefreshing()
     }
 
     private func configureCollectionView() {
@@ -294,13 +312,13 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
                         return nil
                     }
 
-                    headerView.setup(labelTitle: "Подробнее на 24 часа")
-//                    self.presentHourlyWeatherSubscription = headerView
-//                        .buttonTappedPublisher
-//                        .eraseType()
-//                        .sink {[weak self] in
-//                            self?.presentHourlyWeather()
-//                        }
+//                    headerView.setup(labelTitle: "Подробнее на 24 часа")
+                    self.isRecommendedSubscription = headerView
+                        .$isRecommended
+                        .sink {
+                            self.isRecommended = $0
+                            self.fetchData()
+                        }
 
                     return headerView
 
@@ -340,7 +358,6 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
                 }
                 .assign(to: &$storiesItems)
 
-
             viewModel.postsPublisher
                 .removeDuplicates()
                 .map { posts in
@@ -353,20 +370,30 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
 
         func bindToCollectionView() {
             Publishers.MergeMany(
-                $storiesItems.eraseTypeAndDuplicates(),
-                $postsItems.eraseTypeAndDuplicates()
+                viewModel.storiesPublisher.eraseType(),
+                viewModel.postsPublisher.eraseType()
             )
             .debounce(for: .seconds(0.3), scheduler: DispatchQueue.main)
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
+            .sink { [weak self] _ in
                 self?.collectionView.refreshControl?.endRefreshing()
                 self?.applySnapshot()
             }
             .store(in: &subscriptions)
         }
 
+//        func bindToIsRecommended() {
+//           $isRecommended
+//            .sink { [weak self] _ in
+//                self?.fetchData()
+//                print("1")
+//            }
+//            .store(in: &subscriptions)
+//        }
+
         bindViewModelToSections()
         bindToCollectionView()
+//        bindToIsRecommended()
     }
 
     private func applySnapshot() {

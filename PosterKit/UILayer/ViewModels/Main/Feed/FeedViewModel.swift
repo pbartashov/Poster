@@ -9,6 +9,7 @@ import Combine
 
 public enum FeedAction {
     case requestData
+    case requestRecommendedPosts
     case selected(post: PostViewModel)
     case addToFavorites(post: PostViewModel)
 //    case showSignUp
@@ -106,14 +107,18 @@ public final class FeedViewModel<T>: ViewModel<FeedState, FeedAction>,
     public override func perfomAction(_ action: FeedAction) {
         switch action {
             case .requestData:
-                postsViewModel.perfomAction(.requstPosts)
+                postsViewModel.perfomAction(.requstPosts(filteredBy: nil))
                 requestStories()
 
+            case .requestRecommendedPosts:
+                let filter = Filter(isRecommended: true)
+                postsViewModel.perfomAction(.requstPosts(filteredBy: filter))
+                
             case .selected(let post):
                 postsViewModel.perfomAction(.selected(post: post))
 
             case .addToFavorites(post: let post):
-                postsViewModel.perfomAction(.store(post: post))
+                postsViewModel.perfomAction(.addToFavorites(post: post))
         }
     }
 

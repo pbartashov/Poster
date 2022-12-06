@@ -161,15 +161,14 @@ final class ProfileHeaderViewCell: UITableViewCell {
     }
 
     func setup(with user: UserViewModel?) {
-        if let user = user {
-            userInfoView.avatar = user.avatarData?.asImage
-            userInfoView.name = user.displayedName
-            userInfoView.status = user.status
+        guard let user = user else { return }
+        userInfoView.avatar = user.avatarData?.asImage
+        userInfoView.name = user.displayedName
+        userInfoView.status = user.status
 
-            publishedPostsCountLabel.text = user.publishedPostsCountText
-            subsribesCountLabel.text = user.subsribesCountText
-            followersCountLabel.text = user.followersCountText
-        }
+        publishedPostsCountLabel.text = user.publishedPostsCountText
+        subsribesCountLabel.text = user.subsribesCountText
+        followersCountLabel.text = user.followersCountText
     }
 
     private func setupLayouts() {

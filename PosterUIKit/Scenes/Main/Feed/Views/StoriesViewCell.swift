@@ -63,5 +63,9 @@ final class StoriesViewCell: UICollectionViewCell {
             .assignOnMain(to: \.image, on: avatarView)
             .store(in: &subsriptions)
     }
+
+    override func prepareForReuse() {
+        subsriptions.removeAll()
+    }
 }
 

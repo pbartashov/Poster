@@ -15,6 +15,7 @@ where T: DetailedPostViewModelProtocol {
 
     // MARK: - Properties
 
+    
     // MARK: - Views
 
     private lazy var detailedPostView: DetailedPostView = {
@@ -25,6 +26,7 @@ where T: DetailedPostViewModelProtocol {
 
     private var spinner: SpinnerViewController?
 
+   
 
     // MARK: - LifeCicle
 
@@ -45,11 +47,12 @@ where T: DetailedPostViewModelProtocol {
     // MARK: - Metods
 
     private func initialize() {
-        super.addSubView(detailedPostView)
+        super.addSubViewToScrollView(detailedPostView)
 //        title = "titleUserProfileViewController".localized
         setupEditMode()
         bindViewModel()
 //        setupView()
+
     }
 
     private func setupEditMode() {
