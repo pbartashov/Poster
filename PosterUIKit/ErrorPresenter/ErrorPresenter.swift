@@ -8,13 +8,17 @@
 import UIKit
 import PosterKit
 
+protocol Presenter: AnyObject {
+    func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?)
+}
+
 final class ErrorPresenter: ErrorPresenterProtocol {
 
     // MARK: - Properties
 
     static let shared = ErrorPresenter()
 
-    private weak var presenter: UIViewController?
+    private weak var presenter: Presenter?
 
     private var errorQueue: [Error] = []
     private var isErrorPresenting = false
@@ -23,7 +27,7 @@ final class ErrorPresenter: ErrorPresenterProtocol {
 
     private init() { }
 
-    func initialize(with presenter: UIViewController) {
+    func initialize(with presenter: Presenter) {
         self.presenter = presenter
     }
 
@@ -45,7 +49,7 @@ final class ErrorPresenter: ErrorPresenterProtocol {
                                               preferredStyle: .alert)
 
                 let cancelAction = UIAlertAction(title: "okErrorPresenter".localized,
-                                                 style: .default) { [weak self] _ in
+                                                 style: .default) { _ in
                     self?.isErrorPresenting = false
                     if let nextError = self?.errorQueue.popLast() {
                         DispatchQueue.main.async {
@@ -56,8 +60,10 @@ final class ErrorPresenter: ErrorPresenterProtocol {
                 }
                 alert.addAction(cancelAction)
 
-                self?.presenter?.present(alert, animated: true)
+                self?.presenter?.present(alert, animated: true, completion: nil)
             }
         }
     }
 }
+
+extension UIViewController: Presenter { }

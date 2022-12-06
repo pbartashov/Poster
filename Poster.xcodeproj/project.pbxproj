@@ -638,7 +638,8 @@
 				6E2F780A291BD1E8007EB9ED /* Protocols */,
 				6E2F7805291BCEA1007EB9ED /* Services */,
 				6E01175C2921B2CE00D8F391 /* DataLayer */,
-				6E2F7801291BCE0D007EB9ED /* UILayer */,
+				6E2F7802291BCE17007EB9ED /* ViewModels */,
+				6E5886132936DA44000CA953 /* KMBFormatter.swift */,
 				6E106C12291A79DE004021DF /* PosterKit.h */,
 			);
 			path = PosterKit;
@@ -768,15 +769,6 @@
 				6E2F77FC291B1B55007EB9ED /* NavigationCoordinator.swift */,
 			);
 			path = Coordinators;
-			sourceTree = "<group>";
-		};
-		6E2F7801291BCE0D007EB9ED /* UILayer */ = {
-			isa = PBXGroup;
-			children = (
-				6E2F7802291BCE17007EB9ED /* ViewModels */,
-				6E5886132936DA44000CA953 /* KMBFormatter.swift */,
-			);
-			path = UILayer;
 			sourceTree = "<group>";
 		};
 		6E2F7802291BCE17007EB9ED /* ViewModels */ = {
