@@ -6,17 +6,32 @@
 //
 
 import UIKit
+import PosterUIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    //    var appCoordinator: AppCoordinatorProtocol?
+    var appDependancyContainer: AppDependencyContainerProtocol?
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+
+        setAppearance()
+
+        let window = UIWindow(windowScene: windowScene)
+        let appDependancyContainer = AppDependencyContainer()
+        let coordinator = appDependancyContainer.makeAppCoordinator(window: window)
+
+        window.rootViewController = coordinator.start()
+        window.makeKeyAndVisible()
+
+        self.window = window
+        self.appDependancyContainer = appDependancyContainer
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -50,3 +65,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 }
 
+extension SceneDelegate {
+    private func setAppearance() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+
+        let leftArrow = UIImage(named: "LeftArrow")
+        appearance.setBackIndicatorImage(leftArrow, transitionMaskImage: leftArrow)
+
+        let backButtonAppearance = UIBarButtonItemAppearance(style: .plain)
+        let titleTextAttributes: [NSAttributedString.Key : UIColor] = [.foregroundColor: .clear]
+        backButtonAppearance.focused.titleTextAttributes = titleTextAttributes
+        backButtonAppearance.disabled.titleTextAttributes = titleTextAttributes
+        backButtonAppearance.highlighted.titleTextAttributes = titleTextAttributes
+        backButtonAppearance.normal.titleTextAttributes = titleTextAttributes
+
+        appearance.backButtonAppearance = backButtonAppearance
+
+        let proxy = UINavigationBar.appearance()
+        proxy.tintColor = .brandTextBlackColor
+        proxy.standardAppearance = appearance
+        proxy.compactAppearance = appearance
+        proxy.scrollEdgeAppearance = appearance
+    }
+}

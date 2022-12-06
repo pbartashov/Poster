@@ -1,0 +1,128 @@
+/* 
+  Localizable.strings
+  Poster
+
+  Created by Павел Барташов on 09.11.2022.
+  
+*/
+
+// ErrorPresenter
+"okErrorPresenter" = "Ясно";
+
+// LoginError
+"missingPhoneNumberLoginError" = "Введите номер телефона.";
+"missingCodeLoginError" = "Введите код.";
+"invalidPhoneNumberLoginError" = "Неверный номер телефона.";
+"invalidCodeLoginError" = "Неверный код.";
+"userNotFoundLoginError" = "Пользователь не найден.";
+"networkErrorLoginError" = "Нет подключения к сети.";
+"unknownLoginError" = "Ошибка при авторизации. Попробуйте еще раз.";
+
+// LoginCoordinator
+"createAccountPromptTitleLoginCoordinator" = "Создать аккаунт?";
+"createAccountPromptMessageLoginCoordinator" = "Вы хотите создать аккаунт для пользователя";
+"yesAnswerLoginCoordinator" = "Да";
+"noAnswerLoginCoordinator" = "Нет";
+
+// LoginButton
+"signUpLoginButton" = "ЗАРЕГИСТРИРОВАТЬСЯ";
+"signInLoginButton" = "Уже есть аккаунт";
+"nextLoginButton" = "ДАЛЕЕ";
+"confirmLoginButton" = "ПОДТВЕРДИТЬ";
+
+// SignUpView
+"titleLabelSignInView" = "ЗАРЕГИСТРИРОВАТЬСЯ";
+"enterNumberLabelSignInView" = "Введите номер";
+"explainNumberLabelSignInView" = "Ваш номер будет использоваться\nдля входа в аккаунт";
+"explainButtonLabelSignInView" = "Нажимая кнопку “Далее” Вы принимаете\nпользовательское Соглашение и политику\nконфедициальности";
+
+// SignInView
+"titleLabelSignUpView" = "С возвращением";
+"enterNumberLabelSignUpView" = "Введите номер телефона\nдля входа в приложение";
+
+// ConfirmSignUpView
+"titleLabelConfirmSignUpView" = "Подтверждение регистрации";
+"explainLabelConfirmSignUpView" = "Мы отправили SMS с кодом на номер";
+"enterCodeLabelConfirmSignUpView" = "Введите код из SMS";
+
+// MainDependancyContainer
+"feedMainDependancyContainer" = "Главная";
+"profileMainDependancyContainer" = "Профиль";
+"favoritesMainDependancyContainer" = "Сохраненные";
+
+// PhotosViewController
+"titlePhotosViewController" = "Фото галлерея";
+
+// ProfileHeaderView
+"editButtonProfileHeaderView" = "Редактировать";
+"addPostProfileHeaderView" = "Запись";
+"addStoryProfileHeaderView" = "История";
+"addPhotoProfileHeaderView" = "Фото";
+
+// PostsViewController
+"foundedResultsPostsViewController" = "Найдено для";
+
+// PhotosTableViewCell
+"titleLabelPhotosTableViewCell" = "Фото";
+
+// PostsCoordinator
+"searchTextFieldPlaceholderPostsCoordinator" = "Что ищем?";
+"searchActionTitlePostsCoordinator" = "Искать";
+"cancelActionTitlePostsCoordinator" = "Отменить поиск";
+
+// PostsViewModel
+"searchPromptTitlePostsViewModel" = "Поиск по содержимому";
+"retryPromptTitlePostsViewModel" = "Ничего не нашли...🤷";
+"retryPromptMessagePostsViewModel" = "Попробуйте еще";
+
+// UserProfileView
+"tapImageLabelUserProfileView" = "Нажмите для выбора аватара";
+"firstNameLabelUserProfileView" = "Имя";
+"firstNamePlaceholderUserProfileView" = "имя";
+"lastNameLabelUserProfileView" = "Фамилия";
+"lastNamePlaceholderUserProfileView" = "фамилия";
+"genderLabelUserProfileView" = "Пол";
+"birthDateLabelUserProfileView" = "Дата рождения";
+"nativeTownLabelUserProfileView" = "Родной город";
+"nativeTownPlaceholderUserProfileView" = "напишите название";
+"phoneNumberLabelUserProfileView" = "Номер телефона";
+"phoneNumberPlaceholderUserProfileView" = "+00000000000";
+"statusLabelUserProfileView" = "Статус";
+"statusPlaceholderUserProfileView" = "ваш статус";
+
+// Gender
+"maleGender" = "мужской";
+"femaleGender" = "женский";
+
+// UserProfileViewController
+"titleUserProfileViewController" = "Основная информация";
+
+// KMBFormatter
+"thousandsKMBFormatter" = "тыс.";
+"millionsKMBFormatter" = "млн.";
+"billionsKMBFormatter" = "млрд.";
+
+// DetailedPostViewController
+"titleDetailedPostViewController" = "Публикации";
+"tapImageLabelDetailedPostViewController" = "Нажмите для выбора изображения";
+"editButtonDetailedPostViewController" = "Редактировать";
+"saveButtonDetailedPostViewController" = "Сохранить";
+
+// DatabaseError
+"storeDatabaseError" = "Невозможно добавить данные в хранилище";
+"invalidManagedObjectTypeDatabaseError" = "Не найдена модель объекта.";
+"notFoundDatabaseError" = "Объект не найден.";
+
+// Common errors
+"missingContent" = "Пост должен иметь контент.";
+"NotImplemented" = "Извините, функция еще в разработке.";
+
+// StoriesSectionHeaderView
+"allStoriesSectionHeaderView" = "Все новости";
+"recommendedStoriesSectionHeaderView" = "Для вас";
+
+// ColorFilter
+"offColorFilter" = "Выкл";
+"noirColorFilter" = "Нуар";
+"motionBlurColorFilter" = "Размытие";
+"invertColorFilter" = "Инверсия";
