@@ -14,16 +14,6 @@ final class ProfileCoordinator: NavigationCoordinator, ProfileCoordinatorProtoco
 
     var dependancyContainer: ProfileDependancyContainerProtocol?
 
-    // MARK: - LifeCicle
-
-//    init(navigationController: UINavigationController? = nil,
-//         profileDependancyContainer: ProfileDependancyContainerProtocol) {
-//        self.profileDependancyContainer = profileDependancyContainer
-//        super.init(navigationController: navigationController)
-//    }
-
-    // MARK: - Metods
-
     // MARK: - Metods
 
     func showPhotos() {
@@ -38,20 +28,10 @@ final class ProfileCoordinator: NavigationCoordinator, ProfileCoordinatorProtoco
         }
     }
 
-//    func dismissUserProfile() {
-//        dismiss(animated: true)
-//    }
-
     func showAddPhoto() {
         let addPhotoViewController = dependancyContainer?.makeAddPhotoViewController()
         presentViewController(addPhotoViewController)
     }
-
-//    func showImagePicker() {
-//        if let imagePickerController = dependancyContainer?.makeImagePickerViewController() {
-//            presentViewController(imagePickerController)
-//        }
-//    }
 }
 
 extension ProfileCoordinator: DetailedPostCoordinatorProtocol {

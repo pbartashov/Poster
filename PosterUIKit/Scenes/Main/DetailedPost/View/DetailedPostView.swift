@@ -25,24 +25,6 @@ protocol ViewWithText: UIView {
     var textContent: String? { get set }
 }
 
-extension UILabel: ViewWithText {
-    var textContent: String? {
-        get { text }
-        set { text = newValue }
-    }
-}
-
-extension UITextView: ViewWithText {
-    var textContent: String? {
-        get { text }
-        set { text = newValue }
-    }
-}
-
-extension UIImageView: ViewWithImage { }
-
-extension ImagePickerView: ViewWithImage { }
-
 final class DetailedPostView: ViewWithButton<DetailedPostViewButton> {
 
     // MARK: - Properties
@@ -52,9 +34,8 @@ final class DetailedPostView: ViewWithButton<DetailedPostViewButton> {
             applyColorFilter()
         }
     }
-    private var originalImage: UIImage?
 
-//    private var originalPostViewModel: PostViewModel?
+    private var originalImage: UIImage?
 
     private weak var imagePickerViewDelegate: ImagePickerViewDelegate?
 
@@ -71,13 +52,6 @@ final class DetailedPostView: ViewWithButton<DetailedPostViewButton> {
         set {
             originalImage = newValue
             postImageView?.image = newValue
-//            let aspectRatio: CGFloat
-//            if let size = newValue?.size {
-//                aspectRatio = size.height / size.width
-//            } else {
-//                aspectRatio = Constants.UI.postImageAcpectRatio
-//            }
-
             updatePostImageViewButtomConstraint()
         }
     }
@@ -123,59 +97,10 @@ final class DetailedPostView: ViewWithButton<DetailedPostViewButton> {
     }()
 
     private lazy var postImageViewContainer = viewFactory.makeContainerView()
-    private var postImageView: ViewWithImage? // = makeImageView()
-//    private let postImageView: UIImageView = {
-//        let imageView = UIImageView()
-//        imageView.contentMode = .scaleAspectFit
-//        imageView.layer.cornerRadius = Constants.UI.cornerRadius
-//        imageView.layer.masksToBounds = true
-//        imageView.layer.borderColor = UIColor.brandYellowColor.cgColor
-//        imageView.layer.borderWidth = 1
-//
-//        return imageView
-//    }()
+    private var postImageView: ViewWithImage?
 
-//    private lazy var contentView1: UILabel = {
-//        let label = viewFactory.makeTextLabel()
-//        label.textAlignment = .natural
-//        label.numberOfLines = 0
-//        label.lineBreakMode = .byTruncatingTail
-//
-//        return label
-//    }()
-//
-//    private lazy var contentView2: UITextView = {
-//        let textview = UITextView()
-//
-//        textview.isScrollEnabled = false;
-////        label.textAlignment = .natural
-////        label.numberOfLines = 0
-////        label.lineBreakMode = .byTruncatingTail
-//
-//        return textview
-//    }()
     private lazy var contentViewContainer = viewFactory.makeContainerView()
-      private var contentView: ViewWithText? // = makeContentView()
-
-//    private lazy var avatarImageView: UIImageView = {
-//        let imageView = UIImageView(frame: CGRect(x: 0,
-//                                                  y: 0,
-//                                                  width: Constants.UI.avatarImageSize,
-//                                                  height: Constants.UI.avatarImageSize))
-//        //        let imageView = UIImageView()
-//        imageView.layer.borderWidth = 1
-//        imageView.layer.borderColor = UIColor.brandYellowColor.cgColor
-//        imageView.layer.cornerRadius = imageView.frame.width / 2
-//        imageView.layer.masksToBounds = true
-//
-//        let tapRecognizer = UITapGestureRecognizer(target: self,
-//                                                   action: #selector(avatarTapped))
-//        imageView.addGestureRecognizer(tapRecognizer)
-//        imageView.isUserInteractionEnabled = true
-//
-//        return imageView
-//    }()
-
+    private var contentView: ViewWithText? // = makeContentView()
 
     lazy var activityView: UIActivityIndicatorView = {
         let activity = viewFactory.makeActivityIndicatorView()
@@ -208,30 +133,14 @@ final class DetailedPostView: ViewWithButton<DetailedPostViewButton> {
 
         return control
     }()
-//    lazy var stackView: UIStackView = {
-//        let stack = UIStackView()
-//        stack.axis = .vertical
-//        stack.alignment = .fill
-//        stack.spacing = Constants.UI.padding
-//
-//        return stack
-//    }()
-
-
-
-
 
     // MARK: - LifeCicle
 
     init(viewFactory: ViewFactoryProtocol&UserInfoViewFactory,
          imagePickerViewDelegate: ImagePickerViewDelegate?
-//         isEditable: Bool
-         //         dateFormatter: DateFormatter
     ) {
         self.viewFactory = viewFactory
         self.imagePickerViewDelegate = imagePickerViewDelegate
-//        self.isEditable = isEditable
-        //        self.dateFormatter = dateFormatter
         super.init(frame: .zero)
         initialize()
     }
@@ -240,12 +149,11 @@ final class DetailedPostView: ViewWithButton<DetailedPostViewButton> {
         fatalError("init(coder:) has not been implemented")
     }
 
-
     override func layoutSubviews() {
         super.layoutSubviews()
         updatePostImageViewButtomConstraint()
-//        activityView.layer.cornerRadius = activityView.bounds.width / 2
     }
+
     // MARK: - Metods
 
     private func initialize() {
@@ -253,24 +161,16 @@ final class DetailedPostView: ViewWithButton<DetailedPostViewButton> {
          headerView,
          postImageViewContainer,
          contentViewContainer,
-//         stackView,
          activityView,
         ].forEach {
             self.addSubview($0)
         }
-
-//        [postImageView,
-//         contentView
-//        ].forEach {
-//            stackView.addArrangedSubview($0)
-//        }
 
         setupLayouts()
         setupEditableViews()
     }
 
     private func setupLayouts() {
-
         colorFilterSelector.snp.makeConstraints { make in
             make.top.leading.equalToSuperview().offset(Constants.UI.padding)
             make.trailing.equalToSuperview().offset(-Constants.UI.padding)
@@ -287,33 +187,16 @@ final class DetailedPostView: ViewWithButton<DetailedPostViewButton> {
             make.center.equalTo(postImageViewContainer)
         }
 
-//        stackView.snp.makeConstraints { make in
-//            make.top.equalTo(headerView.snp.bottom).offset(Constants.UI.padding)
-//            make.leading.trailing.equalTo(headerView)
-//            make.bottom.equalToSuperview().offset(-Constants.UI.padding)
-//        }
-
-
-
-
-
         postImageViewContainer.snp.makeConstraints { make in
             make.top.equalTo(headerView.snp.bottom).offset(Constants.UI.padding)
             make.leading.trailing.equalTo(headerView)
-//            make.height.equalTo(postImageView.snp.width).multipliedBy(Constants.UI.postImageAcpectRatio)
-            make.bottom.equalTo(postImageViewContainer.snp.top).offset(postImageViewContainer.bounds.width * Constants.UI.postImageAcpectRatio)
-
-
-
-//            make.bottom.equalToSuperview().offset(10 * -Constants.UI.padding)
+            make.bottom.equalTo(postImageViewContainer.snp.top)
+                .offset(postImageViewContainer.bounds.width * Constants.UI.postImageAcpectRatio)
         }
 
         contentViewContainer.snp.makeConstraints { make in
             make.top.equalTo(postImageViewContainer.snp.bottom).offset(Constants.UI.padding)
             make.leading.trailing.equalTo(headerView)
-
-
-
 
             make.bottom.equalToSuperview().offset(-Constants.UI.padding)
         }
@@ -336,18 +219,13 @@ final class DetailedPostView: ViewWithButton<DetailedPostViewButton> {
         postImageView = newPostImageView
         contentView = newContentView
 
-
         prepareForRemoving(oldPostImageView)
         prepareForRemoving(oldContentView)
-
-
-//        oldPostImageView?.snp.removeConstraints()
-//        oldContentView?.snp.removeConstraints()
 
         UIView.animate(withDuration: 0.5) { [self] in
             resetTransform(for: newPostImageView)
             resetTransform(for: newContentView)
-   
+
             oldPostImageView?.transform = CGAffineTransform(translationX: -translationX, y: 0)
             oldContentView?.transform = CGAffineTransform(translationX: -translationX, y: 0)
             oldPostImageView?.alpha = 0
@@ -358,25 +236,11 @@ final class DetailedPostView: ViewWithButton<DetailedPostViewButton> {
         }
     }
 
-
     private func prepareForRemoving(_ view: UIView?) {
         // Для гладкой анимации. Новый view может отличаться по размерам от старого
         guard let view = view else { return }
-//        view.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
-//        view.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-//        view.setContentHuggingPriority(.defaultLow, for: .vertical)
-//        view.setContentHuggingPriority(.defaultLow, for: .horizontal)
-//        view.snp.remakeConstraints { make in
-//            make.top.leading.greaterThanOrEqualToSuperview()
-//            make.trailing.bottom.lessThanOrEqualToSuperview()
-//        }
-
         let bounds = view.bounds
         view.snp.remakeConstraints { make in
-//            make.top.equalTo(10)
-//            make.leading.equalTo(10)
-//            make.trailing.equalTo(50)
-//            make.bottom.equalTo(50)
             make.top.equalToSuperview()
             make.leading.equalToSuperview()
             make.height.equalTo(bounds.height)
@@ -399,21 +263,6 @@ final class DetailedPostView: ViewWithButton<DetailedPostViewButton> {
         view.layer.anchorPointZ = 0
     }
 
-    private func makeContentView() -> ViewWithText {
-        if isEditable {
-            let textview = viewFactory.makeTextView()
-            textview.backgroundColor = .brandBackgroundGrayColor
-            return textview
-        } else {
-            let label = viewFactory.makeTextLabel()
-            label.textAlignment = .natural
-            label.numberOfLines = 0
-            label.lineBreakMode = .byTruncatingTail
-
-            return label
-        }
-    }
-
     private func makeImageView() -> ViewWithImage {
         if isEditable {
             let imagePickerView = viewFactory.makePostImagePickerView(delegate: imagePickerViewDelegate)
@@ -426,8 +275,21 @@ final class DetailedPostView: ViewWithButton<DetailedPostViewButton> {
             return viewFactory.makeImageView()
         }
     }
-    
-    
+
+    private func makeContentView() -> ViewWithText {
+        if isEditable {
+            let textview = viewFactory.makeTextView()
+            return textview
+        } else {
+            let label = viewFactory.makeTextLabel()
+            label.textAlignment = .natural
+            label.numberOfLines = 0
+            label.lineBreakMode = .byTruncatingTail
+
+            return label
+        }
+    }
+
     override func observeValue(forKeyPath keyPath: String?,
                                of object: Any?,
                                change: [NSKeyValueChangeKey : Any]?,
@@ -437,18 +299,6 @@ final class DetailedPostView: ViewWithButton<DetailedPostViewButton> {
         }
     }
 
-    #warning("addMotionEffect(<#T##effect: UIMotionEffect##UIMotionEffect#>)")
-
-
-
-
-
-
-//
-//    @objc private func avatarTapped() {
-//        sendButtonTapped(.avatar)
-//    }
-
     private func updatePostImageViewButtomConstraint() {
         let aspectRatio: CGFloat
         if let size = postImageView?.image?.size {
@@ -456,8 +306,6 @@ final class DetailedPostView: ViewWithButton<DetailedPostViewButton> {
         } else {
             aspectRatio = Constants.UI.postImageAcpectRatio
         }
-
-//        guard let postImageView = postImageView else { return }
 
         UIView.animate(withDuration: 0.3) { [self] in
             postImageViewContainer.snp.updateConstraints { make in
@@ -470,7 +318,6 @@ final class DetailedPostView: ViewWithButton<DetailedPostViewButton> {
 
     private func applyColorFilter() {
         postImageView?.image = originalImage
-
         guard
             let filter = currentColorFilter,
             let image = postImageView?.image
@@ -490,35 +337,22 @@ final class DetailedPostView: ViewWithButton<DetailedPostViewButton> {
             isBusy = false
         }
     }
-//
-//    private func setAvatarViewBorderWidth() {
-//        switch avatarImageView.image {
-//            case .none:
-//                avatarImageView.layer.borderWidth = 1
-//
-//            case .some:
-//                avatarImageView.layer.borderWidth = 0
-//        }
-//    }
 }
 
-//extension DetailedPostView {
-//    var postViewModel: PostViewModel {
-//        get { composePostViewModel() }
-//        set {
-//            originalPostViewModel = newValue
-//            decomposePostViewModel(newValue)
-//        }
-//    }
-//
-//    func composePostViewModel() -> PostViewModel {
-//        let post = Post
-//PostViewModel(from: <#T##Post#>,
-//              storageReader: <#T##StorageReaderProtocol#>)
-//    }
-//
-//    func decomposePostViewModel(_ post: PostViewModel) {
-//        <#function body#>
-//    }
-//}
+extension UILabel: ViewWithText {
+    var textContent: String? {
+        get { text }
+        set { text = newValue }
+    }
+}
 
+extension UITextView: ViewWithText {
+    var textContent: String? {
+        get { text }
+        set { text = newValue }
+    }
+}
+
+extension UIImageView: ViewWithImage { }
+
+extension ImagePickerView: ViewWithImage { }

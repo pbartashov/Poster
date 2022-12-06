@@ -10,11 +10,10 @@
 "okErrorPresenter" = "Ok";
 
 // LoginError
-"missingLoginLoginError" = "Enter login.";
-"missingPasswordLoginError" = "Enter password.";
-"invalidEmailLoginError" = "Wrong email.";
-"wrongPasswordLoginError" = "Wrong login or password.";
-"weakPasswordLoginError" = "Password must contain at least 6 characters.";
+"missingPhoneNumberLoginError" = "Enter phone number.";
+"missingCodeLoginError" = "Enter code.";
+"invalidPhoneNumberLoginError" = "Wrong phone number.";
+"invalidCodeLoginError" = "Wrong code.";
 "userNotFoundLoginError" = "User not found.";
 "networkErrorLoginError" = "Network error.";
 "unknownLoginError" = "Login error. Please try again.";
@@ -25,70 +24,49 @@
 "yesAnswerLoginCoordinator" = "Yes";
 "noAnswerLoginCoordinator" = "No";
 
-// WelcomeView
-"signInButtonSignInView" = "Sign in";
-"signUpButtonSignInView" = "Sign up";
+// LoginButton
+"signUpLoginButton" = "SIGH UP";
+"signInLoginButton" = "I've got an account";
+"nextLoginButton" = "NEXT";
+"confirmLoginButton" = "CONFIRM";
 
-
-
+// SignUpView
+"titleLabelSignInView" = "SIGN IN";
+"enterNumberLabelSignInView" = "Enter phone number";
+"explainNumberLabelSignInView" = "Your number\nwill be used to login";
+"explainButtonLabelSignInView" = "By clicking the Next button\nyou accept\the User Agreement and Privacy Policy";
 
 // SignInView
-"loginButtonSignInView" = "Log in";
-"loginTextFieldPlaceHolder" = "Telephone or email";
-"passwordTextFieldPlaceHolder" = "Password";
+"titleLabelSignUpView" = "Welcome back";
+"enterNumberLabelSignUpView" = "Enter your phone number\nto enter the application";
 
+// ConfirmSignUpView
+"titleLabelConfirmSignUpView" = "Confirmation of registration";
+"explainLabelConfirmSignUpView" = "We sent an SMS with a code to your phone";
+"enterCodeLabelConfirmSignUpView" = "Enter code from SMS";
 
-
-
-// ViewControllerFacLoginCoordinatortory
-"feedViewControllerFactory" = "Feed";
-"profileViewControllerFactory" = "Profile";
-"favoritesViewControllerFactory" = "Favorites";
-
-
-
-
-
-
-
-
-// FeedViewController
-"newPostFeedViewController" = "New post";
-
-// FeedView
-"post1FeedView" = "Post 1";
-"post2FeedView" = "Post 2";
-"loginFeedView" = "Log in";
-"wrongLabelFeedView" = "Wrong";
-"rightLabelFeedView" = "Right";
-"passwordPlaceholderFeedView" = "Password";
-
-
-
-
+// MainDependancyContainer
+"feedMainDependancyContainer" = "Home";
+"profileMainDependancyContainer" = "Profile";
+"favoritesMainDependancyContainer" = "Favorites";
 
 // PhotosViewController
-"titlePhotosViewController" = "Photos";
+"titlePhotosViewController" = "Photo gallery";
 
 // ProfileHeaderView
-"statusTextFieldPlaceholderProfileHeaderView" = "Set your status..";
-"setStatusButtonProfileHeaderView" = "Set status";
+"editButtonProfileHeaderView" = "Edit";
+"addPostProfileHeaderView" = "Post";
+"addStoryProfileHeaderView" = "Story";
+"addPhotoProfileHeaderView" = "Photo";
 
 // PostsViewController
 "foundedResultsPostsViewController" = "Founded for";
-"offColorFilterPostsViewController" = "Off";
-"noirColorFilterPostsViewController" = "Noir";
-"motionBlurColorFilterPostsViewController" = "Blur";
-"invertColorFilterPostsViewController" = "Invert";
 
 // PhotosTableViewCell
 "titleLabelPhotosTableViewCell" = "Photos";
 
-
-
-
 // PostsCoordinator
-"searchTextFieldPlaceholderPostsCoordinator" = "Author name";
+"searchTextFieldPlaceholderPostsCoordinator" = "What are we looking for?";
 "searchActionTitlePostsCoordinator" = "Search";
 "cancelActionTitlePostsCoordinator" = "Cancel";
 
@@ -97,3 +75,54 @@
 "retryPromptTitlePostsViewModel" = "Nothing found...🤷";
 "retryPromptMessagePostsViewModel" = "Try again, please";
 
+// UserProfileView
+"tapImageLabelUserProfileView" = "Click to select an avatar";
+"firstNameLabelUserProfileView" = "First name";
+"firstNamePlaceholderUserProfileView" = "first name";
+"lastNameLabelUserProfileView" = "Last name";
+"lastNamePlaceholderUserProfileView" = "last name";
+"genderLabelUserProfileView" = "Gender";
+"birthDateLabelUserProfileView" = "Date of Birth";
+"nativeTownLabelUserProfileView" = "Native city";
+"nativeTownPlaceholderUserProfileView" = "write the title";
+"phoneNumberLabelUserProfileView" = "Phone number";
+"phoneNumberPlaceholderUserProfileView" = "+00000000000";
+"statusLabelUserProfileView" = "Статус";
+"statusPlaceholderUserProfileView" = "your status";
+
+// Gender
+"maleGender" = "male";
+"femaleGender" = "female";
+
+// UserProfileViewController
+"titleUserProfileViewController" = "Main";
+
+// KMBFormatter
+"thousandsKMBFormatter" = "K";
+"millionsKMBFormatter" = "M";
+"billionsKMBFormatter" = "B";
+
+// DetailedPostViewController
+"titleDetailedPostViewController" = "Posts";
+"tapImageLabelDetailedPostViewController" = "Click to select an image";
+"editButtonDetailedPostViewController" = "Edit";
+"saveButtonDetailedPostViewController" = "Save";
+
+// DatabaseError
+"storeDatabaseError" = "Unable to add data to storage";
+"invalidManagedObjectTypeDatabaseError" = "Object model not found.";
+"notFoundDatabaseError" = "Object not found.";
+
+// Common errors
+"missingContent" = "The post must have content.";
+"NotImplemented" = "Sorry, the feature is still under development.";
+
+// StoriesSectionHeaderView
+"allStoriesSectionHeaderView" = "All news";
+"recommendedStoriesSectionHeaderView" = "For you";
+
+// ColorFilter
+"offColorFilter" = "Off";
+"noirColorFilter" = "Noir";
+"motionBlurColorFilter" = "Blur";
+"invertColorFilter" = "Invert";

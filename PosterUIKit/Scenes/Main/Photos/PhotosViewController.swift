@@ -12,7 +12,7 @@ import PosterKit
 final class PhotosViewController<T>: UIViewController,
                                      UICollectionViewDataSource,
                                      UICollectionViewDelegateFlowLayout
-    where T: PhotosViewModelProtocol {
+where T: PhotosViewModelProtocol {
 
     typealias ViewModelType = T
 
@@ -42,9 +42,7 @@ final class PhotosViewController<T>: UIViewController,
 
     // MARK: - LifeCicle
 
-    init(viewModel: ViewModelType
-         //         postViewModelProvider: PostViewModelProvider
-    ) {
+    init(viewModel: ViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -83,7 +81,7 @@ final class PhotosViewController<T>: UIViewController,
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCollectionViewCell.identifier,
-                                                      for: indexPath)
+                                                          for: indexPath)
                 as? PhotosCollectionViewCell,
             let photo = viewModel.photos[indexPath.row].asImage
         else {
@@ -109,7 +107,7 @@ final class PhotosViewController<T>: UIViewController,
     }
 
 
-// MARK: - UICollectionViewDelegateFlowLayout methods
+    // MARK: - UICollectionViewDelegateFlowLayout methods
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath

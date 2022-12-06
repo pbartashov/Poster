@@ -10,23 +10,12 @@ import PosterKit
 
 struct FeedFactory {
 
-    // MARK: - Properties
-
-    //    static var create = FeedFactory()
-
     // MARK: - Metods
 
     func viewModelWith(feedCoordinator: FeedCoordinatorProtocol?,
                        postsCoordinator: PostsCoordinatorProtocol?,
                        user: User
     ) -> FeedViewModel<PostsViewModel> {
-
-
-//        let user = User(id: "6", name: "",
-//                        avatarData: (UIImage(named: "profileImage") ?? UIImage(systemName: "person"))?.pngData(),
-//                        status: "Hardly coding")
-
-
         let contextProvider = CoreDataContextProvider.shared
         let postRepository = PostRepository(context: contextProvider.backgroundContext)
         let storageWriter = LocalStorageWriter(repository: postRepository)
@@ -54,24 +43,11 @@ struct FeedFactory {
         
         return FeedViewModel(storageReader: storageReader,
                              coordinator: feedCoordinator,
-                             //                                userService: userService,
-                             //                                userName: userName,
-//                             postRepository: postRepository,
                              postsViewModel: postsViewModel,
-//                             postViewModelProvider: postsViewModel,
                              errorPresenter: ErrorPresenter.shared)
     }
     
     func viewControllerWith<T>(viewModel: FeedViewModel<T>) -> UIViewController where T: PostsViewModelProtocol {
         FeedViewController<FeedViewModel<T>>(viewModel: viewModel)
     }
-
-//    func viewControllerWith<T>(viewModel: ProfileViewModel<T>) -> UIViewController where T: PostsViewModelProtocol {
-//        ProfileViewController<ProfileViewModel<T>, T>(viewModel: viewModel)
-//    }
-
-//    func viewControllerWith(viewModel: FeedViewModel) -> UIViewController {
-//        FeedViewController(viewModel: viewModel)
-//    }
 }
-

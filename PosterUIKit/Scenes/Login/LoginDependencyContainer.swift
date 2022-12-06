@@ -10,7 +10,6 @@ import PosterKit
 
 protocol LoginDependencyContainerProtocol {
     func makeLoginViewController(loginCoordinator: LoginCoordinatorProtocol) -> UINavigationController
-//    func makeLoginCoordinator(rootSceneSwitcher: RootSceneSwitcher?) -> LoginCoordinator
     func makeWelcomeViewController() -> UIViewController
     func makeSignUpViewController() -> UIViewController
     func makeSignInViewController() -> UIViewController
@@ -19,17 +18,10 @@ protocol LoginDependencyContainerProtocol {
 
 struct LoginDependencyContainer: LoginDependencyContainerProtocol {
 
-
-
     // MARK: - Properties
-
-//    private weak var viewControllerSwitcher: ViewControllerSwitcher?
-//    private weak var loginSceneSwitcher: LoginSceneSwitcher?
 
     private var sharedLoginViewModel: LoginViewModel
     private unowned var userService: UserServiceProtocol
-
-    // MARK: - Views
 
     // MARK: - LifeCicle
 
@@ -42,7 +34,6 @@ struct LoginDependencyContainer: LoginDependencyContainerProtocol {
             return LoginViewModel(loginDelegate: loginDelegate,
                                   coordinator: loginCoordinator,
                                   errorPresenter: ErrorPresenter.shared)
-            //                              credentialStorage: CredentialStorageService())
         }
 
         self.sharedLoginViewModel = makeLoginViewModel()
@@ -52,26 +43,11 @@ struct LoginDependencyContainer: LoginDependencyContainerProtocol {
     // MARK: - Metods
 
     func makeLoginViewController(loginCoordinator: LoginCoordinatorProtocol) -> UINavigationController {
-//        let loginViewModel = makeLoginViewModel(loginCoordinator: loginCoordinator)
         let loginViewController = LoginViewController(viewModel: sharedLoginViewModel)
-
-//        rootLoginViewController.setViewControllers([loginViewController], animated: false)
-
         ErrorPresenter.shared.initialize(with: loginViewController)
 
         return loginViewController
     }
-
-
-
-//    func makeLoginViewModel(loginCoordinator: LoginCoordinatorProtocol) -> LoginViewModelProtocol {
-//        let checker = ChekerService()
-//        let loginDelegate = LoginInspector(checker: checker)
-//        return LoginViewModel(loginDelegate: loginDelegate,
-//                              coordinator: loginCoordinator,
-//                              errorPresenter: ErrorPresenter.shared)
-//        //                              credentialStorage: CredentialStorageService())
-//    }
 
     func makeWelcomeViewController() -> UIViewController {
         WelcomeViewController(viewModel: sharedLoginViewModel)
@@ -89,4 +65,3 @@ struct LoginDependencyContainer: LoginDependencyContainerProtocol {
         ConfirmSignUpViewController(viewModel: sharedLoginViewModel, phoneNumber: phoneNumber)
     }
 }
-

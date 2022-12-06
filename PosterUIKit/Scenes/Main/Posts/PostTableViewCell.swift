@@ -24,7 +24,6 @@ final class PostTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
         initialize()
     }
 
@@ -33,6 +32,7 @@ final class PostTableViewCell: UITableViewCell {
     }
 
     // MARK: - Metods
+    
     private func initialize() {
         contentView.addSubview(postCellView)
         setupLayouts()

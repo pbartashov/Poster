@@ -7,7 +7,7 @@
 
 public protocol LoginDelegate: AnyObject {
     func signIn(phoneNumber: String,
-                          completion: ((Result<User, Error>) -> Void)?)
+                completion: ((Result<User, Error>) -> Void)?)
 
     func signUp(phoneNumber: String,
                 completion: ((Result<String, Error>) -> Void)?)
@@ -15,7 +15,6 @@ public protocol LoginDelegate: AnyObject {
     func comfirm(phoneNumber: String,
                  withCode code: String,
                  completion: ((Result<User, Error>) -> Void)?)
-
 }
 
 public final class LoginInspector: LoginDelegate {
@@ -24,7 +23,6 @@ public final class LoginInspector: LoginDelegate {
 
     private let checker: CheckerServiceProtocol
     private let userService: UserServiceProtocol
-
 
     // MARK: - LifeCicle
 
@@ -88,8 +86,8 @@ public final class LoginInspector: LoginDelegate {
     }
 
     private func hanldeSignIn(userId: String,
-                        phoneNumber: String,
-                        completion: ((Result<User, Error>) -> Void)?
+                              phoneNumber: String,
+                              completion: ((Result<User, Error>) -> Void)?
     ) {
         Task { [userService] in
             do {

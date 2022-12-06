@@ -20,25 +20,27 @@ extension UIColor {
 }
 
 extension UIColor {
+    static let staticBlack = UIColor(red: 38 / 255, green: 50 / 255, blue: 56 / 255, alpha: 1)
+    static let staticDarkGray = UIColor(red: 38 / 255, green: 50 / 255, blue: 56 / 255, alpha: 1)
+    static let staticLightGray = UIColor(red: 126 / 255, green: 129 / 255, blue: 131 / 255, alpha: 1)
+    static let staticDarkYellow = UIColor(red: 255 / 255, green: 158 / 255, blue: 69 / 255, alpha: 0.7)
+    static let staticYellow = UIColor(red: 255 / 255, green: 158 / 255, blue: 69 / 255, alpha: 1)
+    static let staticWhite = UIColor(red: 245 / 255, green: 243 / 255, blue: 238 / 255, alpha: 1)
 
     static var brandTextBlackColor: UIColor {
-        Self.makeColor(lightMode: UIColor(red: 38 / 255, green: 50 / 255, blue: 56 / 255, alpha: 1),
-                       darkMode: .gray)
+        Self.makeColor(lightMode: staticBlack, darkMode: .gray)
     }
 
-    static var brandLightGray: UIColor {
-        Self.makeColor(lightMode: UIColor(red: 217 / 255, green: 217 / 255, blue: 217 / 255, alpha: 1),
-                       darkMode: .gray)
+    static var brandDarkGray: UIColor {
+        Self.makeColor(lightMode: staticDarkGray, darkMode: .gray)
     }
 
     static var brandTextGrayColor: UIColor {
-        Self.makeColor(lightMode: UIColor(red: 126 / 255, green: 129 / 255, blue: 131 / 255, alpha: 1),
-                       darkMode: .gray)
+        Self.makeColor(lightMode: staticLightGray, darkMode: .gray)
     }
 
     static var brandYellowColor: UIColor {
-        Self.makeColor(lightMode: UIColor(red: 255 / 255, green: 158 / 255, blue: 69 / 255, alpha: 1),
-                       darkMode: .gray)
+        Self.makeColor(lightMode: staticYellow, darkMode: staticDarkYellow)
     }
 
     static var brandBackgroundColor: UIColor {
@@ -46,48 +48,14 @@ extension UIColor {
     }
 
     static var brandBackgroundGrayColor: UIColor {
-        Self.makeColor(lightMode: UIColor(red: 245 / 255, green: 243 / 255, blue: 238 / 255, alpha: 1),
-                       darkMode: .black)
+        Self.makeColor(lightMode: staticWhite, darkMode: .black)
     }
 
-
-//    static var borderColor: UIColor {
-//        Self.makeColor(lightMode: .black, darkMode: .lightGray)
-//    }
-
-
-
-
-
-
-
-
-    
-
-
-    static var lightBackgroundColor: UIColor {
+    static var brandLightBackgroundColor: UIColor {
         Self.makeColor(lightMode: .white, darkMode: .darkGray)
     }
 
-
-    static var shadowColor: UIColor {
-        Self.makeColor(lightMode: .black, darkMode: .darkGray)
-    }
-
-    static var textColor: UIColor {
-        Self.makeColor(lightMode: .black, darkMode: .white)
-    }
-
-    static var secondaryTextColor: UIColor {
-        Self.makeColor(lightMode: .gray, darkMode: .lightGray)
-    }
-
-    static var lightTextColor: UIColor {
-        Self.makeColor(lightMode: .white, darkMode: .lightGray)
-    }
-
-    static var placeholderTextColor: UIColor {
-        Self.makeColor(lightMode: .gray, darkMode: .lightGray)
+    static var brandGrayColor: UIColor {
+        Self.makeColor(lightMode: staticWhite, darkMode: .darkGray)
     }
 }
-

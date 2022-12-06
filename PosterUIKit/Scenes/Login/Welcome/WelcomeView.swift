@@ -35,8 +35,6 @@ final class WelcomeView: ViewWithButton<LoginButton> {
         return viewFactory.makePlainButton(action: action)
     }()
 
-
-
     // MARK: - LifeCicle
 
     init(viewFactory: ViewFactoryProtocol) {
@@ -66,15 +64,12 @@ final class WelcomeView: ViewWithButton<LoginButton> {
         logoImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(80)
             make.centerX.equalToSuperview()
-//            make.leading.greaterThanOrEqualToSuperview().offset(Constants.padding)//.priority(.required)
-//            make.trailing.greaterThanOrEqualToSuperview().offset(-Constants.padding)//.priority(.required)
             make.height.equalTo(logoImageView.snp.width)//.priority(.high)
         }
 
         signUpViewButton.snp.makeConstraints { make in
             make.top.equalTo(logoImageView.snp.bottom).offset(80)
             make.centerX.equalToSuperview()
-//            make.leading.trailing.height.equalTo(loginTextField)
         }
 
         signInViewButton.snp.makeConstraints { make in
@@ -85,4 +80,3 @@ final class WelcomeView: ViewWithButton<LoginButton> {
         }
     }
 }
-

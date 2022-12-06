@@ -10,8 +10,6 @@ import PosterKit
 
 final class UserProfileViewController: ScrollableViewController<UserProfileViewModelProtocol> {
 
-    // MARK: - Properties
-
     // MARK: - Views
 
     private lazy var userProfileView: UserProfileView = {
@@ -19,22 +17,12 @@ final class UserProfileViewController: ScrollableViewController<UserProfileViewM
         return UserProfileView(viewFactory: viewFactory, imagePickerViewDelegate: self)
     }()
 
-
     // MARK: - LifeCicle
-    
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         initialize()
-
-
-
-        //        viewModel.perfomAction(.startHintTimer)
-        //        viewModel.perfomAction(.autoLogin)
     }
-
 
     // MARK: - Metods
 
@@ -50,9 +38,8 @@ final class UserProfileViewController: ScrollableViewController<UserProfileViewM
         let dismissAction = UIAction { [weak self] _ in
             self?.viewModel.perfomAction(.dissmiss)
         }
-
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Cancel"),
-                                                            primaryAction: dismissAction)
+                                                           primaryAction: dismissAction)
         navigationItem.leftBarButtonItem?.tintColor = .brandYellowColor
 
         let saveAction = UIAction { [weak self] _ in
@@ -63,10 +50,8 @@ final class UserProfileViewController: ScrollableViewController<UserProfileViewM
             }
             self.viewModel.perfomAction(.save(user: user))
         }
-
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "CheckMark"),
-                                                           primaryAction: saveAction)
-
+                                                            primaryAction: saveAction)
         navigationItem.rightBarButtonItem?.tintColor = .brandYellowColor
     }
 
@@ -74,19 +59,6 @@ final class UserProfileViewController: ScrollableViewController<UserProfileViewM
         viewModel.datePlaceHolderPublisher
             .assign(to: \.datePlaceHolder, on: userProfileView)
             .store(in: &subsriptions)
-
-//        userProfileView.buttonTappedPublisher
-//            .sink { [weak self] button in
-//                guard let self = self else { return }
-//                switch button {
-//                    case .avatar:
-//                        self.showImagePicker()
-//
-//                    default:
-//                        return
-//                }
-//            }
-//            .store(in: &subsriptions)
 
         viewModel.statePublisher
             .receive(on: DispatchQueue.main)
@@ -125,34 +97,7 @@ final class UserProfileViewController: ScrollableViewController<UserProfileViewM
             userProfileView.birthDate = viewModel.makeText(from: user.birthDate)
         }
     }
-
-//    private func showImagePicker() {
-//        let picker = UIImagePickerController()
-//        picker.sourceType = .photoLibrary
-//        picker.delegate = self
-//
-//        present(picker, animated: true)
-//    }
 }
-
-// MARK: - UIImagePickerControllerDelegate methods
-//extension UserProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-//    func imagePickerController(_ picker: UIImagePickerController,
-//                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
-//    ) {
-//        guard let image = info[.originalImage] as? UIImage else { return }
-//
-//        dismiss(animated: true)
-//
-//        userProfileView.avatarImage = image
-//    }
-//
-//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-//        dismiss(animated: true)
-//    }
-//}
-
-
 
 // MARK: - UIImagePickerControllerDelegate methods
 extension UserProfileViewController: ImagePickerViewDelegate {

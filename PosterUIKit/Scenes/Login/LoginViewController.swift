@@ -16,8 +16,6 @@ final class LoginViewController<T: LoginViewModelProtocol>: UINavigationControll
 
     private var viewModel: ViewModelType
 
-    // MARK: - Views
-
     // MARK: - LifeCicle
 
     init(viewModel: ViewModelType) {
@@ -31,47 +29,7 @@ final class LoginViewController<T: LoginViewModelProtocol>: UINavigationControll
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        navigationController?.navigationBar.isHidden = true
-        setupViewModel()
 
         viewModel.perfomAction(.start)
-    }
-
-    // MARK: - Metods
-
-    private func setupViewModel() {
-        //        viewModel.stateChanged = { [weak self] state in
-        //            DispatchQueue.main.async {
-        //                self?.loginView.isBusy = false
-        //
-        //                switch state {
-        //                    case .initial:
-        //                        break
-        //                    case .missingLogin:
-        //                        self?.loginView.shakeLoginTextField()
-        //
-        //                    case .wrongPassword:
-        //                        self?.loginView.shakePasswordTextField()
-        //
-        //                    case .authFailed:
-        //                        self?.loginView.shakeSignInButton()
-        //
-        //                    case let .processing(login, password):
-        //                        self?.loginView.isBusy = true
-        //                        self?.loginView.login = login
-        //                        self?.loginView.password = password
-        //
-        //                    case .bruteForceFinishedWith(password: let password):
-        //                        self?.loginView.finishBrutePassword(with: password)
-        //
-        //                    case .bruteForceCancelled:
-        //                        self?.loginView.cancelBrutePassword()
-        //
-        //                    case .bruteForceProgress(password: let password):
-        //                        self?.loginView.updateBruteProgress(with: password)
-        //                }
-        //            }
-        //        }
     }
 }

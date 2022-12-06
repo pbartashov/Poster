@@ -10,9 +10,9 @@ import PosterKit
 
 protocol ProfileDependancyContainerProtocol {
     func makeProfileViewModel() -> ProfileViewModel<PostsViewModel, PhotosViewModel>
-    func makeProfileViewController<T, U>(viewModel: ProfileViewModel<T, U>) -> UIViewController where T: PostsViewModelProtocol, U: PhotosViewModelProtocol
+    func makeProfileViewController<T, U>(viewModel: ProfileViewModel<T, U>
+    ) -> UIViewController where T: PostsViewModelProtocol, U: PhotosViewModelProtocol
 
-//    func makePhotosViewModel() -> PhotosViewModel
     func makePhotosViewController() -> PhotosViewController<PhotosViewModel>
 
     func makeUserProfileViewModel() -> UserProfileViewModel
@@ -22,53 +22,27 @@ protocol ProfileDependancyContainerProtocol {
     func makeAddPhotoViewController() -> AddPhotoViewController<AddPhotoViewModel>
 }
 
-
 struct ProfileDependancyContainer: ProfileDependancyContainerProtocol {
-
-
 
     // MARK: - Properties
 
     private weak var profileCoordinator: (ProfileCoordinatorProtocol&UserProfileCoordinatorProtocol&AddPhotoCoordinatorProtocol)?
     private weak var postsCoordinator: PostsCoordinatorProtocol?
     private unowned var userService: UserServiceProtocol
-//    private let photoStorage: ImageCloudStorageProtocol
-//    private let photosViewModel: PhotosViewModel
-
 
     // MARK: - LifeCicle
 
     init(profileCoordinator: (ProfileCoordinatorProtocol&UserProfileCoordinatorProtocol&AddPhotoCoordinatorProtocol)?,
          postsCoordinator: PostsCoordinatorProtocol?,
-         userService: UserServiceProtocol
-//         photoStorage: ImageCloudStorageProtocol = ImageCloudStorage(root: PosterKit.Constants.Cloud.photosStorage,
-//                                                                     fileExtension: PosterKit.Constants.Cloud.imageFileExtension)
-    ) {
+         userService: UserServiceProtocol) {
         self.profileCoordinator = profileCoordinator
         self.postsCoordinator = postsCoordinator
         self.userService = userService
-//        self.photoStorage = photoStorage
-
-//        func makePhotosViewModel() -> PhotosViewModel {
-//            PhotosViewModel(photoStorage: photoStorage,
-//                            userService: userService,
-//                            errorPresenter: ErrorPresenter.shared)
-//        }
-//        self.photosViewModel = makePhotosViewModel()
     }
 
-    // MARK: - Metods
-
-    // MARK: - Profile
+    // MARK: - Profile metods
 
     func makeProfileViewModel() -> ProfileViewModel<PostsViewModel, PhotosViewModel> {
-
-
-        //        let user = User(id: "5", name: userName,
-        //                        avatarData: (UIImage(named: "profileImage") ?? UIImage(systemName: "person"))?.pngData(),
-        //                        status: "Hardly coding")
-
-
         let contextProvider = CoreDataContextProvider.shared
         let postRepository = PostRepository(context: contextProvider.backgroundContext)
         let storageWriter = LocalStorageWriter(repository: postRepository)
@@ -93,23 +67,20 @@ struct ProfileDependancyContainer: ProfileDependancyContainerProtocol {
                                             errorPresenter: ErrorPresenter.shared)
         let photosViewModel = makePhotosViewModel()
         
-        return ProfileViewModel(//storageService: storageService,
-            coordinator: profileCoordinator,
-            userService: userService,
-            //                                user: user,
-            //postRepository: postRepository,
-            postsViewModel: postsViewModel,
-            photosViewModel: photosViewModel,
-            errorPresenter: ErrorPresenter.shared)
+        return ProfileViewModel(coordinator: profileCoordinator,
+                                userService: userService,
+                                postsViewModel: postsViewModel,
+                                photosViewModel: photosViewModel,
+                                errorPresenter: ErrorPresenter.shared)
     }
 
     func makeProfileViewController<T, U>(viewModel: ProfileViewModel<T, U>
-    ) -> UIViewController where T: PostsViewModelProtocol,
-                                U: PhotosViewModelProtocol {
+    ) -> UIViewController
+    where T: PostsViewModelProtocol, U: PhotosViewModelProtocol {
         ProfileViewController<ProfileViewModel<T, U>, T>(viewModel: viewModel)
     }
 
-    // MARK: - UserProfile
+    // MARK: - UserProfile metods
 
     func makeUserProfileViewModel() -> UserProfileViewModel {
         UserProfileViewModel(userService: userService,
@@ -122,7 +93,7 @@ struct ProfileDependancyContainer: ProfileDependancyContainerProtocol {
         return UserProfileViewController(viewModel: viewModel)
     }
 
-    // MARK: - Photos
+    // MARK: - Photos metods
 
     func makePhotosViewModel() -> PhotosViewModel {
         PhotosViewModel(photoStorage: makePhotoStorage(),
@@ -135,7 +106,7 @@ struct ProfileDependancyContainer: ProfileDependancyContainerProtocol {
         return PhotosViewController(viewModel: viewModel)
     }
 
-    // MARK: - AddPhotos
+    // MARK: - AddPhotos metods
 
     func makeAddPhotoViewModel() -> AddPhotoViewModel {
         AddPhotoViewModel(userService: userService,
@@ -149,8 +120,8 @@ struct ProfileDependancyContainer: ProfileDependancyContainerProtocol {
         return AddPhotoViewController(viewModel: viewModel)
     }
 
-    // MARK: - Helpers
-//
+    // MARK: - Helper metods
+
     func makePhotoStorage() -> ImageCloudStorage {
         ImageCloudStorage(root: PosterKit.Constants.Cloud.photosStorage,
                           fileExtension: PosterKit.Constants.Cloud.imageFileExtension)

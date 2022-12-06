@@ -18,10 +18,6 @@ class ViewWithButton<T>: UIView {
 
     private var buttonTappedSubject = PassthroughSubject<T, Never>()
 
-    // MARK: - Views
-
-    // MARK: - LifeCicle
-
     // MARK: - Metods
 
     func sendButtonTapped(_ button: T) {

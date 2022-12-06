@@ -20,26 +20,21 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
     // MARK: Section Definitions
 
     enum Section: Hashable {
-//        case loading
         case storiesSection
-        case postsSection//([Post])
+        case postsSection
     }
-
 
     enum FeedCollectionItem: Hashable {
         case storyItem(StoryViewModel)
         case postItem(PostViewModel)
     }
 
-
     // MARK: - Properties
 
     private let viewModel: ViewModelType
-//    private let postViewModelProvider: PostViewModelProvider
 
     private var subscriptions: Set<AnyCancellable> = []
     private var isRecommendedSubscription: AnyCancellable?
-
 
     private var dataSource: UICollectionViewDiffableDataSource<Section, FeedCollectionItem>!
     private var sections = [Section]()
@@ -48,21 +43,10 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
     @Published private var postsItems: [FeedCollectionItem]?
     private var isRecommended: Bool = false
 
-    // Factories
-    //    private let hourlyWeatherViewControllerFactory: HourlyWeatherViewControllerFactory
-    //    private let dailyWeatherViewControllerFactory: DailyWeatherViewControllerFactory
-
     // MARK: - LifeCicle
 
-    init(viewModel: ViewModelType
-//         postViewModelProvider: PostViewModelProvider
-         //         dailyWeatherViewControllerFactory: DailyWeatherViewControllerFactory
-    ) {
+    init(viewModel: ViewModelType) {
         self.viewModel = viewModel
-//        self.postViewModelProvider = postViewModelProvider
-        //        self.hourlyWeatherViewControllerFactory = hourlyWeatherViewControllerFactory
-        //        self.dailyWeatherViewControllerFactory = dailyWeatherViewControllerFactory
-
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -84,15 +68,6 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
         fetchData()
     }
 
-    //    public override func viewWillAppear(_ animated: Bool) {
-    //        super.viewWillAppear(animated)
-    //
-    //        navigationController?.navigationBar.titleTextAttributes = [
-    //            NSAttributedString.Key.foregroundColor: UIColor.brandTextColor,
-    //            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .bold)
-    //        ]
-    //    }
-
     // MARK: - Metods
 
     private func fetchData() {
@@ -102,9 +77,6 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
         } else {
             viewModel.perfomAction(.requestData)
         }
-//        Task {
-//            await viewModel.fetchWeathers()
-//        }
     }
 
     private func beginRefreshing() {
@@ -122,9 +94,6 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
     private func configureCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
 
-        //        collectionView.register(LoadingCell.self,
-        //                                forCellWithReuseIdentifier: LoadingCell.identifier)
-
         collectionView.register(StoriesViewCell.self,
                                 forCellWithReuseIdentifier: StoriesViewCell.identifier)
 
@@ -138,9 +107,6 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
         collectionView.register(PostsSectionHeaderView.self,
                                 forSupplementaryViewOfKind: FeedSupplementaryViewKind.postsHeader,
                                 withReuseIdentifier: PostsSectionHeaderView.identifier)
-
-//        collectionView.contentInsetAdjustmentBehavior = .never
-//        collectionView.contentInset = .init(top: 0, left: 0, bottom: 160, right: 0)
         collectionView.delegate = self
 
         configureDataSource()
@@ -162,8 +128,6 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             guard !self.sections.isEmpty else { return nil }
 
-//            let widthFactor = layoutEnvironment.traitCollection.horizontalSizeClass == .compact ? 1.0 : 0.6
-
             let headerItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                         heightDimension: .estimated(44))
             let storiesHeaderItem = NSCollectionLayoutBoundarySupplementaryItem(
@@ -180,24 +144,6 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
 
             let section = self.sections[sectionIndex]
             switch section {
-//                case .loading:
-//                    // MARK: Loading Section Layout
-//                    let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-//                                                          heightDimension: .fractionalHeight(1))
-//
-//                    let item = NSCollectionLayoutItem(layoutSize: itemSize)
-//
-//                    let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.92),
-//                                                           heightDimension: .estimated(212))
-//                    let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
-//                                                                   subitems: [item])
-//
-//                    let section = NSCollectionLayoutSection(group: group)
-//                    section.orthogonalScrollingBehavior = .groupPagingCentered
-//                    section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 0,
-//                                                                    bottom: 28, trailing: 0)
-//                    return section
-
                 case .storiesSection:
                     // MARK: Stories Section Layout
                     let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
@@ -223,28 +169,12 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
                     let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                           heightDimension: .estimated(500))
                     let item = NSCollectionLayoutItem(layoutSize: itemSize)
-//                    item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 0,
-//                                                                 bottom: 8, trailing: 0)
-
-//                    let safeAreaInsets = self.collectionView.safeAreaInsets
-//                    let safeAreaSides = safeAreaInsets.left + safeAreaInsets.right
-//                    let contentWidth = layoutEnvironment.container.contentSize.width
-//                    let groupWidth = contentWidth * widthFactor - Constants.UI.padding * 2 - safeAreaSides
-//                    let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(groupWidth),
                     let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                            heightDimension: .estimated(500))
                     let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
-                                                                 subitems: [item])
+                                                                   subitems: [item])
 
                     let section = NSCollectionLayoutSection(group: group)
-//                    let sectionSideInset = (contentWidth - groupWidth) / 2
-//                    section.contentInsets = NSDirectionalEdgeInsets(top: 0,
-//                                                                    leading: sectionSideInset,
-//                                                                    bottom: 0,
-//                                                                    trailing: sectionSideInset)
-
-//                    section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: Constants.UI.padding,
-//                                                                    bottom: 0, trailing: Constants.UI.padding)
                     section.boundarySupplementaryItems = [postsHeaderItem]
 
                     return section
@@ -260,10 +190,6 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
             guard let self = self else { return nil }
             let section = self.sections[indexPath.section]
             switch section {
-//                case .loading:
-//                    return collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.identifier,
-//                                                              for: indexPath)
-
                 case .storiesSection:
                     guard
                         let cell = collectionView.dequeueReusableCell(
@@ -274,7 +200,6 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
                     else {
                         return nil
                     }
-
                     cell.setup(with: story)
 
                     return cell
@@ -289,7 +214,6 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
                     else {
                         return nil
                     }
-//                    let postViewModel = self.postViewModelProvider.makeViewModel(for: post)
                     cell.setup(with: post) {
                         self.viewModel.perfomAction(.addToFavorites(post: post))
                     }
@@ -311,8 +235,6 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
                     else {
                         return nil
                     }
-
-//                    headerView.setup(labelTitle: "Подробнее на 24 часа")
                     self.isRecommendedSubscription = headerView
                         .$isRecommended
                         .sink {
@@ -332,12 +254,7 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
                     else {
                         return nil
                     }
-
-//                    let publisher = headerView.buttonTappedPublisher.eraseType()
-//                    self.viewModel.subscribeToggleForecastHorizon(to: publisher)
-//
-//                    let buttonTitle = "\(self.viewModel.toggleForecastHorizonTitle) дней"
-                    headerView.setup(labelTitle: "Ежедневный прогноз", buttonTitle: "buttonTitle")
+//                    headerView.setup(labelTitle: "", buttonTitle: "")
 
                     return headerView
 
@@ -382,54 +299,21 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
             .store(in: &subscriptions)
         }
 
-//        func bindToIsRecommended() {
-//           $isRecommended
-//            .sink { [weak self] _ in
-//                self?.fetchData()
-//                print("1")
-//            }
-//            .store(in: &subscriptions)
-//        }
-
         bindViewModelToSections()
         bindToCollectionView()
-//        bindToIsRecommended()
     }
 
     private func applySnapshot() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, FeedCollectionItem>()
-
-//        if let currentWeatherItem = currentWeatherItem,
-//           case .currentWeatherItem(let weather) = currentWeatherItem {
-//            snapshot.appendSections([.currentWeatherSection])
-//
-//            let item = FeedCollectionItem.currentWeatherItem(weather)
-//            snapshot.appendItems([item], toSection: .currentWeatherSection)
-//        } else {
-//            snapshot.appendSections([.loading])
-//            snapshot.appendItems([FeedCollectionItem.empty(UUID())], toSection: .loading)
-//        }
-//
-
         if let storiesItem = storiesItems {
             snapshot.appendSections([.storiesSection])
-
             snapshot.appendItems(storiesItem, toSection: .storiesSection)
         }
 
         if let postsItems = postsItems {
             snapshot.appendSections([.postsSection])
-
             snapshot.appendItems(postsItems, toSection: .postsSection)
         }
-
-//        if let dailyWeatherSection = dailyWeatherSection,
-//           case .dailyWeatherSection(let weathers) = dailyWeatherSection {
-//            snapshot.appendSections([dailyWeatherSection])
-//
-//            let items = weathers.map { FeedCollectionItem.dailyWeatherItem($0) }
-//            snapshot.appendItems(items, toSection: dailyWeatherSection)
-//        }
 
         sections = snapshot.sectionIdentifiers
         dataSource.apply(snapshot)
@@ -441,7 +325,6 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
             viewModel.perfomAction(.selected(post: post))
         }
     }
-
 
     // MARK: UICollectionViewDelegate
     public override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

@@ -31,18 +31,16 @@ public final class UserViewModel {
 
     // MARK: - LifeCicle
 
-    public init?(from user: User?
-//                storageReader: StorageReaderProtocol
-    ) {
+    public init?(from user: User?) {
         if let user = user {
             self.user = user
         } else {
-          return nil
+            return nil
         }
-//        self.storageReader = storageReader
     }
 
     // MARK: - Metods
+
     private func format(localizedKey: String, number: Int?) -> String {
         let number = number ?? 0
         let description = String.localizedStringWithFormat(localizedKey.localized, number)

@@ -38,10 +38,6 @@ class SignActionView: ViewWithButton<LoginButton> {
 
     lazy var textField: UITextField = {
         let textField = viewFactory.makeTextField()
-
-//        textField.placeholder = "phoneNumberTextFieldPlaceHolder".localized
-//        textField.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-
         return textField
     }()
 
@@ -112,4 +108,3 @@ class SignActionView: ViewWithButton<LoginButton> {
         shake(view: actionButton)
     }
 }
-

@@ -54,7 +54,7 @@ final class StoriesViewCell: UICollectionViewCell {
             make.edges.equalToSuperview()
         }
     }
-
+    
     func setup(with story: StoryViewModel) {
         story.fetchData()
 
@@ -68,4 +68,3 @@ final class StoriesViewCell: UICollectionViewCell {
         subsriptions.removeAll()
     }
 }
-

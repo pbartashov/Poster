@@ -11,30 +11,19 @@ import Combine
 
 final class SignInViewController: ScrollableViewController<LoginViewModelProtocol> {
     
-    // MARK: - Properties
-
     // MARK: - Views
     
     private lazy var signInView: SignInView = {
         let viewFactory = LoginViewFactory()
         return SignInView(viewFactory: viewFactory)
-   }()
-    
+    }()
 
     // MARK: - LifeCicle
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         initialize()
-        
-
-
-        //        viewModel.perfomAction(.startHintTimer)
-        //        viewModel.perfomAction(.autoLogin)
     }
-    
 
     // MARK: - Metods
 
@@ -61,19 +50,20 @@ final class SignInViewController: ScrollableViewController<LoginViewModelProtoco
         viewModel.statePublisher
             .sink { [weak self] state in
                 DispatchQueue.main.async {
-                    self?.signInView.isBusy = false
+                    guard let self = self else { return }
+                    self.signInView.isBusy = false
                     switch state {
                         case .initial:
                             break
                             
                         case .missingPhoneNumber, .missingCode:
-                            self?.signInView.shakeTextField()
+                            self.signInView.shakeTextField()
                             
                         case .authFailed:
-                            self?.signInView.shakeActionButton()
+                            self.signInView.shakeActionButton()
                             
                         case .processing:
-                            self?.signInView.isBusy = true
+                            self.signInView.isBusy = true
                     }
                 }
             }

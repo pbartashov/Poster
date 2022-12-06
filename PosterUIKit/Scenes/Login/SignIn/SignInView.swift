@@ -11,9 +11,6 @@ import SnapKit
 
 final class SignInView: SignActionView {
 
-    // MARK: - Properties
-
-
     // MARK: - Views
 
     private lazy var titleLabel: UILabel = {
@@ -32,9 +29,6 @@ final class SignInView: SignActionView {
 
         return label
     }()
-
-
-   
 
     // MARK: - LifeCicle
 
@@ -57,12 +51,6 @@ final class SignInView: SignActionView {
         }
 
         setupLayouts()
-
-
-
-
-        #warning("Remove")
-        textField.text = "+16505553535"
     }
 
     private func setupLayouts() {

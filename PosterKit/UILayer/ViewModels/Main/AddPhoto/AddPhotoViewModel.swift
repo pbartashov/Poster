@@ -26,6 +26,7 @@ public final class AddPhotoViewModel: ViewModel<AddPhotoState, AddPhotoAction>,
                                       AddPhotoViewModelProtocol {
 
     // MARK: - Properties
+
     private let photoStorage: ImageCloudStorageProtocol
     private weak var coordinator: AddPhotoCoordinatorProtocol?
     private let userService: UserServiceProtocol
@@ -35,18 +36,14 @@ public final class AddPhotoViewModel: ViewModel<AddPhotoState, AddPhotoAction>,
     public init(
         userService: UserServiceProtocol,
         photoStorage: ImageCloudStorageProtocol,
-        //                storageWriter: StorageWriterProtocol,
         coordinator: AddPhotoCoordinatorProtocol?,
         errorPresenter: ErrorPresenterProtocol
     ) {
         self.userService = userService
-        //        self.storageReader = storageReader
         self.photoStorage = photoStorage
         self.coordinator = coordinator
         super.init(state: .initial, errorPresenter: errorPresenter)
     }
-
-
 
     // MARK: - Metods
 
@@ -76,4 +73,3 @@ public final class AddPhotoViewModel: ViewModel<AddPhotoState, AddPhotoAction>,
         }
     }
 }
-

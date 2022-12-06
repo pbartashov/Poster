@@ -20,21 +20,21 @@ enum DatabaseError: Error {
     /// Неизвестная ошибка.
     case unknown(error: Error)
 }
-#warning("Localize")
+
 extension DatabaseError: LocalizedError {
     public var errorDescription: String? {
         switch self {
             case .store(let model):
-                return NSLocalizedString("Невозможно добавить данные в хранилище: \(model).", comment: "")
+                return "\("storeDatabaseError".localized): \(model)."
 
             case .invalidManagedObjectType:
-                return NSLocalizedString("Не найдена модель объекта.", comment: "")
+                return "invalidManagedObjectTypeDatabaseError".localized
 
             case .error(let description):
                 return NSLocalizedString(description, comment: "")
 
             case .notFound:
-                return NSLocalizedString("Объект не найден", comment: "")
+                return "notFoundDatabaseError".localized
 
             case .unknown(let error as LocalizedError):
                 return error.errorDescription

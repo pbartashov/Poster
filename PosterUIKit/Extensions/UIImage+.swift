@@ -9,12 +9,6 @@ import UIKit
 import AVFoundation
 
 extension UIImage {
-    //    static let imagePlaceholder = UIImage(systemName: "photo")
-    //: UIImage? = {
-    //        let config = UIImage.SymbolConfiguration(scale: .large)
-    //        return UIImage(systemName: "photo", withConfiguration: config)
-    //    }()
-
     static let avatarPlaceholder: UIImage? = {
         let config = UIImage.SymbolConfiguration(pointSize: 30)
         return UIImage(systemName: "person.circle", withConfiguration: config)

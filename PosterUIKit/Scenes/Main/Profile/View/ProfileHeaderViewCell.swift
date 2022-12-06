@@ -23,11 +23,6 @@ final class ProfileHeaderViewCell: UITableViewCell {
     let viewFactory: ViewFactoryProtocol&UserInfoViewFactory = ViewFactory()
     weak var delegate: ProfileHeaderViewDelegate?
 
-//
-//    var statusText: String {
-//        statusTextField.text ?? ""
-//    }
-
     // MARK: - Views
 
     private lazy var userInfoView: UserInfoView = {
@@ -86,7 +81,7 @@ final class ProfileHeaderViewCell: UITableViewCell {
 
     private let separator: UIView = {
         let view = UIView()
-        view.backgroundColor = .brandLightGray
+        view.backgroundColor = .brandDarkGray
 
         return view
     }()
@@ -94,7 +89,6 @@ final class ProfileHeaderViewCell: UITableViewCell {
     private lazy var userActionsPanel: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [
             addPostButton,
-//            UIView(),
             addStoryButton,
             addPhotoButton
         ])
@@ -111,7 +105,7 @@ final class ProfileHeaderViewCell: UITableViewCell {
         }
 
         return viewFactory.makeVerticalPlainButton(action: action)
-     }()
+    }()
 
     private lazy var addStoryButton: UIButton = {
         let image = UIImage(systemName: "camera")
@@ -124,7 +118,7 @@ final class ProfileHeaderViewCell: UITableViewCell {
 
     private lazy var addPhotoButton: UIButton = {
         let image = UIImage(systemName: "photo")
-        let action = UIAction(title: "eaddPhotoProfileHeaderView".localized, image: image) { [weak self] _ in
+        let action = UIAction(title: "addPhotoProfileHeaderView".localized, image: image) { [weak self] _ in
             self?.delegate?.addPhotoButtonTapped()
         }
 
@@ -182,7 +176,6 @@ final class ProfileHeaderViewCell: UITableViewCell {
             make.top.equalTo(userInfoView.snp.bottom).offset(Constants.UI.padding)
             make.leading.equalToSuperview().offset(Constants.UI.padding)
             make.trailing.equalToSuperview().offset(-Constants.UI.padding)
-//            make.height.equalTo(50)
         }
 
         userActivityPanel.snp.makeConstraints { make in
@@ -200,7 +193,6 @@ final class ProfileHeaderViewCell: UITableViewCell {
         userActionsPanel.snp.makeConstraints { make in
             make.top.equalTo(separator.snp.bottom).offset(Constants.UI.padding)
             make.leading.trailing.equalTo(editUserProfileButton)
-//            make.centerX.equalToSuperview()
             make.height.equalTo(Constants.UI.userActivityPanelHeight)
 
             make.bottom.equalToSuperview().offset(-Constants.UI.padding).priority(.low)

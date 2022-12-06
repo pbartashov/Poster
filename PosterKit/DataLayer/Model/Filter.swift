@@ -11,7 +11,7 @@ public struct Filter {
     public var content: String?
     public var authorIds: [String]?
     public var isRecommended: Bool?
-
+    
     public init(authorName: String? = nil,
                 authorId: String? = nil,
                 content: String? = nil,

@@ -6,6 +6,10 @@
 //
 
 public enum Constants {
+    public enum Login {
+        public static let authVerificationID = "authVerificationID"
+    }
+
     public enum Cloud {
         public static let usersCollection = "users"
         public static let postsCollection = "posts"

@@ -13,7 +13,6 @@ final class PhotosCollectionViewCell: UICollectionViewCell {
 
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
 
@@ -24,7 +23,6 @@ final class PhotosCollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
         contentView.addSubview(imageView)
 
         setupLayouts()
@@ -47,4 +45,3 @@ final class PhotosCollectionViewCell: UICollectionViewCell {
         imageView.image = image
     }
 }
-

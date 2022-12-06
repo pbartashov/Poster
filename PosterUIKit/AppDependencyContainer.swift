@@ -9,32 +9,25 @@ import UIKit
 import PosterKit
 
 public protocol AppDependencyContainerProtocol: AnyObject {
-//    func makeLoginViewController() -> UIViewController
-//    func makeLoginCoordinator(loginNavigationController: UINavigationController) -> LoginCoordinatorProtocol
     func makeAppCoordinator(window: UIWindow) -> AppCoordinatorProtocol
 
     func makeLoginViewController() -> UIViewController
     func releaseLoginScene()
 
     func makeMainViewController(for user: User) -> UIViewController
+    func releaseMainScene()
 }
 
 public final class AppDependencyContainer: AppDependencyContainerProtocol {
     
     // MARK: - Properties
 
-//    private weak var rootSceneSwitcher: RootSceneSwitcher?
     private var appCoordinator: AppCoordinator?
-    //    private var feedCoordinator: FeedCoordinator?
     private var loginCoordinator: LoginCoordinator?
-    //    private var profileCoordinator: ProfileCoordinator?
-    //    private var profilePostsCoordinator: PostsCoordinator?
-    //    private var favoritesCoordinator: PostsCoordinator?
 
     private var mainDependancyContainer: MainDependancyContainer?
     private var userService: UserServiceProtocol
-    // MARK: - Views
-    
+
     // MARK: - LifeCicle
 
     public init() {
@@ -42,10 +35,6 @@ public final class AppDependencyContainer: AppDependencyContainerProtocol {
         userService = UserService(userStorage: userStorage)
     }
 
-//    init(rootSceneSwitcher: RootSceneSwitcher) {
-//        self.rootSceneSwitcher = rootSceneSwitcher
-//    }
-    
     // MARK: - Metods
 
     public func makeAppCoordinator(window: UIWindow) -> AppCoordinatorProtocol {
@@ -75,33 +64,6 @@ public final class AppDependencyContainer: AppDependencyContainerProtocol {
         loginCoordinator = nil
     }
 
-//    func makeLoginCoordinator() -> LoginCoordinator {
-//        let switchToMainScene = { [weak self] userName -> Void in
-//            self?.rootSceneSwitcher?.switchToMainViewScene(for: userName)
-//        }
-//
-//        return LoginCoordinator(switchToMainScene: switchToMainScene)
-//    }
-//
-//    func makeLoginCoordinator(loginNavigationController: UINavigationController) -> LoginCoordinatorProtocol {
-//        let switchToMainScene = { [weak self] userName -> Void in
-//            self?.viewControllerSwitcher?.switchToMainViewController(for: userName)
-//        }
-//
-//        let loginCoordinator = LoginCoordinator(navigationController: loginNavigationController,
-//                                                switchToMainScene: switchToMainScene)
-//        return loginCoordinator
-//    }
-//
-//    func makeLoginViewModel() -> LoginViewModelProtocol {
-//        let checker = ChekerService()
-//        let loginDelegate = LoginInspector(checker: checker)
-//        return LoginViewModel(loginDelegate: loginDelegate,
-//                              coordinator: loginCoordinator,
-//                              errorPresenter: ErrorPresenter.shared)
-////                              credentialStorage: CredentialStorageService())
-//    }
-
     public func makeMainViewController(for user: User) -> UIViewController {
         let mainDependancyContainer = MainDependancyContainer(userService: userService)
         self.mainDependancyContainer = mainDependancyContainer
@@ -110,7 +72,7 @@ public final class AppDependencyContainer: AppDependencyContainerProtocol {
     }
 
 
-    func releaseMainScene() {
-//        mainCoordinator = nil
+    public func releaseMainScene() {
+        mainDependancyContainer = nil
     }
 }

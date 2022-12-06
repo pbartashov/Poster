@@ -19,7 +19,7 @@ class TextFieldWithPadding: UITextField {
         self.textPadding = textPadding
         super.init(frame: .zero)
     }
-
+    
     override init(frame: CGRect) {
         self.textPadding = .zero
         super.init(frame: frame)

@@ -17,7 +17,6 @@ where T: FavoritesViewModel {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = .brandYellowColor
-//        tableView.delegate = self
     }
 
     // MARK: - UITableViewDelegate methods

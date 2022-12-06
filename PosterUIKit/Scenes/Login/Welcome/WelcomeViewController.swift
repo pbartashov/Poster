@@ -39,13 +39,8 @@ final class WelcomeViewController<T: LoginViewModelProtocol>: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-//    override func loadView() {
-//        view = welcomeView
-//    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
         initialize()
     }
 
@@ -53,8 +48,6 @@ final class WelcomeViewController<T: LoginViewModelProtocol>: UIViewController {
 
     private func initialize() {
         view.backgroundColor = .systemBackground
-
-        //        navigationController?.navigationBar.isHidden = true
 
         scrollView.addSubview(welcomeView)
         view.addSubview(scrollView)

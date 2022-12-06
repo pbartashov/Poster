@@ -15,9 +15,7 @@ class ScrollableViewController<ViewModelType>: UIViewController {
 
     var viewModel: ViewModelType
 
-//    var buttonTappedSubsription: AnyCancellable?
     var subsriptions: Set<AnyCancellable> = []
-
 
     // MARK: - Views
 
@@ -36,7 +34,6 @@ class ScrollableViewController<ViewModelType>: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         initialize()
     }
 
@@ -44,34 +41,23 @@ class ScrollableViewController<ViewModelType>: UIViewController {
         super.viewWillAppear(animated)
 
         let nc = NotificationCenter.default
-
         nc.addObserver(self,
                        selector: #selector(kbdShow),
                        name: UIResponder.keyboardWillShowNotification,
                        object: nil)
-
         nc.addObserver(self,
                        selector: #selector(kbdHide),
                        name: UIResponder.keyboardWillHideNotification,
                        object: nil)
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        //        scrollView.scrollRectToVisible(signInView.loginButtonFrame.offsetBy(dx: 0, dy: Constants.padding),
-        //                                       animated: false)
-    }
-
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
 
         let nc = NotificationCenter.default
-
         nc.removeObserver(self,
                           name: UIResponder.keyboardWillShowNotification,
                           object: nil)
-
         nc.removeObserver(self,
                           name: UIResponder.keyboardWillHideNotification,
                           object: nil)
@@ -81,11 +67,7 @@ class ScrollableViewController<ViewModelType>: UIViewController {
 
     private func initialize() {
         view.backgroundColor = .systemBackground
-
-        //        navigationController?.navigationBar.isHidden = true
-
         view.addSubview(scrollView)
-
         setupLayout()
     }
 
@@ -97,7 +79,6 @@ class ScrollableViewController<ViewModelType>: UIViewController {
 
     func addSubViewToScrollView(_ view: UIView) {
         scrollView.addSubview(view)
-
         view.snp.remakeConstraints { make in
             make.edges.equalTo(scrollView)
             make.width.equalTo(scrollView)
@@ -114,9 +95,6 @@ class ScrollableViewController<ViewModelType>: UIViewController {
 
             scrollView.contentInset = contentInset
             scrollView.verticalScrollIndicatorInsets = contentInset
-
-            //            scrollView.scrollRectToVisible(loginView.loginButtonFrame.offsetBy(dx: 0, dy: Constants.padding),
-            //                                           animated: true)
         }
     }
 

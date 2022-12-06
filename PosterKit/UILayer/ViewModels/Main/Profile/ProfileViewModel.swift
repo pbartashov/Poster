@@ -6,14 +6,13 @@
 //
 
 import Combine
-//
+
 public enum ProfileAction {
     case showPhotos
     case showUserProfile
     case showAddPost
     case showAddStory
     case showAddPhoto
-//    case selected(post: PostViewModel)
     case insert((post: PostViewModel, index: Int))
     case posts(action: PostsAction)
     case requstPhotos
@@ -40,9 +39,8 @@ where State == ProfileState,
 }
 
 public final class ProfileViewModel<T, U>: ViewModel<ProfileState, ProfileAction>,
-                                        ProfileViewModelProtocol where T: PostsViewModelProtocol,
-                                                                       U: PhotosViewModelProtocol {
-
+                                           ProfileViewModelProtocol where T: PostsViewModelProtocol,
+                                                                          U: PhotosViewModelProtocol {
     public typealias PostsViewModelType = T
     public typealias PhotosViewModelType = U
 
@@ -50,16 +48,13 @@ public final class ProfileViewModel<T, U>: ViewModel<ProfileState, ProfileAction
 
     private weak var coordinator: ProfileCoordinatorProtocol?
 
-//    private let favoritesPostRepository: PostRepositoryInterface
-//    private let storageService: PostServiceProtocol
     private let photosViewModel: PhotosViewModelType
 
     public let postsViewModel: PostsViewModelType
 
     private weak var userService: UserServiceProtocol?
-//    private let userName: String
 
-    @Published var userViewModel: UserViewModel?
+    @Published public var userViewModel: UserViewModel?
     public var userPublisher: Published<UserViewModel?>.Publisher {
         $userViewModel
     }
@@ -82,25 +77,16 @@ public final class ProfileViewModel<T, U>: ViewModel<ProfileState, ProfileAction
 
     // MARK: - LifeCicle
 
-    public init(
-//        postService: PostServiceProtocol,
-         coordinator: ProfileCoordinatorProtocol?,
-         userService: UserServiceProtocol,
-//         userName: String,
-//         postRepository: PostRepositoryInterface,
-         postsViewModel: PostsViewModelType,
-         photosViewModel: PhotosViewModelType,
-         errorPresenter: ErrorPresenterProtocol
+    public init(coordinator: ProfileCoordinatorProtocol?,
+                userService: UserServiceProtocol,
+                postsViewModel: PostsViewModelType,
+                photosViewModel: PhotosViewModelType,
+                errorPresenter: ErrorPresenterProtocol
     ) {
-        
-//        self.storageService = storageService
         self.coordinator = coordinator
         self.userService = userService
-//        self.userName = userName
-//        self.favoritesPostRepository = postRepository
         self.postsViewModel = postsViewModel
         self.photosViewModel = photosViewModel
-
         super.init(state: .initial, errorPresenter: errorPresenter)
 
         setupViewModel()
@@ -112,22 +98,6 @@ public final class ProfileViewModel<T, U>: ViewModel<ProfileState, ProfileAction
         userService?.currentUserPublisher
             .map { UserViewModel(from: $0) }
             .assign(to: &$userViewModel)
-
-//        postsViewModel.requestPosts = { [weak self] in
-//            self?.postService.getPosts { [weak self] result in
-//                switch result {
-//                    case .success(var posts):
-//                        if var text = self?.postsViewModel.searchText {
-//                            text = text.lowercased()
-//                            posts = posts.filter { $0.author.lowercased().contains(text)}
-//                        }
-//                        self?.postsViewModel.posts = posts
-//
-//                    case .failure(let error):
-//                        self?.errorPresenter.show(error: error)
-//                }
-//            }
-//        }
     }
 
     public override func perfomAction(_ action: ProfileAction) {
@@ -147,10 +117,6 @@ public final class ProfileViewModel<T, U>: ViewModel<ProfileState, ProfileAction
             case .showAddPhoto:
                 coordinator?.showAddPhoto()
 
-                //            case .selected(let post):
-                //                let
-                //                postsViewModel.perfomAction(.store(post: post))
-
             case let .insert((post, index)):
                 postsViewModel.perfomAction(.insert((post, index)))
 
@@ -159,7 +125,6 @@ public final class ProfileViewModel<T, U>: ViewModel<ProfileState, ProfileAction
 
             case .requstPhotos:
                 photosViewModel.perfomAction(.requestPhotos(limit: 4))
-
         }
     }
 }

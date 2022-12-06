@@ -12,11 +12,8 @@
 // LoginError
 "missingPhoneNumberLoginError" = "Введите номер телефона.";
 "missingCodeLoginError" = "Введите код.";
-//"missingPasswordLoginError" = "Введите пароль.";
 "invalidPhoneNumberLoginError" = "Неверный номер телефона.";
 "invalidCodeLoginError" = "Неверный код.";
-//"wrongPasswordLoginError" = "Неверный логин или пароль.";
-//"weakPasswordLoginError" = "Пароль должен содержать не менее 6 символов.";
 "userNotFoundLoginError" = "Пользователь не найден.";
 "networkErrorLoginError" = "Нет подключения к сети.";
 "unknownLoginError" = "Ошибка при авторизации. Попробуйте еще раз.";
@@ -33,10 +30,6 @@
 "nextLoginButton" = "ДАЛЕЕ";
 "confirmLoginButton" = "ПОДТВЕРДИТЬ";
 
-// SignActionView
-//"phoneNumberTextFieldPlaceHolder" = "000";
-
-
 // SignUpView
 "titleLabelSignInView" = "ЗАРЕГИСТРИРОВАТЬСЯ";
 "enterNumberLabelSignInView" = "Введите номер";
@@ -52,27 +45,19 @@
 "explainLabelConfirmSignUpView" = "Мы отправили SMS с кодом на номер";
 "enterCodeLabelConfirmSignUpView" = "Введите код из SMS";
 
-// PostServiceErrors
-"networkErrorPostServiceErrors" = "Отсутствует доступ в интернет.";
-
 // MainDependancyContainer
 "feedMainDependancyContainer" = "Главная";
-//"musicViewControllerFactory" = "Музыка";
-//"videoViewControllerFactory" = "Видео";
-//"recorderViewControllerFactory" = "Рекордер";
 "profileMainDependancyContainer" = "Профиль";
 "favoritesMainDependancyContainer" = "Сохраненные";
-//"mapViewControllerFactory" = "Карта"
 
 // PhotosViewController
 "titlePhotosViewController" = "Фото галлерея";
 
 // ProfileHeaderView
-//"statusTextFieldPlaceholderProfileHeaderView" = "Установите ваш статус..";
 "editButtonProfileHeaderView" = "Редактировать";
 "addPostProfileHeaderView" = "Запись";
 "addStoryProfileHeaderView" = "История";
-"eaddPhotoProfileHeaderView" = "Фото";
+"addPhotoProfileHeaderView" = "Фото";
 
 // PostsViewController
 "foundedResultsPostsViewController" = "Найдено для";
@@ -98,7 +83,6 @@
 "lastNamePlaceholderUserProfileView" = "фамилия";
 "genderLabelUserProfileView" = "Пол";
 "birthDateLabelUserProfileView" = "Дата рождения";
-//"birthDatePlaceholderUserProfileView" = "01.01.2020";
 "nativeTownLabelUserProfileView" = "Родной город";
 "nativeTownPlaceholderUserProfileView" = "напишите название";
 "phoneNumberLabelUserProfileView" = "Номер телефона";
@@ -124,6 +108,11 @@
 "editButtonDetailedPostViewController" = "Редактировать";
 "saveButtonDetailedPostViewController" = "Сохранить";
 
+// DatabaseError
+"storeDatabaseError" = "Невозможно добавить данные в хранилище";
+"invalidManagedObjectTypeDatabaseError" = "Не найдена модель объекта.";
+"notFoundDatabaseError" = "Объект не найден.";
+
 // Common errors
 "missingContent" = "Пост должен иметь контент.";
 "NotImplemented" = "Извините, функция еще в разработке.";
@@ -137,57 +126,3 @@
 "noirColorFilter" = "Нуар";
 "motionBlurColorFilter" = "Размытие";
 "invertColorFilter" = "Инверсия";
-
-
-// PostsView
-//"loadingPostsView" = "Загрузка...";
-
-
-
-//
-
-
-//
-//// FeedViewController
-//"newPostFeedViewController" = "Новый пост";
-//
-//// FeedView
-//"post1FeedView" = "Пост 1";
-//"post2FeedView" = "Пост 2";
-//"loginFeedView" = "Войти";
-//"wrongLabelFeedView" = "Неверно";
-//"rightLabelFeedView" = "Верно";
-//"passwordPlaceholderFeedView" = "Пароль";
-//
-//// HintView
-//"closeButtonHintView" = "Закрыть";
-//
-//// LoginError
-
-//
-//// LoginView
-//"loginButtonLoginView" = "Войти";
-//"brutePasswordButtonLoginView" = "Подобрать пароль";
-//"cancelBrutePasswordButtonLoginView" = "Отменить";
-//"localAuthFaceIDButtonLoginView" = "Войти с Face ID";
-//"localAuthTouchIDButtonLoginView" = "Войти с Touch ID";
-//"localAuthPasscodeButtonLoginView" = "Войти с код-паролем";
-//"loginTextFieldPlaceHolder" = "Телефон или почта";
-//"passwordTextFieldPlaceHolder" = "Пароль";
-//"orLabelText" = "или";
-//
-//// LoginCoordinator
-
-//
-
-
-
-//
-;
-//
-
-//// LocalNotificationsService
-//"checkoutUpdatesLocalNotificationsService" = "Посмотрите последние обновления";
-//"showProfileLocalNotificationsService" = "Показать посты";
-//"showFavoritesLocalNotificationsService" = "Показать избранное";
-//"showMapLocalNotificationsService" = "Показать карту";

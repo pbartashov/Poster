@@ -11,8 +11,6 @@ import SnapKit
 
 final class SignUpView: SignActionView {
 
-    // MARK: - Properties
-
     // MARK: - Views
 
     private lazy var titleLabel: UILabel = {
@@ -25,7 +23,7 @@ final class SignUpView: SignActionView {
 
     private lazy var enterNumberLabel: UILabel = {
         let label = viewFactory.makeH3Label()
-        label.textColor = .brandLightGray
+        label.textColor = .brandDarkGray
         label.text = "enterNumberLabelSignInView".localized
 
         return label
@@ -46,7 +44,6 @@ final class SignUpView: SignActionView {
 
         return label
     }()
-
 
     // MARK: - LifeCicle
 
@@ -71,15 +68,6 @@ final class SignUpView: SignActionView {
         }
 
         setupLayouts()
-
-
-
-
-
-
-
-
-        textField.text = "+16505553535"
     }
 
     private func setupLayouts() {
@@ -116,10 +104,5 @@ final class SignUpView: SignActionView {
 
             make.bottom.equalToSuperview().offset(-Constants.UI.padding)
         }
-//
-//        activityView.snp.makeConstraints { make in
-//            make.centerY.equalTo(phoneNumberTextField)
-//            make.centerX.equalToSuperview()
-//        }
     }
 }

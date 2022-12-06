@@ -9,12 +9,10 @@ import Combine
 
 public enum PhotosAction {
     case requestPhotos(limit: Int?)
-//    case dissmiss
 }
 
 public enum PhotosState {
     case initial
-//    case saving
 }
 
 public protocol PhotosViewModelProtocol: ViewModelProtocol
@@ -30,8 +28,8 @@ where State == PhotosState,
 
 public final class PhotosViewModel: ViewModel<PhotosState, PhotosAction>,
                                     PhotosViewModelProtocol {
-
     // MARK: - Properties
+
     private let photoStorage: ImageCloudStorageProtocol
     private let userService: UserServiceProtocol
 
@@ -57,8 +55,6 @@ public final class PhotosViewModel: ViewModel<PhotosState, PhotosAction>,
         super.init(state: .initial, errorPresenter: errorPresenter)
     }
 
-
-
     // MARK: - Metods
 
     public override func perfomAction(_ action: PhotosAction) {
@@ -79,7 +75,7 @@ public final class PhotosViewModel: ViewModel<PhotosState, PhotosAction>,
                 try await withThrowingTaskGroup(of: (Data?).self) { [self] group in
                     for (i, fileName) in list.enumerated() where i < maxCount {
                         group.addTask { [self] in
-                            try? await photoStorage.getImageData(withFileName: fileName, in: path)
+                            try await photoStorage.getImageData(withFileName: fileName, in: path)
                         }
                     }
 
@@ -90,10 +86,8 @@ public final class PhotosViewModel: ViewModel<PhotosState, PhotosAction>,
                     }
                 }
             } catch {
-//                self.state = .initial
                 errorPresenter.show(error: error)
             }
         }
     }
 }
-

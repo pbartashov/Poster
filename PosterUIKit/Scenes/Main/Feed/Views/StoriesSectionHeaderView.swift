@@ -9,15 +9,9 @@ import UIKit
 import Combine
 
 final class StoriesSectionHeaderView: UICollectionReusableView {
-//    enum Button {
-//        case button
-//    }
 
     // MARK: - Properties
 
-//    var buttonTappedPublisher: AnyPublisher<Button, Never> {
-//        button.tappedPublisher
-//    }
     @Published var isRecommended: Bool = false
 
     // MARK: - Views
@@ -62,11 +56,4 @@ final class StoriesSectionHeaderView: UICollectionReusableView {
             make.trailing.equalToSuperview().offset(-Constants.UI.padding)
         }
     }
-
-//    func setup(labelTitle: String? = nil,
-//               buttonTitle: String? = nil
-//    ) {
-//        label.text = labelTitle
-////        button.setUnderlinedTitle(buttonTitle, for: .normal)
-//    }
 }

@@ -58,7 +58,6 @@ final class ConfirmSignUpView: SignActionView {
 
     private let logoImageView = UIImageView(image: UIImage(named: "LogoCheckMark"))
 
-
     // MARK: - LifeCicle
 
     init(viewFactory: ViewFactoryProtocol) {
@@ -126,4 +125,3 @@ final class ConfirmSignUpView: SignActionView {
         }
     }
 }
-

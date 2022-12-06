@@ -14,15 +14,14 @@ final class PostsCoordinator: NavigationCoordinator, PostsCoordinatorProtocol {
 
     private let makeDetailedPostViewController: (PostViewModel?) -> DetailedPostViewController<DetailedPostViewModel>?
 
-     // MARK: - LifeCicle
+    // MARK: - LifeCicle
+
     init(navigationController: UINavigationController,
          detailedPostViewControllerFactory: @escaping (PostViewModel?) -> DetailedPostViewController<DetailedPostViewModel>?
     ) {
         self.makeDetailedPostViewController = detailedPostViewControllerFactory
         super.init(navigationController: navigationController)
     }
-
-    // MARK: - Metods
 
     // MARK: - Metods
 

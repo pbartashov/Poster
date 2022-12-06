@@ -26,6 +26,7 @@ extension ImageCloudStorageProtocol {
 public final class ImageCloudStorage: ImageCloudStorageProtocol {
 
     // MARK: - Properties
+
     private let root: String
     private let fileExtension: String
 
@@ -51,27 +52,7 @@ public final class ImageCloudStorage: ImageCloudStorageProtocol {
 
     public func store(imageData data: Data, withFileName fileName: String, to path: [String] = []) async throws {
         let imageRef = getImageRef(for: fileName, in: resolve(path: path))
-
-        print(imageRef)
-
         _ = try await imageRef.putDataAsync(data)
-
-
-//        let uploadTask = imageRef.putData(data, metadata: nil) { (metadata, error) in
-//            guard let metadata = metadata else {
-//                // Uh-oh, an error occurred!
-//                return
-//            }
-//            // Metadata contains file metadata such as size, content-type.
-//            let size = metadata.size
-//            // You can also access to download URL after upload.
-//            riversRef.downloadURL { (url, error) in
-//                guard let downloadURL = url else {
-//                    // Uh-oh, an error occurred!
-//                    return
-//                }
-//            }
-//        }
     }
 
     public func getImageData(withFileName fileName: String, in path: [String] = []) async throws -> Data? {
@@ -93,6 +74,3 @@ public final class ImageCloudStorage: ImageCloudStorageProtocol {
         path.joined(separator: "/")
     }
 }
-
-
-

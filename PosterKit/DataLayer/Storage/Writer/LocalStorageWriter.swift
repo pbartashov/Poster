@@ -20,7 +20,7 @@ final public class LocalStorageWriter: StorageWriterProtocol {
     // MARK: - Metods
 
     public func createPost(author: User, content: String, imageData: Data?) async throws {
-        #warning("TODO")
+        fatalError("NotImplemented")
     }
 
     public func store(post: Post, imageData: Data?, author: User?) async throws {

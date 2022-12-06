@@ -40,26 +40,12 @@ public struct UserCloudStorage: UserStorageProtocol {
 
     public func getUser(byId id: String) async throws -> User? {
         let documentRef = usersCollectionRef.document(id)
-//
-//        documentRef.getDocument { snapshot, errror in
-//            if let data = snapshot?.data() {
-//                let avatar_data = data["avatar_data"]
-//                let avatat = avatar_data as? Data
-//                print(avatat)
-//            }
-//
-//        }
-
-
-
 
         do {
             return try await documentRef.getDocument(as: User.self)
         } catch DecodingError.valueNotFound {
             return nil
         } catch {
-            #warning("REMOVE")
-            print(error)
             throw DatabaseError.notFound
         }
     }
@@ -78,36 +64,9 @@ public struct UserCloudStorage: UserStorageProtocol {
     }
 
     public func save(user: User) throws {
-//        var fields: [AnyHashable : Any] = [:]
-//        add(to: &fields, field: .firstName, with: user.firstName)
-//        add(to: &fields, field: .lastName, with: user.lastName)
-//        add(to: &fields, field: .phoneNumber, with: user.phoneNumber)
-////        add(to: &fields, field: .avatarData, with: user.avatarData)
-//        add(to: &fields, field: .status, with: user.status)
-//        add(to: &fields, field: .nativeTown, with: user.nativeTown)
-//        add(to: &fields, field: .gender, with: user.gender)
-//        add(to: &fields, field: .birthDate, with: user.birthDate)
-//
         let documentRef = usersCollectionRef.document(user.uid)
-//
-//        if let avatarData = user.avatarData {
-//            try await documentRef.updateData([
-//                User.CodingKeys.avatarData.rawValue: Array<UInt8>(avatarData)
-//            ])
-//        }
-
         try documentRef.setData(from: user)
-
-//        if !fields.isEmpty {
-//            try await docRef.updateData(fields)
-//        }
     }
-
-//    private func add(to fields: inout [AnyHashable : Any], field: User.CodingKeys, with value: Any?) {
-//        if let value = value {
-//            fields[field.rawValue] = value
-//        }
-//    }
 
     private func apply(filter: Filter) -> Query? {
         var query: Query? = nil

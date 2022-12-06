@@ -8,6 +8,7 @@
 public final class StoryViewModel {
 
     // MARK: - Properties
+
     private let storageReader: StorageReaderProtocol?
 
     @Published public var authorAvatarData: Data?

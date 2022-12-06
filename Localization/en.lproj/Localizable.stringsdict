@@ -2,52 +2,76 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>postViewsCount</key>
+	<key>followersCount</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@numberOfViews@</string>
-		<key>numberOfViews</key>
+		<string>%#@numberOfFollowers@</string>
+		<key>numberOfFollowers</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>zero</key>
-			<string>%d views</string>
+			<string>followers</string>
 			<key>one</key>
-			<string>%d view</string>
+			<string>follower</string>
 			<key>two</key>
-			<string>%d views</string>
+			<string>followers</string>
 			<key>few</key>
-			<string>%d views</string>
+			<string>followers</string>
 			<key>many</key>
-			<string>%d views</string>
+			<string>followers</string>
 			<key>other</key>
-			<string>%d views</string>
+			<string>followers</string>
 		</dict>
 	</dict>
-	<key>postLikesCount</key>
+	<key>subsribesCount</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@numberOfLikes@</string>
-		<key>numberOfLikes</key>
+		<string>%#@numberOfSubscribers@</string>
+		<key>numberOfSubscribers</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>zero</key>
-			<string>%d likes</string>
+			<string>subsribes</string>
 			<key>one</key>
-			<string>%d like</string>
+			<string>subsribe</string>
 			<key>two</key>
-			<string>%d likes</string>
+			<string>subsribes</string>
 			<key>few</key>
-			<string>%d likes</string>
+			<string>subsribes</string>
 			<key>many</key>
-			<string>%d likes</string>
+			<string>subsribes</string>
 			<key>other</key>
-			<string>%d likes</string>
+			<string>subsribes</string>
+		</dict>
+	</dict>
+	<key>publishedCount</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@numberOfPublishedPosts@</string>
+		<key>numberOfPublishedPosts</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>posts</string>
+			<key>one</key>
+			<string>post</string>
+			<key>two</key>
+			<string>posts</string>
+			<key>few</key>
+			<string>posts</string>
+			<key>many</key>
+			<string>posts</string>
+			<key>other</key>
+			<string>posts</string>
 		</dict>
 	</dict>
 </dict>

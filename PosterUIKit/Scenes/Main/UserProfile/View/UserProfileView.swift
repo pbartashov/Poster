@@ -10,18 +10,9 @@ import Combine
 import SnapKit
 import PosterKit
 
-//enum SaveCancelButton {
-//    case save
-//    case cancel
-////    case avatar
-//}
-
 final class UserProfileView: UIView {
-//    ViewWithButton<SaveCancelButton> {
 
     // MARK: - Properties
-
-//    private let dateFormatter: DateFormatter
 
     private weak var imagePickerViewDelegate: ImagePickerViewDelegate?
 
@@ -32,7 +23,11 @@ final class UserProfileView: UIView {
         set { birthDateView.view.placeholder = newValue }
     }
 
-    var gender: Gender?
+    var gender: Gender? {
+        didSet {
+            setGenderSelectorIndex()
+        }
+    }
 
     var firstName: String? {
         get { firstNameView.view.text }
@@ -71,9 +66,7 @@ final class UserProfileView: UIView {
 
     var avatarImage: UIImage? {
         get { avatarImageView.image }
-        set { avatarImageView.image = newValue
-//            setAvatarViewBorderWidth()
-        }
+        set { avatarImageView.image = newValue }
     }
 
     var isBusy: Bool {
@@ -92,48 +85,6 @@ final class UserProfileView: UIView {
 
         return imageView
     }()
-
-//    private lazy var avatarImageView: UIImageView = {
-//        let imageView = UIImageView(frame: CGRect(x: 0,
-//                                                  y: 0,
-//                                                  width: Constants.UI.avatarImageSize,
-//                                                  height: Constants.UI.avatarImageSize))
-//        //        let imageView = UIImageView()
-//        imageView.layer.borderWidth = 1
-//        imageView.layer.borderColor = UIColor.brandYellowColor.cgColor
-//        imageView.layer.cornerRadius = imageView.frame.width / 2
-//        imageView.layer.masksToBounds = true
-//
-//        let tapRecognizer = UITapGestureRecognizer(target: self,
-//                                                   action: #selector(avatarTapped))
-//        imageView.addGestureRecognizer(tapRecognizer)
-//        imageView.isUserInteractionEnabled = true
-//
-//        return imageView
-//    }()
-
-//    private lazy var tapImageLabel: UILabel = {
-//        let label = viewFactory.makeSmallTextLabel()
-//        label.numberOfLines = 0
-//        label.text = "tapImageLabelUserProfileView".localized
-////        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-////        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-//
-//        return label
-//    }()
-
-//    lazy var clearAvatarButton: UIButton = {
-//        let config = UIImage.SymbolConfiguration(pointSize: 10)
-//        let image = UIImage(systemName: "xmark", withConfiguration: config)
-//        let action = UIAction(image: image) { [weak self] _ in
-//            self?.avatarImageView.image = nil
-//        }
-//
-//        var configuration = UIButton.Configuration.plain()
-//        configuration.baseForegroundColor = .brandYellowColor
-//
-//        return UIButton(configuration: configuration, primaryAction: action)
-//    }()
 
     private lazy var firstNameView: LabeledView<UITextField> = {
         let view = viewFactory.makeLabeledTextField(label: "firstNameLabelUserProfileView".localized,
@@ -165,20 +116,6 @@ final class UserProfileView: UIView {
         return LabeledView(label: label, view: control, spacing: Constants.UI.smallPadding)
     }()
 
-    private lazy var genderSelector: UISegmentedControl = {
-        let male = UIAction(title: Gender.male.title) { _ in
-            self.gender = .male
-        }
-
-        let female = UIAction(title: Gender.female.title) { _ in
-            self.gender = .female
-        }
-
-        let control = UISegmentedControl(items: [male, female])
-
-        return control
-    }()
-
     private lazy var birthDateView: LabeledView<UITextField> = {
         let view = viewFactory.makeLabeledTextField(label: "birthDateLabelUserProfileView".localized,
                                                     placeholder: "")
@@ -193,7 +130,7 @@ final class UserProfileView: UIView {
 
     private lazy var phoneNumberView: LabeledView<UITextField> = {
         let view = viewFactory.makeLabeledPhoneField(label: "phoneNumberLabelUserProfileView".localized,
-                                                    placeholder: "phoneNumberPlaceholderUserProfileView".localized)
+                                                     placeholder: "phoneNumberPlaceholderUserProfileView".localized)
         return view
     }()
 
@@ -219,20 +156,15 @@ final class UserProfileView: UIView {
         return stack
     }()
 
-
-
-
-
     // MARK: - LifeCicle
 
     init(viewFactory: ViewFactoryProtocol,
          imagePickerViewDelegate: ImagePickerViewDelegate?
-//         dateFormatter: DateFormatter
     ) {
         self.viewFactory = viewFactory
         self.imagePickerViewDelegate = imagePickerViewDelegate
-//        self.dateFormatter = dateFormatter
         super.init(frame: .zero)
+
         initialize()
     }
 
@@ -243,10 +175,7 @@ final class UserProfileView: UIView {
     // MARK: - Metods
 
     private func initialize() {
-        [
-            //tapImageLabel,
-         avatarImageView,
-//         clearAvatarButton,
+        [avatarImageView,
          stackView,
          activityView
         ].forEach {
@@ -268,11 +197,6 @@ final class UserProfileView: UIView {
     }
 
     private func setupLayouts() {
-//        tapImageLabel.snp.makeConstraints { make in
-//            make.top.leading.equalTo(avatarImageView).offset(Constants.UI.padding)
-//            make.trailing.bottom.equalTo(avatarImageView).offset(-Constants.UI.padding)
-//        }
-        
         activityView.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
@@ -283,31 +207,25 @@ final class UserProfileView: UIView {
             make.width.height.equalTo(Constants.UI.avatarImageSize).priority(.required)
         }
 
-//        clearAvatarButton.snp.makeConstraints { make in
-//            make.centerX.equalTo(avatarImageView.snp.trailing)
-//            make.centerY.equalTo(avatarImageView.snp.top)
-//        }
-
         stackView.snp.makeConstraints { make in
             make.top.equalTo(avatarImageView.snp.bottom).offset(Constants.UI.padding)
             make.leading.equalToSuperview().offset(Constants.UI.padding)
             make.trailing.equalToSuperview().offset(-Constants.UI.padding)
-
+            
             make.bottom.equalToSuperview().offset(-Constants.UI.padding)
         }
     }
 
-//    @objc private func avatarTapped() {
-//        sendButtonTapped(.avatar)
-//    }
+    private func setGenderSelectorIndex() {
+        switch gender {
+            case .male:
+                genderView.view.selectedSegmentIndex = 0
 
-//    private func setAvatarViewBorderWidth() {
-//        switch avatarImageView.image {
-//            case .none:
-//                avatarImageView.layer.borderWidth = 1
-//
-//            case .some:
-//                avatarImageView.layer.borderWidth = 0
-//        }
-//    }
+            case .female:
+                genderView.view.selectedSegmentIndex = 1
+
+            case .none:
+                genderView.view.selectedSegmentIndex = -1
+        }
+    }
 }

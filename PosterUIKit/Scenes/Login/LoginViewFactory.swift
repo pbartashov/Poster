@@ -9,14 +9,9 @@ import UIKit
 
 struct LoginViewFactory: ViewFactoryProtocol {
 
-
-
-
     // MARK: - Properties
 
     let viewFactory: ViewFactory
-
-    // MARK: - Views
 
     // MARK: - LifeCicle
 
@@ -24,27 +19,7 @@ struct LoginViewFactory: ViewFactoryProtocol {
         self.viewFactory = viewFactory
     }
 
-    // MARK: - Metods
-
-
-
-
     // MARK: - Buttons
-
-    //    func button(withTitle title: String) -> ClosureBasedButton {
-    //        let button = ClosureBasedButton(title: title,
-    //                                        titleColor: .lightTextColor,
-    //                                        backgroundColor: .systemBlue)
-    //
-    //        button.layer.cornerRadius = 14
-    //
-    //        button.layer.shadowOffset = .init(width: 4, height: 4)
-    //        button.layer.shadowRadius = 4
-    //        button.layer.shadowColor = UIColor.shadowColor.cgColor
-    //        button.layer.shadowOpacity = 0.7
-    //
-    //        return button
-    //    }
 
     func makeBlackFilledButton(action: UIAction?) -> UIButton {
         viewFactory.makeBlackFilledButton(action: action)
@@ -56,6 +31,10 @@ struct LoginViewFactory: ViewFactoryProtocol {
 
     func makePlainButton(action: UIAction?) -> UIButton {
         viewFactory.makePlainButton(action: action)
+    }
+
+    func makeVerticalPlainButton(action: UIAction?) -> UIButton {
+        viewFactory.makeVerticalPlainButton(action: action)
     }
 
     // MARK: - Labels
@@ -80,6 +59,8 @@ struct LoginViewFactory: ViewFactoryProtocol {
         viewFactory.makeSmallTextLabel()
     }
 
+    // MARK: - UITextFields
+
     func makeTextField() -> UITextField {
         let phoneTextField = PhoneTextField()
         let textField = viewFactory.configured(textField: phoneTextField)
@@ -88,10 +69,14 @@ struct LoginViewFactory: ViewFactoryProtocol {
         return textField
     }
 
+    // MARK: - ImagedLabels
+
     func makeImagedLabel(imageSystemName: String) -> ImagedLabel {
         viewFactory.makeImagedLabel(imageSystemName: imageSystemName)
     }
 
+    // MARK: - LabeledViews
+    
     func makeLabeledTextField(label: String, placeholder: String?) -> LabeledView<UITextField> {
         viewFactory.makeLabeledPhoneField(label: label, placeholder: placeholder)
     }
@@ -100,17 +85,19 @@ struct LoginViewFactory: ViewFactoryProtocol {
         viewFactory.makeLabeledPhoneField(label: label, placeholder: placeholder)
     }
 
+    // MARK: - UITextViews
+    
     func makeTextView() -> UITextView {
         viewFactory.makeTextView()
     }
 
-    func makeContainerView() -> UIView {
-        viewFactory.makeContainerView()
-    }
+    // MARK: - UIImageViews
 
     func makeImageView() -> UIImageView {
         viewFactory.makeImageView()
     }
+
+    // MARK: - ImagePickerViews
 
     func makeAvatarPickerView(delegate: ImagePickerViewDelegate?) -> ImagePickerView {
         viewFactory.makeAvatarPickerView(delegate: delegate)
@@ -120,11 +107,16 @@ struct LoginViewFactory: ViewFactoryProtocol {
         viewFactory.makePostImagePickerView(delegate: delegate)
     }
 
-    func makeVerticalPlainButton(action: UIAction?) -> UIButton {
-        viewFactory.makeVerticalPlainButton(action: action)
-    }
+    // MARK: - UIActivityIndicatorView
 
     func makeActivityIndicatorView() -> UIActivityIndicatorView {
         viewFactory.makeActivityIndicatorView()
     }
+
+    // MARK: - UIViews
+
+    func makeContainerView() -> UIView {
+        viewFactory.makeContainerView()
+    }
 }
+

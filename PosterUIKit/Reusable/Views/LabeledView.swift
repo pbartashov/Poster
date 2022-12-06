@@ -9,26 +9,6 @@ import UIKit
 
 final class LabeledView<ViewType: UIView>: UIStackView {
 
-    // MARK: - Properties
-//
-//    var labelText: String? {
-//        get {
-//            label.text
-//        }
-//        set {
-//            label.text = newValue
-//        }
-//    }
-//
-//    var text: String? {
-//        get {
-//            textField.text
-//        }
-//        set {
-//            textField.text = newValue
-//        }
-//    }
-
     // MARK: - Views
 
     let label: UILabel

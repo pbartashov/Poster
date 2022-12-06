@@ -9,30 +9,20 @@ import FirebaseAuth
 
 public protocol CheckerServiceProtocol {
     func signIn(phoneNumber: String,
-                          completion: ((Result<String, Error>) -> Void)?)
+                completion: ((Result<String, Error>) -> Void)?)
 
     func signUp(phoneNumber: String,
                 completion: ((Result<String, Error>) -> Void)?)
 
     func comfirmPhoneNumberWith(code: String,
-                completion: ((Result<String, Error>) -> Void)?)
+                                completion: ((Result<String, Error>) -> Void)?)
 }
 
 public struct ChekerService: CheckerServiceProtocol {
 
-    // MARK: - Properties
-
-//    private let userService: UserServiceProtocol
-
-    // MARK: - Views
-
     // MARK: - LifeCicle
 
-    public init(
-//        userService: UserServiceProtocol
-    ) {
-//        self.userService = userService
-    }
+    public init() { }
 
     // MARK: - Metods
 
@@ -59,14 +49,13 @@ public struct ChekerService: CheckerServiceProtocol {
                     handle(error: error, completion: completion)
                     return
                 }
-
-                UserDefaults.standard.set(verificationID, forKey: "authVerificationID")
+                UserDefaults.standard.set(verificationID, forKey: Constants.Login.authVerificationID)
                 completion?(.success(phoneNumber))
             }
     }
 
     public func comfirmPhoneNumberWith(code: String, completion: ((Result<String, Error>) -> Void)?) {
-        if let verificationID = UserDefaults.standard.string(forKey: "authVerificationID") {
+        if let verificationID = UserDefaults.standard.string(forKey: Constants.Login.authVerificationID) {
             let credential = PhoneAuthProvider.provider().credential(
                 withVerificationID: verificationID,
                 verificationCode: code
@@ -82,7 +71,6 @@ public struct ChekerService: CheckerServiceProtocol {
                     completion?(.failure(LoginError.unknown))
                     return
                 }
-
                 completion?(.success(user.uid))
             }
         }
@@ -117,5 +105,3 @@ fileprivate extension AuthErrorCode {
         }
     }
 }
-
-

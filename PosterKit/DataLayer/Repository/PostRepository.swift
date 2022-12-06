@@ -25,8 +25,8 @@ public protocol PostRepositoryInterface {
     /// Saves changes to Repository.
     func saveChanges() async throws
 
-//    func setupResultsControllerStateChangedHandler(stateChanged:((FetchResultServiceState) -> Void)?)
-//    
+    //    func setupResultsControllerStateChangedHandler(stateChanged:((FetchResultServiceState) -> Void)?)
+    //
     func startFetchingWith(predicate: NSPredicate?,
                            sortDescriptors: [NSSortDescriptor]?) throws
 }
@@ -53,10 +53,10 @@ extension PostRepository: PostRepositoryInterface {
             .eraseToAnyPublisher()
     }
     
-//    private func mapToPosts(postEntities: [PostEntity]) -> [Post] {
-//        postEntities.map { $0.toDomainModel() }
-//    }
-//
+    //    private func mapToPosts(postEntities: [PostEntity]) -> [Post] {
+    //        postEntities.map { $0.toDomainModel() }
+    //    }
+    //
     /// Get Posts using a predicate
     public func getPosts(predicate: NSPredicate?) async throws -> [PostViewModel] {
         let postEntities = try await repository.get(predicate: predicate, sortDescriptors: nil)

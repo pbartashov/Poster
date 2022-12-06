@@ -80,7 +80,5 @@ final class PostsSectionHeaderView: UICollectionReusableView {
                buttonTitle: String? = nil
     ) {
         label.text = labelTitle
-        //        button.setUnderlinedTitle(buttonTitle, for: .normal)
     }
 }
-

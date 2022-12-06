@@ -14,44 +14,34 @@ public protocol AppCoordinatorProtocol {
 
 protocol RootSceneSwitcher: AnyObject {
     func switchToMainViewScene(for user: User)
-
+    
 }
 
-//protocol TabNavigatorProtocol: AnyObject {
-//    func switchTo(tab: Tab)
-//}
-
 public final class AppCoordinator: AppCoordinatorProtocol {
-
+    
     // MARK: - Properties
-
+    
     private weak var window: UIWindow?
     private unowned var appDependencyContainer: AppDependencyContainerProtocol
-
+    
     // MARK: - LifeCicle
-
+    
     public init(window: UIWindow,
                 appDependencyContainer: AppDependencyContainerProtocol) {
         self.window = window
         self.appDependencyContainer = appDependencyContainer
-//
-//        defer {
-//            self.appDependencyContainer = AppDependencyContainer(rootSceneSwitcher: self)
-//        }
     }
-
+    
     // MARK: - Metods
-
+    
     public func start() -> UIViewController {
         appDependencyContainer.makeLoginViewController()
-//        appDependencyContainer.makeMainViewController(for: "rwre")
     }
-
+    
     func switchTo(viewController: UIViewController) {
         guard let window = window else { return }
-
+        
         window.rootViewController = viewController
-        // add animation
         UIView.transition(with: window,
                           duration: 0.5,
                           options: [.transitionFlipFromLeft],

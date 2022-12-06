@@ -27,9 +27,5 @@ extension UIFont {
     static var brandSmallTextFont: UIFont {
         .systemFont(ofSize: 12)
     }
-
-
-
-
 }
 

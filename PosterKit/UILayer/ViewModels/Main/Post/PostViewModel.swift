@@ -10,6 +10,7 @@ import Combine
 public final class PostViewModel {
 
     // MARK: - Properties
+
     private let storageReader: StorageReaderProtocol?
     private let favoritesPostsHashProvider: FavoritesPostsHashProvider?
 
@@ -19,8 +20,7 @@ public final class PostViewModel {
     @Published public var authorName: String?
     @Published public var authorStatus: String?
     @Published public var isFavorite: Bool?
-//    public let postUid: String
-//    public let authorId: String
+
     public let post: Post
     public var content: String { post.content }
     public var likes: Int { post.likes }
@@ -73,15 +73,6 @@ public final class PostViewModel {
                     }
                 }
             }
-
-            //            if let user = try? await storageReader.getUser(byId: post.authorId) {
-            //                postViewModel.authorName = user.name
-            //                postViewModel.authorAvatar = user.avatarData
-            //            }
-            //
-            //            if let postImageData = try? await storageReader.getImageData(byId: post.uid) {
-            //                postViewModel.imageData = postImageData
-            //            }
         }
     }
 }

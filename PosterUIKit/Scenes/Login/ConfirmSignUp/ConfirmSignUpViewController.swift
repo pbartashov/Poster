@@ -24,13 +24,11 @@ final class ConfirmSignUpViewController<T: LoginViewModelProtocol>: ScrollableVi
         return ConfirmSignUpView(viewFactory: viewFactory)
     }()
 
-
     // MARK: - LifeCicle
 
     init(viewModel: ViewModelType,
          phoneNumber: String) {
         self.phoneNumber = phoneNumber
-
         super.init(viewModel: viewModel)
     }
 
@@ -72,19 +70,20 @@ final class ConfirmSignUpViewController<T: LoginViewModelProtocol>: ScrollableVi
         viewModel.statePublisher
             .sink { [weak self] state in
                 DispatchQueue.main.async {
-                    self?.confirmSignUpView.isBusy = false
+                    guard let self = self else { return }
+                    self.confirmSignUpView.isBusy = false
                     switch state {
                         case .initial:
                             break
                             
                         case .missingPhoneNumber, .missingCode:
-                            self?.confirmSignUpView.shakeTextField()
+                            self.confirmSignUpView.shakeTextField()
                             
                         case .authFailed:
-                            self?.confirmSignUpView.shakeActionButton()
+                            self.confirmSignUpView.shakeActionButton()
                             
                         case .processing:
-                            self?.confirmSignUpView.isBusy = true
+                            self.confirmSignUpView.isBusy = true
                     }
                 }
             }

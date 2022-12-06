@@ -11,7 +11,7 @@ import PosterUIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-//    var appCoordinator: AppCoordinatorProtocol?
+    //    var appCoordinator: AppCoordinatorProtocol?
     var appDependancyContainer: AppDependencyContainerProtocol?
 
 

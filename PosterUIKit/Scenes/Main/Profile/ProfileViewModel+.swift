@@ -36,13 +36,12 @@ extension ProfileViewModel: DragDropProtocol {
         var dragItems = [
             UIDragItem(itemProvider: textItemProvider)
         ]
-        #warning("TODO")
-//        guard let image = post.imageUrl?.asImage else { return dragItems }
-//
-//        let imageProvider = NSItemProvider(object: image)
-//        dragItems.append(
-//            UIDragItem(itemProvider: imageProvider)
-//        )
+        guard let image = post.imageData?.asImage else { return dragItems }
+
+        let imageProvider = NSItemProvider(object: image)
+        dragItems.append(
+            UIDragItem(itemProvider: imageProvider)
+        )
 
         return dragItems
     }
@@ -55,7 +54,7 @@ extension ProfileViewModel: DragDropProtocol {
     }
 
     func handle(dropSessionDidUpdate session: UIDropSession,
-               withDestinationIndexPath destinationIndexPath: IndexPath?
+                withDestinationIndexPath destinationIndexPath: IndexPath?
     ) -> UITableViewDropProposal {
         guard session.items.count == 2 else {
             return UITableViewDropProposal(operation: .cancel)
@@ -82,14 +81,13 @@ extension ProfileViewModel: DragDropProtocol {
                 return
             }
 
-            #warning("Use UserService && open Create Post")
+            let newPost = Post(uid: UUID().uuidString,
+                               authorId: userViewModel?.user.uid ?? "",
+                               content: description)
+            let postViewModel = PostViewModel(from: newPost)
+            postViewModel.imageData = image.asImageData
 
-//            let newPost = Post(url: UUID().uuidString,
-//                               author: User(id: "id", name: "Drag&Drop"),
-//                               description: description,
-//                               imageData: image.pngData())
-//
-//            perfomAction(.insert((newPost, destinationIndex)))
+            perfomAction(.insert((postViewModel, destinationIndex)))
 
             completion()
         }

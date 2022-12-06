@@ -43,6 +43,7 @@ open class KMBFormatter: Formatter {
     open func string(fromNumber number: Int64) -> String {
         numberFormatter.numberStyle = .decimal
         numberFormatter.roundingMode = .down
+        
         return convertValue(fromNumber: number)
     }
 
@@ -109,7 +110,6 @@ open class KMBFormatter: Formatter {
                 }
                 return partsToIncludeFor(value: result, unit: unit)
         }
-
     }
 
     private func partsToIncludeFor(value: String, unit: Unit) -> String {
@@ -133,5 +133,4 @@ open class KMBFormatter: Formatter {
         }
         return length
     }
-
 }

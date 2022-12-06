@@ -21,8 +21,6 @@ where T: AddPhotoViewModelProtocol {
     var viewModel: ViewModelType
     var subsriptions: Set<AnyCancellable> = []
 
-
-
     // MARK: - Views
 
     private var spinner: SpinnerViewController?
@@ -38,27 +36,17 @@ where T: AddPhotoViewModelProtocol {
         fatalError("init(coder:) has not been implemented")
     }
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
         initialize()
-
         showImagePicker()
     }
-
 
     // MARK: - Metods
 
     private func initialize() {
-        //        title = "titleUserProfileViewController".localized
         bindViewModel()
     }
-
-
-
-
-
 
     private func bindViewModel() {
         viewModel.statePublisher

@@ -10,10 +10,6 @@ import PosterKit
 
 struct DetailedPostFactory {
 
-    // MARK: - Properties
-
-    //    static var create = FavoritesFactory()
-
     // MARK: - Metods
 
     func makeDetailedPostViewModel(postViewModel: PostViewModel?,
@@ -27,7 +23,6 @@ struct DetailedPostFactory {
         let storageWriter = CloudStorageWriter(postCloudStorage: postCloudStorage,
                                                imageCloudStorage: imageCloudStorage)
 
-
         return DetailedPostViewModel(postViewModel: postViewModel,
                                      userService: userService,
                                      storageWriter: storageWriter,
@@ -36,7 +31,8 @@ struct DetailedPostFactory {
                                      errorPresenter: ErrorPresenter.shared)
     }
 
-    func makeDetailedPostViewController(viewModel: DetailedPostViewModel) -> DetailedPostViewController<DetailedPostViewModel> {
+    func makeDetailedPostViewController(viewModel: DetailedPostViewModel
+    ) -> DetailedPostViewController<DetailedPostViewModel> {
         DetailedPostViewController(viewModel: viewModel)
     }
 }

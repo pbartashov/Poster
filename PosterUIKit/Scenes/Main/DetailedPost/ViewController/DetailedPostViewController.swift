@@ -13,9 +13,6 @@ where T: DetailedPostViewModelProtocol {
 
     typealias ViewModelType = T
 
-    // MARK: - Properties
-
-    
     // MARK: - Views
 
     private lazy var detailedPostView: DetailedPostView = {
@@ -26,33 +23,19 @@ where T: DetailedPostViewModelProtocol {
 
     private var spinner: SpinnerViewController?
 
-   
-
     // MARK: - LifeCicle
-
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         initialize()
-
-
-
-        //        viewModel.perfomAction(.startHintTimer)
-        //        viewModel.perfomAction(.autoLogin)
     }
-
 
     // MARK: - Metods
 
     private func initialize() {
         super.addSubViewToScrollView(detailedPostView)
-//        title = "titleUserProfileViewController".localized
         setupEditMode()
         bindViewModel()
-//        setupView()
-
     }
 
     private func setupEditMode() {
@@ -66,24 +49,17 @@ where T: DetailedPostViewModelProtocol {
                 setEditMode()
             }
         }
-
-//        navigationItem.rightBarButtonItem = rightBarButtonItem
-//
-//        navigationItem.rightBarButtonItem?.tintColor = .brandYellowColor
     }
 
     private func setEditMode() {
-//    -> UIBarButtonItem {
         let editAction = UIAction { [self] _ in
             setSaveMode()
         }
-
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "editButtonDetailedPostViewController".localized,
-                        primaryAction: editAction)
+                                                            primaryAction: editAction)
     }
 
     private func setSaveMode() {
-//    } -> UIBarButtonItem {
         detailedPostView.isEditable = true
 
         let saveAction = UIAction { [self] _ in
@@ -92,39 +68,21 @@ where T: DetailedPostViewModelProtocol {
             let postData = (content, imageData)
             viewModel.perfomAction(.savePost(postData))
         }
-
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "saveButtonDetailedPostViewController".localized,
-                               primaryAction: saveAction)
+                                                            primaryAction: saveAction)
     }
 
     private func bindViewModel() {
         func bindViewModelChanges() {
-            //        detailedPostView.buttonTappedPublisher
-            //            .sink { [weak self] button in
-            //                guard let self = self else { return }
-            //                switch button {
-            //                    case .save:
-            ////                        self.showImagePicker()
-            //
-            //                    default:
-            //                        return
-            //                }
-            //            }
-            //            .store(in: &subsriptions)
-
-
             viewModel.statePublisher
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] state in
                     state == .saving ? self?.showSpinnerView() : self?.hideSpinnerView()
                 }
-//                .assignOnMain(to: \.isBusy, on: detailedPostView)
                 .store(in: &subsriptions)
-
 
             viewModel.postViewModelPublisher
                 .map { $0?.content }
-            //            .receive(on: DispatchQueue.main)
                 .assignOnMain(to: \.content, on: detailedPostView)
                 .store(in: &subsriptions)
         }
@@ -168,22 +126,13 @@ where T: DetailedPostViewModelProtocol {
     func showSpinnerView() {
         let spinner = SpinnerViewController()
         spinner.color = .brandYellowColor
-
         spinner.showSpinner(for: self)
-//        addChild(spinner)
-//        view.addSubview(spinner.view)
-//        spinner.didMove(toParent: self)
-//        spinner.view.frame = view.frame
 
         self.spinner = spinner
     }
 
     func hideSpinnerView() {
         spinner?.hideSpinner()
-//        guard let spinner = spinner else { return }
-//        spinner.willMove(toParent: nil)
-//        spinner.view.removeFromSuperview()
-//        spinner.removeFromParent()
     }
 }
 

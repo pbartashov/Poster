@@ -11,9 +11,6 @@ import Combine
 
 final class SignUpViewController: ScrollableViewController<LoginViewModelProtocol> {
 
-    // MARK: - Properties
-
-
     // MARK: - Views
 
     private lazy var signUpView: SignUpView = {
@@ -21,24 +18,10 @@ final class SignUpViewController: ScrollableViewController<LoginViewModelProtoco
         return SignUpView(viewFactory: viewFactory)
     }()
 
-    // MARK: - LifeCicle
-
-//    init(viewModel: LoginViewModelProtocol) {
-//        super.init(viewModel: viewModel)
-//    }
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
         initialize()
-
-
-
-        //        viewModel.perfomAction(.startHintTimer)
-        //        viewModel.perfomAction(.autoLogin)
     }
-
 
     // MARK: - Metods
 
@@ -65,19 +48,20 @@ final class SignUpViewController: ScrollableViewController<LoginViewModelProtoco
         viewModel.statePublisher
             .sink { [weak self] state in
                 DispatchQueue.main.async {
-                    self?.signUpView.isBusy = false
+                    guard let self = self else { return }
+                    self.signUpView.isBusy = false
                     switch state {
                         case .initial:
                             break
 
                         case .missingPhoneNumber, .missingCode:
-                            self?.signUpView.shakeTextField()
+                            self.signUpView.shakeTextField()
 
                         case .authFailed:
-                            self?.signUpView.shakeActionButton()
+                            self.signUpView.shakeActionButton()
 
                         case .processing:
-                            self?.signUpView.isBusy = true
+                            self.signUpView.isBusy = true
                     }
                 }
             }

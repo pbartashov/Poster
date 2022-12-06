@@ -32,6 +32,7 @@ final class PostCollectionViewCell: UICollectionViewCell {
     }
 
     // MARK: - Metods
+
     private func initialize() {
         contentView.addSubview(postCellView)
         setupLayouts()
@@ -55,7 +56,7 @@ final class PostCollectionViewCell: UICollectionViewCell {
     }
 
     func setup(with post: PostViewModel,
-              onAddToFavorites: (() -> Void)?
+               onAddToFavorites: (() -> Void)?
     ) {
         postCellView.setup(with: post)
         self.onAddToFavorites = onAddToFavorites
@@ -64,6 +65,5 @@ final class PostCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         postCellView.reset()
         onAddToFavorites = nil
-        #warning("other")
     }
 }

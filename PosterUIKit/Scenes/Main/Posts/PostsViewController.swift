@@ -27,7 +27,6 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
     // MARK: - Properties
 
     private(set) var viewModel: ViewModelType
-//    private var postViewModelProvider: PostViewModelProvider
 
     private var subscriptions: Set<AnyCancellable> = []
 
@@ -63,16 +62,10 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
 
     private(set) lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
-
-        tableView.register(PostTableViewCell.self,
-                           forCellReuseIdentifier: PostTableViewCell.identifier)
-
         tableView.backgroundColor = .brandBackgroundColor
         tableView.delegate = self
-//        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap))
-//        doubleTap.numberOfTapsRequired = 2
-//        tableView.addGestureRecognizer(doubleTap)
-
+        tableView.register(PostTableViewCell.self,
+                           forCellReuseIdentifier: PostTableViewCell.identifier)
         return tableView
     }()
 
@@ -80,12 +73,8 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
 
     // MARK: - LifeCicle
 
-    init(viewModel: ViewModelType
-//         postViewModelProvider: PostViewModelProvider
-    ) {
+    init(viewModel: ViewModelType) {
         self.viewModel = viewModel
-//        self.postViewModelProvider = postViewModelProvider
-
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -97,7 +86,6 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
         super.viewDidLoad()
 
         view.backgroundColor = .brandBackgroundColor
-
         view.addSubview(tableView)
 
         setupLayout()
@@ -172,8 +160,8 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
     private func configureRefreshControl() {
         tableView.refreshControl = UIRefreshControl()
         tableView.refreshControl?.addTarget(self,
-                                                 action: #selector(handleRefreshControl),
-                                                 for: .valueChanged)
+                                            action: #selector(handleRefreshControl),
+                                            for: .valueChanged)
     }
 
     @objc func handleRefreshControl() {
@@ -192,8 +180,6 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
             return UITableViewCell()
         }
 
-        //        let postViewModel = postViewModelProvider.makeViewModel(for: post)
-
         cell.setup(with: post) { [weak self] in
             self?.viewModel.perfomAction(.addToFavorites(post: post))
         }
@@ -205,18 +191,7 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
         postsDataSource.apply(postsSnapshot)
     }
 
-//    @objc func handleDoubleTap(recognizer: UIGestureRecognizer) {
-//        let tappedPoint = recognizer.location(in: tableView)
-//
-//        if let indexPath = tableView.indexPathForRow(at: tappedPoint) {
-//            tableView.deselectRow(at: indexPath, animated: true)
-//
-//            let post = viewModel.posts[indexPath.row]
-//            viewModel.perfomAction(.selected(post: post))
-//        }
-//    }
-
-// MARK: - UITableViewDelegate methods
+    // MARK: - UITableViewDelegate methods
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == postsSectionNumber {
@@ -225,7 +200,9 @@ class PostsViewController<ViewModelType: PostsViewModelProtocol>: UIViewControll
         }
     }
 
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    func tableView(_ tableView: UITableView,
+                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
+    ) -> UISwipeActionsConfiguration? {
         return nil
     }
 }

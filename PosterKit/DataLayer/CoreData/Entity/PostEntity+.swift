@@ -40,12 +40,3 @@ extension PostEntity: DomainModel {
         views = Int32(model.views)
     }
 }
-
-//extension UIImage {
-//    convenience init?(data: Data?) {
-//        guard let data = data else {
-//            return nil
-//        }
-//        self.init(data: data)
-//    }
-//}

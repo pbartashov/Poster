@@ -15,11 +15,10 @@ extension PostSectionType {
 }
 
 final class ProfileViewController<T, U>: PostsViewController<U>,
-//                                         UITableViewDelegate,
-UITableViewDragDelegate,
-UITableViewDropDelegate
+                                         UITableViewDragDelegate,
+                                         UITableViewDropDelegate
 where T: ProfileViewModelProtocol&DragDropProtocol,
-U == T.PostsViewModelType {
+      U == T.PostsViewModelType {
 
     typealias ViewModelType = T
     typealias SectionType = PostsViewController<U>.SectionType
@@ -93,9 +92,7 @@ U == T.PostsViewModelType {
 
     // MARK: - LifeCicle
 
-    init(viewModel: ViewModelType
-         //         postViewModelProvider: PostViewModelProvider
-    ) {
+    init(viewModel: ViewModelType) {
         self.profileViewModel = viewModel
         super.init(viewModel: profileViewModel.postsViewModel)
     }
@@ -107,15 +104,7 @@ U == T.PostsViewModelType {
     override func viewDidLoad() {
         super.viewDidLoad()
         initialize()
-
-//        profileViewModel.perfomAction(.requstPhotos)
     }
-
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        let photos = profileViewModel.photos.compactMap { $0.asImage }
-//        photosTableViewCell.setup(with: photos)
-//    }
 
     override func viewSafeAreaInsetsDidChange() {
         if isAvatarPresenting {
@@ -126,10 +115,9 @@ U == T.PostsViewModelType {
     // MARK: - Metods
 
     private func initialize() {
-        //        tableView.delegate = self
-        tableView.dragDelegate = self
-        tableView.dropDelegate = self
-        tableView.dragInteractionEnabled = true
+//        tableView.dragDelegate = self
+//        tableView.dropDelegate = self
+//        tableView.dragInteractionEnabled = true
         postsSectionNumber = 2
 
         navigationController?.navigationBar.tintColor = .brandYellowColor
@@ -182,7 +170,7 @@ U == T.PostsViewModelType {
 
     private func createCover(for sender: UIView) {
         let cover = UIView()
-        cover.backgroundColor = .lightBackgroundColor
+        cover.backgroundColor = .brandLightBackgroundColor
         cover.alpha = 0.0
 
         let configuration = UIImage.SymbolConfiguration(pointSize: 24)
@@ -192,7 +180,7 @@ U == T.PostsViewModelType {
         }
 
         let button = UIButton(frame: .zero, primaryAction: action)
-        button.tintColor = .textColor
+        button.tintColor = .brandTextBlackColor
         button.alpha = 0.0
 
         sender.superview?.insertSubview(cover, belowSubview: sender)
@@ -284,15 +272,15 @@ extension ProfileViewController: ProfileHeaderViewDelegate {
 
         avatar = sender
         profileHeaderView.bringSubviewToFront(sender)
-//        sender.superview?.bringSubviewToFront(sender)
+        //        sender.superview?.bringSubviewToFront(sender)
 
-        UIView.animate(withDuration: 0.5) { [weak self] in
-            self?.coverView?.alpha = 0.5
-            self?.avatar?.layer.cornerRadius = 0
-            self?.moveAndScaleAvatarToCenter()
+        UIView.animate(withDuration: 0.5) { [self] in
+            coverView?.alpha = 0.5
+            avatar?.layer.cornerRadius = 0
+            moveAndScaleAvatarToCenter()
         } completion: { _ in
-            UIView.animate(withDuration: 0.3) { [weak self] in
-                self?.closeAvatarPresentationButton?.alpha = 1
+            UIView.animate(withDuration: 0.3) { [self] in
+                closeAvatarPresentationButton?.alpha = 1
             }
         }
     }

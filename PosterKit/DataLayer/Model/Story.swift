@@ -12,9 +12,9 @@ public struct Story {
     public let description: String?
 
     public init(uid: String,
-                  authorId: String,
-                  storyData: Data? = nil,
-                  description: String? = nil
+                authorId: String,
+                storyData: Data? = nil,
+                description: String? = nil
     ) {
         self.uid = uid
         self.authorId = authorId

@@ -17,13 +17,11 @@ public enum PostsAction {
     case showSearchPromt
     case cancelSearch
     case addToFavorites(post: PostViewModel)
-//    case showError(Error)
 }
 
 public enum PostsState {
     case initial
     case postsLoaded
-    //([Post])
     case isFiltered(with: String?)
 }
 
@@ -33,9 +31,6 @@ where State == PostsState,
 
     var posts: [PostViewModel] { get }
     var postsPublisher: Published<[PostViewModel]>.Publisher { get }
-//    var onPostSelected: ((Post) -> Void)? { get set }
-//    var requestPosts: (() -> Void)? { get set }
-//    var deletePost: ((IndexPath) -> Void)? { get set }
     var searchText: String? { get }
 }
 
@@ -44,8 +39,6 @@ public class PostsViewModel: ViewModel<PostsState, PostsAction>,
     // MARK: - Properties
 
     private weak var coordinator: PostsCoordinatorProtocol?
-//    private let errorPresenter: ErrorPresenterProtocol
-//    let storageService: StorageServiceProtocol
     let storageReader: StorageReaderProtocol
     let storageWriter: StorageWriterProtocol
     let favoritesPostsHashProvider: FavoritesPostsHashProvider?
@@ -58,14 +51,9 @@ public class PostsViewModel: ViewModel<PostsState, PostsAction>,
     public private(set) var searchText: String?
     private var defaultRequestFilter: Filter
 
-//    public var onPostSelected: ((Post) -> Void)?
-//    public var requestPosts: (() -> Void)?
-//    public var deletePost: ((IndexPath) -> Void)?
-
     // MARK: - LifeCicle
 
     public init(coordinator: PostsCoordinatorProtocol?,
-//                storageService: StorageServiceProtocol,
                 storageReader: StorageReaderProtocol,
                 storageWriter: StorageWriterProtocol,
                 favoritesPostsHashProvider: FavoritesPostsHashProvider?,
@@ -73,7 +61,6 @@ public class PostsViewModel: ViewModel<PostsState, PostsAction>,
                 errorPresenter: ErrorPresenterProtocol
     ) {
         self.coordinator = coordinator
-//        self.storageService = storageService
         self.storageReader = storageReader
         self.storageWriter = storageWriter
         self.favoritesPostsHashProvider = favoritesPostsHashProvider
@@ -139,9 +126,6 @@ public class PostsViewModel: ViewModel<PostsState, PostsAction>,
 
             case .addToFavorites(let post):
                 handleAddToFavorites(post: post)
-                
-//            case .showError(let error):
-//                errorPresenter.show(error: error)
         }
     }
 
@@ -217,43 +201,3 @@ public class PostsViewModel: ViewModel<PostsState, PostsAction>,
         }
     }
 }
-
-//extension PostsViewModel: PostViewModelProvider {
-//    public func makeViewModel(for post: Post) -> PostViewModel {
-//        let postViewModel = PostViewModel(from: post)
-//
-//        Task {
-//            try await withThrowingTaskGroup(of: (User?, Data?).self) { group in
-//                group.addTask {
-//                    let user = try? await self.storageReader.getUser(byId: post.authorId)
-//                    return (user, nil)
-//                }
-//
-//                group.addTask {
-//                    let postImageData = try? await self.storageReader.getImageData(byId: post.uid)
-//                    return (nil, postImageData)
-//                }
-//
-//                for try await (user, postImageData) in group {
-//                    if let user = user {
-//                        postViewModel.authorName = user.name
-//                        postViewModel.authorAvatar = user.avatarData
-//                    } else if let postImageData = postImageData {
-//                        postViewModel.imageData = postImageData
-//                    }
-//                }
-//            }
-//
-////            if let user = try? await storageReader.getUser(byId: post.authorId) {
-////                postViewModel.authorName = user.name
-////                postViewModel.authorAvatar = user.avatarData
-////            }
-////
-////            if let postImageData = try? await storageReader.getImageData(byId: post.uid) {
-////                postViewModel.imageData = postImageData
-////            }
-//        }
-//
-//        return postViewModel
-//    }
-//}

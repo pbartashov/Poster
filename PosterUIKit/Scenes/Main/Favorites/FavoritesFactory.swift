@@ -8,10 +8,6 @@ import PosterKit
 
 struct FavoritesFactory {
 
-    // MARK: - Properties
-
-    //    static var create = FavoritesFactory()
-
     // MARK: - Metods
 
     func viewModelWith(coordinator: PostsCoordinatorProtocol?) -> FavoritesViewModel {
@@ -19,7 +15,6 @@ struct FavoritesFactory {
         let postRepository = PostRepository(context: contextProvider.backgroundContext)
         let storageReader = LocalStorageReader(repository: postRepository)
         let storageWriter = LocalStorageWriter(repository: postRepository)
-
         let requestFilter = Filter()
 
         return FavoritesViewModel(storageReader: storageReader,
@@ -33,4 +28,3 @@ struct FavoritesFactory {
         FavoritesViewController(viewModel: viewModel)
     }
 }
-

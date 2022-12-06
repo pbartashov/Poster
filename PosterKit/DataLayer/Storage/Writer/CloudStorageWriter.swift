@@ -47,11 +47,6 @@ final public class CloudStorageWriter: StorageWriterProtocol {
     }
 
     public func remove(post: Post) async throws {
-#warning("TODO")
+        fatalError("NotImplemented")
     }
-
-//    public func store(photo: Data?) async throws {
-//        <#code#>
-//    }
 }
-

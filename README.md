@@ -11,8 +11,6 @@
 ## Использумый стэк
 
 
-
-
 MVVM
 
 Combine
@@ -21,12 +19,20 @@ UIKit
 
 SnapKit
 
-Core Data
+CoreData
 
 asyc/await concurrency
 
-URLSession
-
-CLLocationManager
-
 UICollectionViewDiffableDataSource
+
+Localization
+
+FirebaseFirestore
+
+FirebaseStorage
+
+Dark/light themes
+
+CocoaPods
+
+SPM

@@ -31,11 +31,7 @@ public final class StoryCloudStorage: StoryCloudStorageProtocol {
 
     // MARK: - LifeCicle
 
-    public init(
-        //        imageStorage: ImageCloudStorageProtocol
-    ) {
-        //        self.imageStorage = imageStorage
-    }
+    public init() { }
 
     // MARK: - Metods
 
@@ -79,33 +75,11 @@ public final class StoryCloudStorage: StoryCloudStorageProtocol {
         return try result.documents.map {
             try $0.data(as: Story.self)
         }
-
-        //
-        //            .getDocuments() { (querySnapshot, err) in
-        //                if let err = err {
-        //                    print("Error getting documents: \(err)")
-        //                } else {
-        //                    for document in querySnapshot!.documents {
-        //                        print("\(document.documentID) => \(document.data())")
-        //                    }
-        //                }
-        //            }
-
-        //        let collectionRef = database.collection(CloudConstants.usersCollection)
-        //        let docRef = collectionRef.document(id)
-        //
-        //        do {
-        //            return try await docRef.getDocument(as: User.self)
-        //        } catch DecodingError.valueNotFound {
-        //            return nil
-        //        } catch {
-        //            throw DatabaseError.notFound
-        //        }
     }
 
     private func getQuery(filteredBy filter: Filter?) -> Query {
         var query = storiesCollectionRef.order(by: Constants.Cloud.timestamp, descending: true)
-        guard var filter = filter else { return query }
+        guard let filter = filter else { return query }
         if let authorId = filter.authorId {
             query = query
                 .whereField(Post.CodingKeys.authorId.rawValue, isEqualTo: authorId)
@@ -114,12 +88,9 @@ public final class StoryCloudStorage: StoryCloudStorageProtocol {
                 .whereField(Post.CodingKeys.authorId.rawValue, in: authorIds)
         }
 
-        if let content = filter.content {
-#warning("TODO")
+        if let _ = filter.content {
+            //#warning("TODO")
         }
         return query
     }
 }
-
-
-
