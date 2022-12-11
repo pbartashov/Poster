@@ -22,6 +22,7 @@ public final class PostViewModel {
     @Published public var isFavorite: Bool?
 
     public let post: Post
+    public var timestamp: Date { post.timestamp }
     public var content: String { post.content }
     public var likes: Int { post.likes }
     public var views: Int { post.views }

@@ -34,29 +34,20 @@ public final class PostCloudStorage: PostCloudStorageProtocol {
     ) async throws -> Post {
         let newPostRef = postsCollectionRef.document()
         let newPost = Post(uid: newPostRef.documentID,
+                           timestamp: .now,
                            authorId: authorId,
                            content: content)
-        let addition = [Constants.Cloud.timestamp: FieldValue.serverTimestamp()]
-        try await store(post: newPost, at: newPostRef, with: addition)
+        try newPostRef.setData(from: newPost)
+        try await newPostRef.updateData([
+            Post.CodingKeys.timestamp.rawValue: FieldValue.serverTimestamp()
+        ])
 
         return newPost
     }
 
     public func save(post: Post) async throws {
         let postRef = postsCollectionRef.document(post.uid)
-        let document = try await postRef.getDocument().data()
-        let timestamp = document?[Constants.Cloud.timestamp] ?? FieldValue.serverTimestamp()
-
-        let addition: [String: Any] = [Constants.Cloud.timestamp: timestamp]
-        try await store(post: post, at: postRef, with: addition)
-    }
-
-    private func store(post: Post,
-                       at postRef: DocumentReference,
-                       with addition: [String: Any]
-    ) async throws {
         try postRef.setData(from: post)
-        try await postRef.updateData(addition)
     }
 
     public func getPosts(filteredBy filter: Filter) async throws -> [Post] {
@@ -69,7 +60,7 @@ public final class PostCloudStorage: PostCloudStorageProtocol {
     }
 
     private func getQuery(filteredBy filter: Filter) -> Query {
-        var query = postsCollectionRef.order(by: Constants.Cloud.timestamp, descending: true)
+        var query = postsCollectionRef.order(by: Post.CodingKeys.timestamp.rawValue, descending: true)
         if let authorId = filter.authorId {
             query = query
                 .whereField(Post.CodingKeys.authorId.rawValue, isEqualTo: authorId)

@@ -14,6 +14,7 @@ extension PostEntity: DomainModel {
 
     func toDomainModel() -> PostViewModel {
         let post = Post(uid: uid ?? "",
+                        timestamp: timestamp ?? Date(),
                         authorId: authorId ?? "",
                         content: content ?? "",
                         likes: Int(likes),
@@ -30,6 +31,7 @@ extension PostEntity: DomainModel {
 
     func copyDomainModel(model: PostViewModel) {
         uid = model.post.uid
+        timestamp = model.timestamp
         authorId = "\(model.post.uid)\(model.post.authorId)"
         authorName = model.authorName
         authorStatus = model.authorStatus

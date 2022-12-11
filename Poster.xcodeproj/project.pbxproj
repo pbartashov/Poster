@@ -70,6 +70,7 @@
 		6E132B272925AD6500B346BE /* FeedFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E132B262925AD6500B346BE /* FeedFactory.swift */; };
 		6E132B302926E7DD00B346BE /* PostViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E132B2F2926E7DD00B346BE /* PostViewCell.swift */; };
 		6E132B322926EB2D00B346BE /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E132B312926EB2D00B346BE /* Filter.swift */; };
+		6E25EC602944AD3800C1B515 /* DMYDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E25EC5F2944AD3800C1B515 /* DMYDateFormatter.swift */; };
 		6E2D4188292EE98600D9963E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6E2D4187292EE98600D9963E /* GoogleService-Info.plist */; };
 		6E2D418B2930298200D9963E /* ImageCloudStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2D418A2930298200D9963E /* ImageCloudStorage.swift */; };
 		6E2D418D2931EC7900D9963E /* StorageReaderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2D418C2931EC7900D9963E /* StorageReaderProtocol.swift */; };
@@ -149,6 +150,7 @@
 		6ECCCD482929FF9B006094CD /* CloudConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ECCCD472929FF9B006094CD /* CloudConstants.swift */; };
 		6ED56153292D4B1600A2731A /* PostCloudStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED56152292D4B1600A2731A /* PostCloudStorage.swift */; };
 		6ED56159292D801400A2731A /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED56158292D801400A2731A /* Data+.swift */; };
+		6EFD3CFC29447185004FE78B /* DailyPosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EFD3CFB29447185004FE78B /* DailyPosts.swift */; };
 		6EFF1A61293E9DD100337B07 /* FavoritesPostsHashProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EFF1A60293E9DD100337B07 /* FavoritesPostsHashProvider.swift */; };
 		6EFF1A63293E9EE100337B07 /* PostRepository+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EFF1A62293E9EE100337B07 /* PostRepository+.swift */; };
 		6EFF1A68293F750E00337B07 /* StorageWriterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EFF1A67293F750E00337B07 /* StorageWriterProtocol.swift */; };
@@ -255,6 +257,7 @@
 		6E132B262925AD6500B346BE /* FeedFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedFactory.swift; sourceTree = "<group>"; };
 		6E132B2F2926E7DD00B346BE /* PostViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewCell.swift; sourceTree = "<group>"; };
 		6E132B312926EB2D00B346BE /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		6E25EC5F2944AD3800C1B515 /* DMYDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMYDateFormatter.swift; sourceTree = "<group>"; };
 		6E2D4187292EE98600D9963E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6E2D418A2930298200D9963E /* ImageCloudStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCloudStorage.swift; sourceTree = "<group>"; };
 		6E2D418C2931EC7900D9963E /* StorageReaderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageReaderProtocol.swift; sourceTree = "<group>"; };
@@ -331,6 +334,7 @@
 		6ECCCD472929FF9B006094CD /* CloudConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudConstants.swift; sourceTree = "<group>"; };
 		6ED56152292D4B1600A2731A /* PostCloudStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCloudStorage.swift; sourceTree = "<group>"; };
 		6ED56158292D801400A2731A /* Data+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
+		6EFD3CFB29447185004FE78B /* DailyPosts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPosts.swift; sourceTree = "<group>"; };
 		6EFF1A60293E9DD100337B07 /* FavoritesPostsHashProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPostsHashProvider.swift; sourceTree = "<group>"; };
 		6EFF1A62293E9EE100337B07 /* PostRepository+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostRepository+.swift"; sourceTree = "<group>"; };
 		6EFF1A67293F750E00337B07 /* StorageWriterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageWriterProtocol.swift; sourceTree = "<group>"; };
@@ -441,7 +445,6 @@
 				6E2D418E2931EFD000D9963E /* Storage */,
 				6E0117682921B30400D8F391 /* Error */,
 				6E8A5494292CED83005AF15D /* Remote */,
-				6ECCCD472929FF9B006094CD /* CloudConstants.swift */,
 				6E0117602921B30400D8F391 /* CoreData */,
 				6E01176A2921B30400D8F391 /* Model */,
 				6E01175D2921B30300D8F391 /* Repository */,
@@ -640,6 +643,7 @@
 				6E01175C2921B2CE00D8F391 /* DataLayer */,
 				6E2F7802291BCE17007EB9ED /* ViewModels */,
 				6E5886132936DA44000CA953 /* KMBFormatter.swift */,
+				6E25EC5F2944AD3800C1B515 /* DMYDateFormatter.swift */,
 				6E106C12291A79DE004021DF /* PosterKit.h */,
 			);
 			path = PosterKit;
@@ -920,6 +924,7 @@
 			children = (
 				6E2D419929322AD400D9963E /* PostViewModel.swift */,
 				6E01177C2921B45800D8F391 /* PostsViewModel.swift */,
+				6EFD3CFB29447185004FE78B /* DailyPosts.swift */,
 				6E58861E29382634000CA953 /* DetailedPostViewModel.swift */,
 			);
 			path = Post;
@@ -982,6 +987,7 @@
 				6E8A5495292CED99005AF15D /* Users */,
 				6ECCCD49292A02B2006094CD /* Posts */,
 				6E2D41892930296400D9963E /* Images */,
+				6ECCCD472929FF9B006094CD /* CloudConstants.swift */,
 			);
 			path = Remote;
 			sourceTree = "<group>";
@@ -1445,10 +1451,12 @@
 				6E5886122936D753000CA953 /* UserViewModel.swift in Sources */,
 				6E2F7809291BCFDA007EB9ED /* ChekerService.swift in Sources */,
 				6E0117722921B30400D8F391 /* Poster.xcdatamodeld in Sources */,
+				6EFD3CFC29447185004FE78B /* DailyPosts.swift in Sources */,
 				6E2F7803291BCE5C007EB9ED /* LoginError.swift in Sources */,
 				6E01176F2921B30400D8F391 /* Repository.swift in Sources */,
 				6E2D41932931F65D00D9963E /* LocalStorageWriter.swift in Sources */,
 				6E2F77F8291B1AEA007EB9ED /* String+.swift in Sources */,
+				6E25EC602944AD3800C1B515 /* DMYDateFormatter.swift in Sources */,
 				6E0117872923149C00D8F391 /* ProfileCoordinatorProtocol.swift in Sources */,
 				6E0117752921B30400D8F391 /* CoreDataRepository.swift in Sources */,
 				6E01179529231ABE00D8F391 /* FavoritePostsViewModel.swift in Sources */,

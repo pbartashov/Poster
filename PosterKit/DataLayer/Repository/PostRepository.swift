@@ -100,7 +100,7 @@ extension PostRepository: PostRepositoryInterface {
                                   sortDescriptors: [NSSortDescriptor]?) throws {
         var sorting = sortDescriptors
         if sorting == nil {
-            sorting = [NSSortDescriptor(keyPath: \PostEntity.uid, ascending: true)]
+            sorting = [NSSortDescriptor(keyPath: \PostEntity.timestamp, ascending: false)]
         }
         
         try repository.startFetchingWith(predicate: predicate, sortDescriptors: sorting)

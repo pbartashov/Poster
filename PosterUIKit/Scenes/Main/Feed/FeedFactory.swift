@@ -40,10 +40,12 @@ struct FeedFactory {
                                             favoritesPostsHashProvider: favoritesPostsHashProvider,
                                             requestFilter: requestFilter,
                                             errorPresenter: ErrorPresenter.shared)
-        
+
+        let dateFormatter = DMYDateFormatter()
         return FeedViewModel(storageReader: storageReader,
                              coordinator: feedCoordinator,
                              postsViewModel: postsViewModel,
+                             dateFormatter: dateFormatter,
                              errorPresenter: ErrorPresenter.shared)
     }
     

@@ -9,15 +9,6 @@ import UIKit
 import Combine
 
 final class PostsSectionHeaderView: UICollectionReusableView {
-    enum Button {
-        case button
-    }
-
-    // MARK: - Properties
-
-    var buttonTappedPublisher: AnyPublisher<Button, Never> {
-        button.tappedPublisher
-    }
 
     // MARK: - Views
 
@@ -26,25 +17,41 @@ final class PostsSectionHeaderView: UICollectionReusableView {
         stackView.axis = .horizontal
         stackView.distribution = .fill
         stackView.alignment = .center
+        stackView.spacing = Constants.UI.smallPadding
 
         return stackView
     }()
 
-    private let label: UILabel = {
+    private lazy var label: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 18, weight: .bold)
-        label.textColor = .brandTextBlackColor
+        label.font = .brandTextFont
+        label.textColor = .brandTextGrayColor
+        label.textAlignment = .center
 
         return label
     }()
 
-    private lazy var button: PublishedButton<Button> = {
-        let button = PublishedButton(publishedValue: Button.button)
-        button.setTitleColor(.brandTextBlackColor, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 16)
-        button.setContentHuggingPriority(.required, for: .horizontal)
+    private lazy var labelContainer: UIView = {
+        let view = UILabel()
+        view.layer.cornerRadius = Constants.UI.cornerRadius
+        view.layer.borderWidth = Constants.UI.separatorHeight
+        view.layer.borderColor = UIColor.brandTextGrayColor.cgColor
 
-        return button
+        return view
+    }()
+
+    private lazy var leftLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .brandTextGrayColor
+
+        return view
+    }()
+
+    private lazy var rightLineView: UIView	 = {
+        let view = UIView()
+        view.backgroundColor = .brandTextGrayColor
+
+        return view
     }()
 
     // MARK: - LifeCicle
@@ -62,8 +69,12 @@ final class PostsSectionHeaderView: UICollectionReusableView {
 
     private func initialize() {
         addSubview(stackView)
+        labelContainer.addSubview(label)
 
-        [label, button].forEach {
+        [leftLineView,
+         labelContainer,
+         rightLineView
+        ].forEach {
             stackView.addArrangedSubview($0)
         }
 
@@ -72,13 +83,29 @@ final class PostsSectionHeaderView: UICollectionReusableView {
 
     private func setupLayouts() {
         stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.bottom.equalToSuperview()
+            make.leading.equalToSuperview().offset(Constants.UI.padding)
+            make.trailing.equalToSuperview().offset(-Constants.UI.padding)
+        }
+
+        leftLineView.snp.makeConstraints { make in
+            make.height.equalTo(Constants.UI.separatorHeight)
+        }
+
+        rightLineView.snp.makeConstraints { make in
+            make.height.equalTo(Constants.UI.separatorHeight)
+            make.width.equalTo(leftLineView)
+        }
+
+        label.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(Constants.UI.smallPadding)
+            make.leading.equalToSuperview().offset(Constants.UI.padding)
+            make.trailing.equalToSuperview().offset(-Constants.UI.padding)
+            make.bottom.equalToSuperview().offset(-Constants.UI.smallPadding)
         }
     }
 
-    func setup(labelTitle: String? = nil,
-               buttonTitle: String? = nil
-    ) {
-        label.text = labelTitle
+    func setup(title: String? = nil) {
+        label.text = title
     }
 }

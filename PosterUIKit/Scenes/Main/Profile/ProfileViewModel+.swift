@@ -82,6 +82,7 @@ extension ProfileViewModel: DragDropProtocol {
             }
 
             let newPost = Post(uid: UUID().uuidString,
+                               timestamp: .now,
                                authorId: userViewModel?.user.uid ?? "",
                                content: description)
             let postViewModel = PostViewModel(from: newPost)

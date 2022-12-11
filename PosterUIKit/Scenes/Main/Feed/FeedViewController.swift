@@ -21,7 +21,7 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
 
     enum Section: Hashable {
         case storiesSection
-        case postsSection
+        case postsSection(DailyPosts)
     }
 
     enum FeedCollectionItem: Hashable {
@@ -39,8 +39,8 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
     private var dataSource: UICollectionViewDiffableDataSource<Section, FeedCollectionItem>!
     private var sections = [Section]()
 
-    @Published private var storiesItems: [FeedCollectionItem]?
-    @Published private var postsItems: [FeedCollectionItem]?
+    @Published private var stories: [StoryViewModel] = []
+    @Published private var dailyPosts: [DailyPosts] = []
     private var isRecommended: Bool = false
 
     // MARK: - LifeCicle
@@ -129,7 +129,7 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
             guard !self.sections.isEmpty else { return nil }
 
             let headerItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                                        heightDimension: .estimated(44))
+                                                        heightDimension: .estimated(24))
             let storiesHeaderItem = NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: headerItemSize,
                 elementKind: FeedSupplementaryViewKind.storiesHeader,
@@ -175,6 +175,8 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
                                                                    subitems: [item])
 
                     let section = NSCollectionLayoutSection(group: group)
+                    section.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 0,
+                                                                    bottom: 12, trailing: 0)
                     section.boundarySupplementaryItems = [postsHeaderItem]
 
                     return section
@@ -196,7 +198,7 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
                             withReuseIdentifier: StoriesViewCell.identifier,
                             for: indexPath
                         ) as? StoriesViewCell,
-                        case .storyItem(let story) = self.storiesItems?[indexPath.item]
+                        case .storyItem(let story) = item
                     else {
                         return nil
                     }
@@ -210,7 +212,7 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
                             withReuseIdentifier: PostCollectionViewCell.identifier,
                             for: indexPath
                         ) as? PostCollectionViewCell,
-                        case .postItem(let post) = self.postsItems?[indexPath.item]
+                        case .postItem(let post) = item
                     else {
                         return nil
                     }
@@ -250,11 +252,13 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
                             ofKind: FeedSupplementaryViewKind.postsHeader,
                             withReuseIdentifier: PostsSectionHeaderView.identifier,
                             for: indexPath
-                        ) as? PostsSectionHeaderView
+                        ) as? PostsSectionHeaderView,
+                        case let .postsSection(post) = self.sections[indexPath.section]
                     else {
                         return nil
                     }
-//                    headerView.setup(labelTitle: "", buttonTitle: "")
+
+                    headerView.setup(title: post.title)
 
                     return headerView
 
@@ -268,21 +272,11 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
         func bindViewModelToSections() {
             viewModel.storiesPublisher
                 .removeDuplicates()
-                .map { stories in
-                    stories.map {
-                        FeedCollectionItem.storyItem($0)
-                    }
-                }
-                .assign(to: &$storiesItems)
+                .assign(to: &$stories)
 
             viewModel.postsPublisher
                 .removeDuplicates()
-                .map { posts in
-                    posts.map {
-                        FeedCollectionItem.postItem($0)
-                    }
-                }
-                .assign(to: &$postsItems)
+                .assign(to: &$dailyPosts)
         }
 
         func bindToCollectionView() {
@@ -305,33 +299,35 @@ final class FeedViewController<ViewModelType: FeedViewModelProtocol>: UICollecti
 
     private func applySnapshot() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, FeedCollectionItem>()
-        if let storiesItem = storiesItems {
+        if !stories.isEmpty {
             snapshot.appendSections([.storiesSection])
-            snapshot.appendItems(storiesItem, toSection: .storiesSection)
+            let storiesItems = stories.map { FeedCollectionItem.storyItem($0) }
+            snapshot.appendItems(storiesItems, toSection: .storiesSection)
         }
 
-        if let postsItems = postsItems {
-            snapshot.appendSections([.postsSection])
-            snapshot.appendItems(postsItems, toSection: .postsSection)
+        for dailyPost in dailyPosts {
+            let postsSection = Section.postsSection(dailyPost)
+            snapshot.appendSections([postsSection])
+            let postsItems = dailyPost.posts.map { FeedCollectionItem.postItem($0) }
+            snapshot.appendItems(postsItems, toSection: postsSection)
         }
 
         sections = snapshot.sectionIdentifiers
         dataSource.apply(snapshot)
     }
 
-    private func showDetailedPost(at indexPath: IndexPath) {
-        if let item = postsItems?[indexPath.item],
-           case let .postItem(post) = item {
-            viewModel.perfomAction(.selected(post: post))
-        }
+    private func showDetailedPost(from dailyPosts: DailyPosts, at indexPath: IndexPath) {
+        let post = dailyPosts.posts[indexPath.item]
+        viewModel.perfomAction(.selected(post: post))
     }
 
     // MARK: UICollectionViewDelegate
     public override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        switch indexPath.section {
-            case 1:
-                showDetailedPost(at: indexPath)
+        let section = sections[indexPath.section]
+        switch section {
+            case .postsSection(let dailyPosts):
+                showDetailedPost(from: dailyPosts, at: indexPath)
 
             default:
                 break
