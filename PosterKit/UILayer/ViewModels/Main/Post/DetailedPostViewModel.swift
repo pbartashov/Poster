@@ -85,7 +85,6 @@ public final class DetailedPostViewModel: ViewModel<DetailedPostState, DetailedP
             do {
                 if let post = postViewModel?.post {
                     let newPost = Post(uid: post.uid,
-                                       timestamp: post.timestamp,
                                        authorId: post.authorId,
                                        content: content,
                                        likes: post.likes,

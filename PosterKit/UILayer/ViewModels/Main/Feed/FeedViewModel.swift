@@ -22,8 +22,8 @@ public protocol FeedViewModelProtocol: ViewModelProtocol
 where State == FeedState,
       Action == FeedAction {
 
-    var storiesPublisher: AnyPublisher<[StoryViewModel], Never> { get }
-    var postsPublisher: AnyPublisher<[DailyPosts], Never> { get }
+    var storiesPublisher: Published<[StoryViewModel]>.Publisher { get }
+    var postsPublisher: Published<[PostViewModel]>.Publisher { get }
 }
 
 
@@ -39,31 +39,21 @@ public final class FeedViewModel<T>: ViewModel<FeedState, FeedAction>,
     private weak var coordinator: FeedCoordinatorProtocol?
 
     @Published var stories: [StoryViewModel] = []
-    public var storiesPublisher: AnyPublisher<[StoryViewModel], Never> { $stories.eraseToAnyPublisher() }
+    public var storiesPublisher: Published<[StoryViewModel]>.Publisher { $stories }
 
     private let postsViewModel: PostsViewModelType
-    public var postsPublisher: AnyPublisher<[DailyPosts], Never> {
-        postsViewModel.postsPublisher
-            .compactMap { [weak self] posts in
-                self?.groupDaily(posts)
-            }
-            .eraseToAnyPublisher()
-    }
-
-    let dateFormatter: DMYDateFormatterProtocol
+    public var postsPublisher: Published<[PostViewModel]>.Publisher { postsViewModel.postsPublisher }
 
     // MARK: - LifeCicle
 
     public init(storageReader: StorageReaderProtocol,
                 coordinator: FeedCoordinatorProtocol?,
                 postsViewModel: PostsViewModelType,
-                dateFormatter: DMYDateFormatterProtocol,
                 errorPresenter: ErrorPresenterProtocol
     ) {
         self.storageReader = storageReader
         self.coordinator = coordinator
         self.postsViewModel = postsViewModel
-        self.dateFormatter = dateFormatter
         super.init(state: .initial, errorPresenter: errorPresenter)
 
         setupBindings()
@@ -103,21 +93,6 @@ public final class FeedViewModel<T>: ViewModel<FeedState, FeedAction>,
                 try await storageReader.startFetchingStories()
             } catch {
                 errorPresenter.show(error: error)
-            }
-        }
-    }
-
-    private func groupDaily(_ posts: [PostViewModel]) -> [DailyPosts] {
-        let calendar = Calendar.current
-        return posts.reduce(into: [DailyPosts]()) { dailyPosts, current in
-            let startOfCurrentPostDay = calendar.startOfDay(for: current.timestamp)
-            if startOfCurrentPostDay == dailyPosts.last?.timestamp {
-                dailyPosts[dailyPosts.count - 1].posts.append(current)
-            } else {
-                let newDailyPost = DailyPosts(timestamp: startOfCurrentPostDay,
-                                              title: dateFormatter.format(date: startOfCurrentPostDay),
-                                              posts: [current])
-                dailyPosts.append(newDailyPost)
             }
         }
     }

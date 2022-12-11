@@ -41,31 +41,21 @@ public final class StoryCloudStorage: StoryCloudStorageProtocol {
     ) async throws -> Story {
         let newStoryRef = storiesCollectionRef.document()
         let newStory = Story(uid: newStoryRef.documentID,
+                             timestamp: .now,
                              authorId: authorId,
                              storyData: storyData,
                              description: description)
-
-        let addition = [Constants.Cloud.timestamp: FieldValue.serverTimestamp()]
-        try await store(story: newStory, at: newStoryRef, with: addition)
+        try newStoryRef.setData(from: newStory)
+        try await newStoryRef.updateData([
+            Story.CodingKeys.timestamp.rawValue: FieldValue.serverTimestamp()
+        ])
 
         return newStory
     }
 
     public func save(story: Story) async throws {
         let storyRef = storiesCollectionRef.document(story.uid)
-        let document = try await storyRef.getDocument().data()
-        let timestamp = document?[Constants.Cloud.timestamp] ?? FieldValue.serverTimestamp()
-
-        let addition: [String: Any] = [Constants.Cloud.timestamp: timestamp]
-        try await store(story: story, at: storyRef, with: addition)
-    }
-
-    private func store(story: Story,
-                       at postRef: DocumentReference,
-                       with addition: [String: Any]
-    ) async throws {
-        try postRef.setData(from: story)
-        try await postRef.updateData(addition)
+        try storyRef.setData(from: story)
     }
 
     public func getStories(filteredBy filter: Filter?) async throws -> [Story] {
@@ -78,14 +68,14 @@ public final class StoryCloudStorage: StoryCloudStorageProtocol {
     }
 
     private func getQuery(filteredBy filter: Filter?) -> Query {
-        var query = storiesCollectionRef.order(by: Constants.Cloud.timestamp, descending: true)
+        var query = storiesCollectionRef.order(by: Story.CodingKeys.timestamp.rawValue, descending: true)
         guard let filter = filter else { return query }
         if let authorId = filter.authorId {
             query = query
-                .whereField(Post.CodingKeys.authorId.rawValue, isEqualTo: authorId)
+                .whereField(Story.CodingKeys.authorId.rawValue, isEqualTo: authorId)
         } else if let authorIds = filter.authorIds {
             query = query
-                .whereField(Post.CodingKeys.authorId.rawValue, in: authorIds)
+                .whereField(Story.CodingKeys.authorId.rawValue, in: authorIds)
         }
 
         if let _ = filter.content {

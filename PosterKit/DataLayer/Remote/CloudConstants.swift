@@ -15,7 +15,6 @@ public enum Constants {
         public static let postsCollection = "posts"
         public static let storiesCollection = "stories"
 
-        public static let timestamp = "timestamp"
         public static let isRecommended = "is_recommended"
 
         public static let postImagesStorage = "post_images"
