@@ -46,7 +46,7 @@ public final class MainDependancyContainer: MainDependancyContainerProtocol {
         ])
 
         ErrorPresenter.shared.initialize(with: tabBarController)
-
+        tabBarController.selectedIndex = 1
         return tabBarController
     }
 

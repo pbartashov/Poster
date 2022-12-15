@@ -54,8 +54,8 @@ public final class LoginViewModel: ViewModel<LoginState, LoginAction>,
     public override func perfomAction(_ action: LoginAction) {
         switch action {
             case .start:
-                showWelcome()
-
+//                showWelcome()
+                checkAuthFor(phoneNumber: "+1 650-555-3535")
             case .showSignIn:
                 showSignIn()
 

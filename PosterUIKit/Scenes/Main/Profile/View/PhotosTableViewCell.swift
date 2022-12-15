@@ -26,7 +26,7 @@ class PhotosTableViewCell: UITableViewCell {
         return label
     }()
 
-    private lazy  var arrowLabel: UILabel = {
+    private lazy var arrowLabel: UILabel = {
         let label = UILabel()
         label.text = "→"
         label.textColor = .brandTextBlackColor

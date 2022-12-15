@@ -8,10 +8,6 @@
 import UIKit
 import PosterKit
 
-protocol Presenter: AnyObject {
-    func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?)
-}
-
 final class ErrorPresenter: ErrorPresenterProtocol {
 
     // MARK: - Properties
@@ -65,5 +61,3 @@ final class ErrorPresenter: ErrorPresenterProtocol {
         }
     }
 }
-
-extension UIViewController: Presenter { }

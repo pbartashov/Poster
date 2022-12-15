@@ -13,7 +13,7 @@ protocol ProfileHeaderViewDelegate: AnyObject {
     func addPostButtonTapped()
     func addStoryButtonTapped()
     func addPhotoButtonTapped()
-    func avatarTapped(sender: UIView)
+    func avatarTapped(sender: UIImageView)
 }
 
 final class ProfileHeaderViewCell: UITableViewCell {

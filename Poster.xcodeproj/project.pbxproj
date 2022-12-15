@@ -120,6 +120,10 @@
 		6E2F78362920B7A4007EB9ED /* PhoneTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2F78352920B7A4007EB9ED /* PhoneTextField.swift */; };
 		6E2F78382920D3D2007EB9ED /* ConfirmSignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2F78372920D3D2007EB9ED /* ConfirmSignUpView.swift */; };
 		6E2F783A2920D3DD007EB9ED /* ConfirmSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2F78392920D3DD007EB9ED /* ConfirmSignUpViewController.swift */; };
+		6E51F6872945E1A60044E6E3 /* -CoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E51F6862945E1A60044E6E3 /* -CoverView.swift */; };
+		6E51F6892945E7000044E6E3 /* AvatarPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E51F6882945E7000044E6E3 /* AvatarPresenter.swift */; };
+		6E51F68B2945EFFF0044E6E3 /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E51F68A2945EFFF0044E6E3 /* Presenter.swift */; };
+		6E51F68D2945F19A0044E6E3 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E51F68C2945F19A0044E6E3 /* UIViewController+.swift */; };
 		6E5886102936BB37000CA953 /* UserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E58860F2936BB37000CA953 /* UserInfoView.swift */; };
 		6E5886122936D753000CA953 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5886112936D753000CA953 /* UserViewModel.swift */; };
 		6E5886142936DA44000CA953 /* KMBFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5886132936DA44000CA953 /* KMBFormatter.swift */; };
@@ -304,6 +308,10 @@
 		6E2F78352920B7A4007EB9ED /* PhoneTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneTextField.swift; sourceTree = "<group>"; };
 		6E2F78372920D3D2007EB9ED /* ConfirmSignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmSignUpView.swift; sourceTree = "<group>"; };
 		6E2F78392920D3DD007EB9ED /* ConfirmSignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmSignUpViewController.swift; sourceTree = "<group>"; };
+		6E51F6862945E1A60044E6E3 /* -CoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "-CoverView.swift"; sourceTree = "<group>"; };
+		6E51F6882945E7000044E6E3 /* AvatarPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarPresenter.swift; sourceTree = "<group>"; };
+		6E51F68A2945EFFF0044E6E3 /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
+		6E51F68C2945F19A0044E6E3 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		6E58860F2936BB37000CA953 /* UserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoView.swift; sourceTree = "<group>"; };
 		6E5886112936D753000CA953 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		6E5886132936DA44000CA953 /* KMBFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KMBFormatter.swift; sourceTree = "<group>"; };
@@ -419,6 +427,7 @@
 			children = (
 				6E0117442921B29600D8F391 /* ProfileHeaderViewCell.swift */,
 				6E0117452921B29600D8F391 /* PhotosTableViewCell.swift */,
+				6E51F6862945E1A60044E6E3 /* -CoverView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -434,6 +443,7 @@
 		6E01174B2921B29600D8F391 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				6E51F6882945E7000044E6E3 /* AvatarPresenter.swift */,
 				6E01174C2921B29600D8F391 /* ProfileViewController.swift */,
 			);
 			path = ViewController;
@@ -763,6 +773,7 @@
 				6E2F783229209C18007EB9ED /* ViewControllers */,
 				6E2F7825291FC027007EB9ED /* Views */,
 				6E2F77FA291B1B55007EB9ED /* Coordinators */,
+				6E51F68A2945EFFF0044E6E3 /* Presenter.swift */,
 			);
 			path = Reusable;
 			sourceTree = "<group>";
@@ -829,6 +840,7 @@
 				6E01179A29231D6000D8F391 /* UIImage+.swift */,
 				6E2F782A29207F8D007EB9ED /* UIFont+.swift */,
 				6ED56158292D801400A2731A /* Data+.swift */,
+				6E51F68C2945F19A0044E6E3 /* UIViewController+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1378,6 +1390,7 @@
 				6E2F782F29209544007EB9ED /* SignUpViewController.swift in Sources */,
 				6E2F783A2920D3DD007EB9ED /* ConfirmSignUpViewController.swift in Sources */,
 				6E2F7829291FC157007EB9ED /* LoginButton.swift in Sources */,
+				6E51F6892945E7000044E6E3 /* AvatarPresenter.swift in Sources */,
 				6E0117A92923AE5C00D8F391 /* PhotosCollectionViewCell.swift in Sources */,
 				6E6EDBDD2934ED43007A81DA /* TextFieldWithPadding.swift in Sources */,
 				6E01174D2921B29600D8F391 /* ProfileHeaderViewCell.swift in Sources */,
@@ -1385,6 +1398,7 @@
 				6E2F77EA291B186B007EB9ED /* SignInViewController.swift in Sources */,
 				6E2F77F7291B1AEA007EB9ED /* String+.swift in Sources */,
 				6E6EDBCD29339826007A81DA /* UserProfileViewController.swift in Sources */,
+				6E51F6872945E1A60044E6E3 /* -CoverView.swift in Sources */,
 				6E5886232938BC54000CA953 /* DetailedPostFactory.swift in Sources */,
 				6E132B1029246AC900B346BE /* StoriesViewCell.swift in Sources */,
 				6E5886102936BB37000CA953 /* UserInfoView.swift in Sources */,
@@ -1402,6 +1416,7 @@
 				6E2F782D29209538007EB9ED /* SignUpView.swift in Sources */,
 				6ED56159292D801400A2731A /* Data+.swift in Sources */,
 				6E2F7822291F9003007EB9ED /* LoginViewController.swift in Sources */,
+				6E51F68B2945EFFF0044E6E3 /* Presenter.swift in Sources */,
 				6E132B17292502BD00B346BE /* StoriesSectionHeaderView.swift in Sources */,
 				6E0117A82923AE5300D8F391 /* PhotosViewController.swift in Sources */,
 				6E2F782B29207F8D007EB9ED /* UIFont+.swift in Sources */,
@@ -1410,6 +1425,7 @@
 				6E2F7816291BDA3C007EB9ED /* LoginDependencyContainer.swift in Sources */,
 				6E2F77E6291B186B007EB9ED /* LoginCoordinator.swift in Sources */,
 				6E01174E2921B29600D8F391 /* PhotosTableViewCell.swift in Sources */,
+				6E51F68D2945F19A0044E6E3 /* UIViewController+.swift in Sources */,
 				6E0117412921B28500D8F391 /* FeedViewController.swift in Sources */,
 				6E01174F2921B29600D8F391 /* ProfileCoordinator.swift in Sources */,
 				6E2F7811291BD4CC007EB9ED /* ErrorPresenter.swift in Sources */,
