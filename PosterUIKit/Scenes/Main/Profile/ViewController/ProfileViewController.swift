@@ -98,12 +98,6 @@ where T: ProfileViewModelProtocol&DragDropProtocol,
         initialize()
     }
 
-//    override func viewSafeAreaInsetsDidChange() {
-//        if isAvatarPresenting {
-//            moveAndScaleAvatarToCenter()
-//        }
-//    }
-
     // MARK: - Metods
 
     private func initialize() {

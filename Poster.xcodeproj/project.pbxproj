@@ -120,7 +120,6 @@
 		6E2F78362920B7A4007EB9ED /* PhoneTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2F78352920B7A4007EB9ED /* PhoneTextField.swift */; };
 		6E2F78382920D3D2007EB9ED /* ConfirmSignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2F78372920D3D2007EB9ED /* ConfirmSignUpView.swift */; };
 		6E2F783A2920D3DD007EB9ED /* ConfirmSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2F78392920D3DD007EB9ED /* ConfirmSignUpViewController.swift */; };
-		6E51F6872945E1A60044E6E3 /* -CoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E51F6862945E1A60044E6E3 /* -CoverView.swift */; };
 		6E51F6892945E7000044E6E3 /* AvatarPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E51F6882945E7000044E6E3 /* AvatarPresenter.swift */; };
 		6E51F68B2945EFFF0044E6E3 /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E51F68A2945EFFF0044E6E3 /* Presenter.swift */; };
 		6E51F68D2945F19A0044E6E3 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E51F68C2945F19A0044E6E3 /* UIViewController+.swift */; };
@@ -308,7 +307,6 @@
 		6E2F78352920B7A4007EB9ED /* PhoneTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneTextField.swift; sourceTree = "<group>"; };
 		6E2F78372920D3D2007EB9ED /* ConfirmSignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmSignUpView.swift; sourceTree = "<group>"; };
 		6E2F78392920D3DD007EB9ED /* ConfirmSignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmSignUpViewController.swift; sourceTree = "<group>"; };
-		6E51F6862945E1A60044E6E3 /* -CoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "-CoverView.swift"; sourceTree = "<group>"; };
 		6E51F6882945E7000044E6E3 /* AvatarPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarPresenter.swift; sourceTree = "<group>"; };
 		6E51F68A2945EFFF0044E6E3 /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
 		6E51F68C2945F19A0044E6E3 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
@@ -427,7 +425,6 @@
 			children = (
 				6E0117442921B29600D8F391 /* ProfileHeaderViewCell.swift */,
 				6E0117452921B29600D8F391 /* PhotosTableViewCell.swift */,
-				6E51F6862945E1A60044E6E3 /* -CoverView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1398,7 +1395,6 @@
 				6E2F77EA291B186B007EB9ED /* SignInViewController.swift in Sources */,
 				6E2F77F7291B1AEA007EB9ED /* String+.swift in Sources */,
 				6E6EDBCD29339826007A81DA /* UserProfileViewController.swift in Sources */,
-				6E51F6872945E1A60044E6E3 /* -CoverView.swift in Sources */,
 				6E5886232938BC54000CA953 /* DetailedPostFactory.swift in Sources */,
 				6E132B1029246AC900B346BE /* StoriesViewCell.swift in Sources */,
 				6E5886102936BB37000CA953 /* UserInfoView.swift in Sources */,
